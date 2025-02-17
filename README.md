@@ -1,2 +1,2 @@
 # MinhSon090.github.io
-My Semi-Personal Website
+My Personal Website
