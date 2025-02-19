@@ -1,9 +1,23 @@
 #uniqueParagraph {
+    text-align: center;
     width: 20ch;
     font-family: monospace;
     white-space: nowrap;
     overflow: hidden;
     animation: typ 2s steps(20) infinite alternate-reverse;
+}
+
+div{
+    color: white;
+    font-size: x-large;
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    text-shadow: 3x 3px 6px black;
+    padding: 10px 10px 10px 10px;
+    border-radius: 25px;
+    animation: pulsewithoutop 2s infinite;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
 }
 
 h1{
@@ -40,7 +54,6 @@ p{
 }
 
 @keyframes pulse {
-
     0% {
         transform: scale(1);
     }
@@ -51,7 +64,6 @@ p{
         transform: scale(1.5);
         opacity: 0;
     }
-
     0% {
         transform: scale(1) rotate(0deg);
     }
@@ -60,4 +72,12 @@ p{
     }
 }
 
+@keyframes pulsewithoutop {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
   
