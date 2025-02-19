@@ -1,0 +1,63 @@
+#uniqueParagraph {
+    width: 20ch;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typ 2s steps(20) infinite alternate-reverse;
+}
+
+h1{
+    text-align: center;
+    text-shadow: 2px 2px 4px #ff00dd;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+}
+
+p{
+    background-image: url('101723.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    color: rgb(255, 255, 255);
+    margin: 10;
+    padding: 0;
+    font-size: 20px;
+    text-shadow: 3px 3px 6px #ff00dd;
+    box-shadow: 20px 20px 20px rgba(255, 255, 255, 0.5);
+}
+
+#image21{
+    text-align: center;
+    box-shadow: 100% rgb(255, 255, 255);
+    border-radius: 500%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes typ {
+    from {
+      width: 0ch;
+    }
+}
+
+@keyframes pulse {
+
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+  
