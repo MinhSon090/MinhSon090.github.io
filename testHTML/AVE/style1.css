@@ -1,8 +1,76 @@
-body{
-    font-size: x-large;
+h1{
+    font-size: 110px;
+    text-align: center;
+    background: linear-gradient(45deg, red, pink, aqua);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+main.container{
     display: grid;
-    max-width: 100px;
-    margin: 0 auto;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 5px;
+}
+
+
+main{
+    div{
+        background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 80px;
+        height: 200px;
+        text-align: center;
+    }
+    a.RickR{
+        background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-color: white;
+        font-size: 50px;
+        height: 200px;
+        animation: scale 1s infinite;
+    }
+    a.SA{
+        background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-color: white;
+        font-size: 50px;
+        height: 200px;
+    }
+    div.notclickable{
+        background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 80px;
+        height: 200px;
+        text-align: center;
+        animation: scale 1s infinite;
+    }
+}
+
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
