@@ -12,7 +12,57 @@ main.container{
     gap: 5px;
 }
 
+/* layout and background without animation*/
+main>a.RickR, div, a.SA{
+    background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    border-color: white;
+    font-size: 50px;
+    height: 200px;
+}
 
+/* animation */
+main>a.RickR, div.notclickable{
+    animation: scale 1s infinite;
+}
+
+/* Grid with image */
+/* hj.jpg */
+main>div.a1{
+    background: url('/testHTML/AVE/Images/kj.jpg') no-repeat;
+    background-size: 100%;
+    background-position: center;
+    border-radius: 15px;
+}
+/* hts.jpg */
+main>div.a2{
+    background: url('/testHTML/AVE/Images/hts.jpg') no-repeat;
+    background-size: 100%;
+    background-position: center;
+    border-radius: 15px;
+}
+
+
+/* animation */
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+/*
 main{
     div{
         background: linear-gradient(45deg, red, rgb(255,0,255), aqua);
@@ -31,7 +81,7 @@ main{
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: rgb(255, 255, 255);
         border-color: white;
         font-size: 50px;
         height: 200px;
@@ -60,17 +110,12 @@ main{
         text-align: center;
         animation: scale 1s infinite;
     }
-}
-
-
-@keyframes scale {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.95);
-    }
-    100% {
-        transform: scale(1);
+    div.a1{
+        background: url('/testHTML/AVE/Images/kj.jpg') no-repeat;
+        background-size: 100%;
+        background-position: center;
+        border-radius: 15px;
     }
 }
+*/
+
