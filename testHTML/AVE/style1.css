@@ -7,7 +7,7 @@ body{
 }
 
 /* heading style */
-h1,h2{
+h1,h2,p.not{
     text-align: center;
     background: linear-gradient(45deg, red, pink, aqua);
     background-clip: text;
