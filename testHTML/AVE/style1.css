@@ -5,18 +5,9 @@ body{
     background-position: center ;
     animation: slideshow 100s infinite;
 }
-/* Preload images */
-ht{
-    background-image: url(Images/background/ab1.jpg);
-    background-image: url(Images/background/ab2.jpg);
-    background-image: url(Images/background/ab3.jpg);
-    background-image: url(Images/background/ab4.jpg);
-    background-image: url(Images/background/ab5.jpg);
-    background-image: url(Images/background/ab6.jpg);
-    background-image: url(Images/background/ab7.jpg);
-    background-image: url(Images/background/ab8.jpg);
-    background-image: url(Images/background/ab9.jpg);
-    background-image: url(Images/background/ab10.jpg);
+body::after{
+    position: absolute; width:0; height:0; overflow:hidden; z-index:-1;
+    content: url(Images/background/ab1.jpg) url(Images/background/ab2.jpg) url(Images/background/ab3.jpg) url(Images/background/ab4.jpg) url(Images/background/ab5.jpg) url(Images/background/ab6.jpg) url(Images/background/ab7.jpg) url(Images/background/ab8.jpg) url(Images/background/ab9.jpg) url(Images/background/ab10.jpg);
 }
 
 /* heading style */
