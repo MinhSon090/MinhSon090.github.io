@@ -1,9 +1,25 @@
-h1{
-    font-size: 110px;
+body{
+    /* the responsive background image is following user when scrolling up and down */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center ;
+    animation: slideshow 100s infinite;
+}
+
+/* heading style */
+h1,h2{
     text-align: center;
     background: linear-gradient(45deg, red, pink, aqua);
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+h1{
+    font-size: 150px;
+    -webkit-text-stroke: 4px transparent;
+}
+h2{
+    text-shadow: 10px 10px 2px rgba(1,1,0,0);
+    font-size: 50px;
 }
 
 main.container{
@@ -18,11 +34,13 @@ main>a.RickR, div, a.SA{
     border-radius: 15px;
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
     color: rgb(255, 255, 255);
     border-color: white;
     font-size: 50px;
     height: 200px;
+    text-decoration: none;
 }
 
 /* animation */
@@ -59,8 +77,42 @@ main>div.a2{
         transform: scale(1);
     }
 }
-
-
+/* Slideshow background */
+@keyframes slideshow {
+    0% {
+        background-image: url(Images/background/ab1.jpg);
+    }
+    10% {
+        background-image: url(Images/background/ab2.jpg);
+    }
+    20% {
+        background-image: url(Images/background/ab3.jpg);
+    }
+    30% {
+        background-image: url(Images/background/ab4.jpg);
+    }
+    40% {
+        background-image: url(Images/background/ab5.jpg);
+    }
+    50% {
+        background-image: url(Images/background/ab6.jpg);
+    }
+    60% {
+        background-image: url(Images/background/ab7.jpg);
+    }
+    70% {
+        background-image: url(Images/background/ab8.jpg);
+    }
+    80% {
+        background-image: url(Images/background/ab9.jpg);
+    }
+    90% {
+        background-image: url(Images/background/ab10.jpg);
+    }
+    100% {
+        background-image: url(Images/background/ab1.jpg);
+    }
+}
 
 /*
 main{
