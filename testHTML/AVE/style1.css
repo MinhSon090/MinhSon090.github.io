@@ -48,7 +48,7 @@ main>a.RickR, div, a.SA {
 }
 
 /* make grid scale down when user's cursor move on */
-main>a.RickR:hover, div:hover, a.SA:hover {
+main>a.RickR:hover, div:hover,div.notclickable:hover, a.SA:hover {
     /* background: linear-gradient(45deg, red, rgb(255,0,255), aqua); */
     animation: shadow 10s infinite alternate-reverse;
     transform: scale(0.9);
