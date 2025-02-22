@@ -18,7 +18,7 @@ h1,h2,p.not{
     -webkit-text-fill-color: transparent;
 }
 h1{
-    font-size: 150px;
+    font-size: 120px;
     -webkit-text-stroke: 4px transparent;
 }
 h2{
