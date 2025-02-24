@@ -2,8 +2,8 @@ div.my_list{
     margin: 50px  auto;
     padding: 2px 24px;
     display: table;
-    background-color: #f7f381;
-    border: 2px solid #f7f381;
+    background-color: #ffffff;
+    border: 2px solid #e6e6e6;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
     font-size: calc(30px + (100vw - 1000px) * 0.02);
 }
@@ -16,10 +16,26 @@ h1{
     -webkit-text-fill-color: transparent;
 }
 div.my_list>ol{
+    display: block;
     margin: 12px;
-    text-wrap: wrap;
+    gap: 5px;
 }
-
+div.my_list>img.profile_image{
+    display: block;
+    margin: 10px auto;
+    width: 100px;
+    border-radius: 50%;
+}
+div.my_list>ol>li{
+    padding: 8px;
+    margin: 10px auto;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+div.my_list>ol>li:hover{
+    background-color: rgba(0,0,0,0.2);
+    transform: scale(1.05);
+}
 
 
 
