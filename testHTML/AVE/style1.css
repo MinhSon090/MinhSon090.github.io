@@ -90,7 +90,7 @@ main>div.a2{
         transform: scale(1);
     }
 }
-/* grid shadow */
+/* grid shadow for hover */
 @keyframes shadow {
     0% {
         box-shadow: 0 0 0 5px rgba(255, 88, 131, 0.75);
