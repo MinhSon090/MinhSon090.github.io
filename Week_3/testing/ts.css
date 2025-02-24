@@ -1,0 +1,32 @@
+h1{
+    color: aqua; 
+    text-decoration: overline; 
+    font-size: calc(100px + (100vw - 1000px)*0.1);
+    text-align:center;
+}
+p, h1.special{
+    text-align: center;
+    font-size: calc(100px + (100vw - 1000px)*0.1);
+    background: linear-gradient(135deg, red, pink, aqua);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+h3{
+    text-decoration: overline; 
+    font-size: calc(100px + (100vw - 1000px)*0.1);
+    text-align:center;
+    animation: rotate_color 1s infinite;
+}
+
+@keyframes rotate_color{
+    0%{
+        background: linear-gradient(0deg, red, rgba(255,0,255,0.7), aqua);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    100%{
+        background: linear-gradient(180deg, red, rgba(255,0,255,0.7), aqua);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}

@@ -1,0 +1,20 @@
+div.my_list{
+    margin: 0  auto;
+    padding: 2px 24px;
+    display: table;
+    background-color: #f7f381;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
+    font-size: 24px;
+}
+div.my_list>p, div.my_list>h1{
+    text-align: center
+}
+div.my_list>ol{
+    margin: 12px;
+    text-wrap: wrap;
+}
+
+
+
+
+

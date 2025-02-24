@@ -17,7 +17,7 @@ div{
     padding: 10px 10px 10px 10px;
     border-radius: 25px;
     animation: pulsewithoutop 2s infinite;
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
 }
 
 h1{
