@@ -17,7 +17,6 @@ h1{
     -webkit-text-fill-color: transparent;
 }
 div.my_list>ol{
-    display: block;
     margin: 5px auto;
 }
 div.my_list>img.profile_image{
