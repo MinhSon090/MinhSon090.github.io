@@ -3,8 +3,9 @@ div.my_list{
     padding: 2px 24px;
     display: table;
     background-color: #f7f381;
+    border: 2px solid #f7f381;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
-    font-size: calc(50px + (100vw - 1000px) * 0.05);
+    font-size: calc(30px + (100vw - 1000px) * 0.02);
 }
 div.my_list>p, h1{
     text-align: center
