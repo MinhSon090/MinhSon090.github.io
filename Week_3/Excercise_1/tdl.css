@@ -1,13 +1,18 @@
 div.my_list{
-    margin: 0  auto;
+    margin: 50px  auto;
     padding: 2px 24px;
     display: table;
     background-color: #f7f381;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
-    font-size: 24px;
+    font-size: calc(50px + (100vw - 1000px) * 0.05);
 }
-div.my_list>p, div.my_list>h1{
+div.my_list>p, h1{
     text-align: center
+}
+h1{
+    background:linear-gradient(125deg, red, pink, aqua);
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
 }
 div.my_list>ol{
     margin: 12px;
