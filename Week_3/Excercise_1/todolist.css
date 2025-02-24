@@ -21,8 +21,8 @@ div.my_list>ol{
 }
 div.my_list>img.profile_image{
     display: block;
-    margin: 10px auto;
-    width: 100px;
+    margin: 15px auto;
+    width: 130px;
     border-radius: 50%;
 }
 div.my_list>ol>li{
