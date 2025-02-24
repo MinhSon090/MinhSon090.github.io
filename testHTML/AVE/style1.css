@@ -46,6 +46,7 @@ main>a.RickR, div, a.SA {
     font-size: 50px;
     height: 200px;
     text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.5s ease-in-out;
 }
 
 /* make grid scale down when user's cursor move on */
@@ -53,7 +54,7 @@ main>a.RickR:hover, div:hover,div.notclickable:hover, a.SA:hover {
     /* background: linear-gradient(45deg, red, rgb(255,0,255), aqua); */
     animation: shadow 10s infinite alternate-reverse;
     transform: scale(0.9);
-    transition: transform 0.3s ease ;
+    background-color: rgba(255, 255, 255, 0.2);
     z-index: 1;
     color: aqua;
 }

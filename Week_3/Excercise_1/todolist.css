@@ -17,8 +17,7 @@ h1{
 }
 div.my_list>ol{
     display: block;
-    margin: 12px;
-    gap: 5px;
+    margin: 5px auto;
 }
 div.my_list>img.profile_image{
     display: block;
@@ -29,8 +28,9 @@ div.my_list>img.profile_image{
 div.my_list>ol>li{
     padding: 8px;
     margin: 10px auto;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.075);
     border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 div.my_list>ol>li:hover{
     background-color: rgba(0,0,0,0.2);
