@@ -2,10 +2,11 @@ div.my_list{
     margin: 50px  auto;
     padding: 2px 24px;
     display: table;
+    width: calc(100vw * 0.4);
     background-color: #ffffff;
     border: 2px solid #e6e6e6;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
-    font-size: calc(30px + (100vw - 1000px) * 0.02);
+    font-size: calc(25px + (90vw - 1000px) * 0.02);
 }
 div.my_list>p, h1{
     text-align: center
