@@ -1,0 +1,26 @@
+.card{
+    display: grid;
+    margin: 50px auto;
+    width: 350px;
+    height: 500px;
+    background-color: rgba(255, 192, 203, 1);
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.heading{
+    font-size: 50px;
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.card:hover{
+    .heading{
+        font-size: 0px;
+    }
+    content: 'ADDIJ';
+    background-color: aqua;
+    transform: rotateY(180deg);
+}
