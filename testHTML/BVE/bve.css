@@ -35,7 +35,7 @@
 .d1content {
     background: linear-gradient(45deg, red, pink, aqua);
     border-radius: 10px;
-    font-size: 10vw;
+    font-size: 5vw;
     padding: 10px 0;
     transition: all 0.5s ease-in-out;
 }
