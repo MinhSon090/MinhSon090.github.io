@@ -1,0 +1,57 @@
+:root{
+    --overlay-color-1: #ff0000;
+    --overlay-color-2: #0000ff;
+    --anim-duration: 1s;
+    --content:'Wellcome to my website';
+}
+
+#gradient {
+    opacity: 0.8;
+    background: none;
+    font-size: 9vw;
+    text-align: center;
+}
+.center_bottom{
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+#paragraph1{
+    left: 50%;
+}
+#icon{
+    left: 97%;
+    width: 5vw;
+    border-radius: 50%;
+}
+
+
+#gradient:after,
+#gradient:before {
+    display: block;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    padding: 15vh 0;
+    margin: 15vh 0;
+}
+
+#gradient:before {
+    content: var(--content);
+    background: linear-gradient(135deg, var(--overlay-color-2) 0%, var(--overlay-color-1) 100%);
+    animation: OpacityAnim var(--anim-duration) ease-in-out 0s infinite alternate;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#gradient:after {
+    content: var(--content);
+    background: linear-gradient(135deg, var(--overlay-color-1) 0%, var(--overlay-color-2) 100%);
+    animation: OpacityAnim var(--anim-duration) ease-in-out calc(-1 * var(--anim-duration)) infinite alternate;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes OpacityAnim {
+    0%{opacity: 1.0}
+    100%{opacity: 0.0}
+}
