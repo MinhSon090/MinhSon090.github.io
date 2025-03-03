@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: gray;
+}
+
+.nav-links{
+    display: flex;
+    justify-content:space-evenly;
+    padding: 45px 0;
+    margin: 0 auto;
+    background-color: rgba(46, 46, 46, 0.85);
+}
+
+.nav-links li a{
+    color: white;
+    text-decoration: none;
+    font-size: 3vw;
+}
+
+.nav-links li{
+    transition: all 0.5s ease-in-out;
+}
+.nav-links li:hover{
+    transform: scale(1.2);
+}
