@@ -4,28 +4,35 @@
     --anim-duration: 1s;
     --content:'Wellcome to my website';
 }
+body{
+    /* background-image: url('testHTML/AVE/Images/background/ab2.jpg');
+    background-size: cover;
+    background-attachment: inherit; */
+}
 
-
+/* header */
 #gradient {
     opacity: 0.8;
     background: none;
     font-size: 9vw;
     text-align: center;
 }
-.center_bottom{
+
+/* subtitle below header */
+#subtitle{
+    font-size: 2vw;
+    position: absolute;
+    top: 50%;left: 50%;
+    transform: translateX(-50%);
+}
+
+/* footer */
+#center_bottom{
     position: absolute;
     bottom: 0;
     transform: translateX(-50%);
-}
-#paragraph1{
     left: 50%;
 }
-/* #icon{
-    left: 97%;
-    width: 5vw;
-    border-radius: 50%;
-} */
-
 
 #gradient:after,
 #gradient:before {
@@ -43,7 +50,6 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 #gradient:after {
     content: var(--content);
     background: linear-gradient(135deg, var(--overlay-color-1) 0%, var(--overlay-color-2) 100%);
