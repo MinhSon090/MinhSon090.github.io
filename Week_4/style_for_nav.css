@@ -15,15 +15,19 @@ body{
 .nav-links li{
     transition: all 0.5s ease-in-out;
 }
-.nav-links li:hover{
+.nav-links li:hover {
     transform: scale(1.2);
 }
+
 
 .nav-links li a{
     color: white;
     text-decoration: none;
     font-size: 3vw;
+    transition: color 0.5s ease;
 }
-
+.nav-links li a:hover{
+    color: aqua;
+}
 
 
