@@ -1,0 +1,107 @@
+body {
+    background-color: lightgray;
+}
+
+.CV {
+    display: grid;
+    margin: 0 auto;
+    width: 800px;
+    height: 97vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    background-color: white;
+}
+
+/* Section title style */
+.bottom .left strong,
+.bottom .right strong {
+    padding-left: 10px;
+}
+
+.bottom .left strong {
+    font-size: 30px;
+}
+
+.bottom .right strong {
+    font-size: 45px;
+}
+
+/* Top of the CV, include profile picture and name */
+.top {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+.top header, #profile_picture {
+    display: flex;
+    align-items: center;
+}
+.top header {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-style: italic;
+    justify-content: left;
+    width: 450px;
+    font-size: 22px;
+}
+#profile_picture {
+    justify-content: center;
+}
+.top img {
+    width: 240px;
+    height: 37%;
+    position: absolute;
+    top: 30px;
+    box-shadow: 10px 10px 30px black;
+}
+
+/* Bottom of the CV, divide into 2 columns */
+.bottom {
+    grid-row: span 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    background-color: rgb(173, 173, 173);
+}
+
+/* Display type for bottom left and right */
+.bottom .left {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    padding: 10px 20px;
+    gap: 2px;
+}
+
+.bottom .right {
+    display: grid;
+    padding: 20px 0;
+    width: 450px;
+}
+
+.bottom .right img {
+    width: 35px;
+}
+
+.bottom .left section {
+    background-color: white;
+}
+
+.bottom .left ul {
+    padding: 2px 0 0 5px;
+    list-style-type: none;
+}
+
+/* Information section */
+.bottom #Information {
+    display: flex;
+    align-items: flex-end;
+    grid-row: span 2;
+}
+
+.bottom .left img {
+    width: 20px;
+}
+
+/* Education section */
+#education {
+    padding: 10px;
+}
