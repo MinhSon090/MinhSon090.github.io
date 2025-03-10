@@ -6,7 +6,7 @@ body {
     display: grid;
     margin: 0 auto;
     width: 800px;
-    height: 97vh;
+    height: 1000px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
     background-color: white;
@@ -30,7 +30,6 @@ body {
 .top {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
 }
 .top header, #profile_picture {
     display: flex;
@@ -48,7 +47,7 @@ body {
 }
 .top img {
     width: 240px;
-    height: 37%;
+    height: 325px;
     position: absolute;
     top: 30px;
     box-shadow: 10px 10px 30px black;
