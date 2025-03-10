@@ -30,6 +30,7 @@ body {
 .top {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 .top header, #profile_picture {
     display: flex;
@@ -47,7 +48,7 @@ body {
 }
 .top img {
     width: 240px;
-    height: 325px;
+    height: 360px;
     position: absolute;
     top: 30px;
     box-shadow: 10px 10px 30px black;
@@ -70,30 +71,30 @@ body {
     gap: 2px;
 }
 
+/* Bottom right */
 .bottom .right {
     display: grid;
     padding: 20px 0;
     width: 450px;
 }
-
 .bottom .right img {
     width: 35px;
 }
 
+/* Bottom left */
 .bottom .left section {
     background-color: white;
 }
-
 .bottom .left ul {
-    padding: 2px 0 0 5px;
+    padding: 2px 0 0 10px;
     list-style-type: none;
 }
 
 /* Information section */
-.bottom #Information {
+#Information {
     display: flex;
     align-items: flex-end;
-    grid-row: span 2;
+    grid-row: span 2 / span 2;
 }
 
 .bottom .left img {
@@ -104,3 +105,17 @@ body {
 #education {
     padding: 10px;
 }
+
+/* Experience and Education table*/
+#Experience table, #Education table{
+    width: 90%;
+    border-collapse: collapse;
+    border: 0.5px solid white;
+    font-size: 22px;
+}
+#Experience table td:nth-child(3),
+#Experience table td:nth-child(2) {
+    text-align: center;
+}
+
+
