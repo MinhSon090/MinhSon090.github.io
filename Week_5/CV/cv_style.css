@@ -5,11 +5,18 @@ body {
 .CV {
     display: grid;
     margin: 0 auto;
-    width: 800px;
+    width: 820px;
     height: 1000px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
     background-color: white;
+    /* shadow */
+    border-bottom: 2px solid #D9EAFD;
+    border-right: 2px solid #D9EAFD;
+    box-shadow:
+        #BCCCDC 15px 15px 5px,
+        #D9EAFD 30px 30px 5px,
+        #F8FAFC 45px 45px 5px;
 }
 
 /* Section title style */
@@ -108,10 +115,10 @@ body {
 
 /* Experience and Education table*/
 #Experience table, #Education table{
-    width: 90%;
+    width: 97%;
     border-collapse: collapse;
     border: 0.5px solid white;
-    font-size: 22px;
+    font-size: 20px;
 }
 #Experience table td:nth-child(3),
 #Experience table td:nth-child(2) {
