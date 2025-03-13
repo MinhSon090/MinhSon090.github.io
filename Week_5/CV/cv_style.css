@@ -1,24 +1,23 @@
 body {
     background-color: lightgray;
+    margin: 0;
 }
 
 .CV {
     display: grid;
     margin: 0 auto;
-    width: 820px;
-    height: 1000px;
+    width: 810px;
+    height: 900px;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     background-color: white;
-    /* shadow */
-    border-bottom: 2px solid #D9EAFD;
-    border-right: 2px solid #D9EAFD;
-    box-shadow:
-        #BCCCDC 15px 15px 5px,
-        #D9EAFD 30px 30px 5px,
-        #F8FAFC 45px 45px 5px;
 }
 
+/* blank grid on bottom left */
+.blank{
+    background: rgb(173, 173, 173);
+    margin: 70px 0;
+}
 /* Section title style */
 .bottom .left strong,
 .bottom .right strong {
@@ -46,16 +45,11 @@ body {
     font-size: 22px;
 }
 #name {
-    padding-top: 110px;
+    margin: 75px 0 0 0;
 }
-/* it's not working */
-/* ________________________________________ */
 #job{  
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    margin: 5px 0 20px 0;
 }
-/* ________________________________________ */
 #profile_picture {
     justify-content: center;
 }
@@ -69,7 +63,7 @@ body {
 
 /* Bottom of the CV, divide into 2 columns */
 .bottom {
-    grid-row: span 3;
+    height: 800px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
@@ -111,7 +105,7 @@ body {
 /* Information section */
 #Information ul {
     font-size: 20px;
-    padding: 100px 0 0 15px;
+    padding: 50px 0 0 15px;
 }
 #Information img {
     /* Icon */
