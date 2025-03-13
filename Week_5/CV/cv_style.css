@@ -23,15 +23,9 @@ body {
 .bottom .left strong,
 .bottom .right strong {
     padding-left: 10px;
+    font-size: 40px;
 }
 
-.bottom .left strong {
-    font-size: 30px;
-}
-
-.bottom .right strong {
-    font-size: 45px;
-}
 
 /* Top of the CV, include profile picture and name */
 .top {
@@ -44,12 +38,24 @@ body {
     align-items: center;
 }
 .top header {
+    display: grid;
     font-family: "Georgia", "Times New Roman", serif;
     font-style: italic;
     justify-content: left;
-    width: 450px;
+    width: 480px;
     font-size: 22px;
 }
+#name {
+    padding-top: 110px;
+}
+/* it's not working */
+/* ________________________________________ */
+#job{  
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+/* ________________________________________ */
 #profile_picture {
     justify-content: center;
 }
@@ -58,7 +64,7 @@ body {
     height: 360px;
     position: absolute;
     top: 30px;
-    box-shadow: 10px 10px 30px black;
+    box-shadow: 0 0 1px 4px rgb(173, 173, 173);
 }
 
 /* Bottom of the CV, divide into 2 columns */
@@ -69,43 +75,47 @@ body {
     gap: 8px;
     background-color: rgb(173, 173, 173);
 }
-
-/* Display type for bottom left and right */
-.bottom .left {
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    padding: 10px 20px;
-    gap: 2px;
+.bottom .right ul, 
+.bottom .left ul{
+    margin: 3px 0;
 }
 
 /* Bottom right */
 .bottom .right {
     display: grid;
-    padding: 20px 0;
-    width: 450px;
+    padding: 10px 0 0 0;
+    width: 480px;
+    font-size: 21px;
 }
 .bottom .right img {
     width: 35px;
 }
-
 /* Bottom left */
+.bottom .left {
+    display: grid;
+    padding: 10px 15px;
+    gap: 2px;
+}
 .bottom .left section {
     background-color: white;
 }
-.bottom .left ul {
-    padding: 2px 0 0 10px;
-    list-style-type: none;
+
+
+#Interests ul,
+#Languages ul,
+#References ul {
+    padding: 0 0 0 40px;
+    font-size: 20px;
 }
 
 /* Information section */
-#Information {
-    display: flex;
-    align-items: flex-end;
-    grid-row: span 2 / span 2;
+#Information ul {
+    font-size: 20px;
+    padding: 100px 0 0 15px;
 }
-
-.bottom .left img {
-    width: 20px;
+#Information img {
+    /* Icon */
+    width: 22px;
 }
 
 /* Education section */
@@ -113,16 +123,21 @@ body {
     padding: 10px;
 }
 
-/* Experience and Education table*/
-#Experience table, #Education table{
+/* Education table*/
+#Education table{
     width: 97%;
     border-collapse: collapse;
-    border: 0.5px solid white;
+    border: none;
     font-size: 20px;
+    
 }
-#Experience table td:nth-child(3),
-#Experience table td:nth-child(2) {
+#Education table th,
+#Education table td{
+    border: none;
+}
+#Education table td:nth-child(2){
     text-align: center;
 }
+
 
 
