@@ -1,0 +1,31 @@
+.color{
+    background: linear-gradient(45deg, red, pink, aqua);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#SID{
+    background-color: aqua;
+}
+
+.SC{
+    text-decoration: overline;
+}
+
+div.Descendant > p{
+    color: red;
+}
+div.Descendant ul {
+    color: blue;
+}
+
+.Adjacent_Sibling p + p{
+    color: green;
+}
+
+
+
+.font{
+    font-size: 60px;
+}
+
