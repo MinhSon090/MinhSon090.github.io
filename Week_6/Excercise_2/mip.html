@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mip_style.css">
     <title>Multi Input</title>
 </head>
 <body>
@@ -11,7 +12,17 @@
         <input type="color" name="color" placeholder="FavColor"><br>
         <input type="date" name="date" placeholder="Date"><br>
         <input type="email" name="email" placeholder="Email"><br>
-        <input type="range" name="range" placeholder="Range" min="0" max="200"><br>
+        <input type="range" name="range" placeholder="Range" min="0" max="200" value="0"><br>
+        <p>A</p>
+        <p id="scale">0</p>
+        <script>
+            const rangeInput = document.querySelector('input[name="range"]');
+            const scaleParagraph = document.getElementById('scale');
+
+            rangeInput.addEventListener('input', () => {
+                scaleParagraph.textContent = rangeInput.value;
+            });
+        </script>
     </form>
     <p>______________________________________________________________________</p>
     <form>
