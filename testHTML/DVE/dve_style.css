@@ -1,0 +1,45 @@
+body{
+    background: linear-gradient(195deg,red,pink,aqua);
+}
+.loading_icon_container{
+    display: grid;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    width: 200px;
+    height: auto;
+    aspect-ratio: 1/1;
+    z-index: -1;
+}
+.loading_icon_container div{
+    padding: 10px;
+}
+
+.first_layer,
+.second_layer,
+.third_layer,
+.fourth_layer,
+.fifth_layer,
+.sixth_layer,
+.seventh_layer,
+.eighth_layer,
+.ninth_layer,
+.tenth_layer{
+    border: 2.5vw solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: border_rotate 10s infinite;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+@keyframes border_rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
