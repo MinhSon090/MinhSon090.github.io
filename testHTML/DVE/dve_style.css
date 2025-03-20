@@ -1,45 +1,59 @@
-body{
-    background: linear-gradient(195deg,red,pink,aqua);
-}
+/* rotate loading icon */
 .loading_icon_container{
     display: grid;
     justify-content: center;
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    width: 200px;
-    height: auto;
-    aspect-ratio: 1/1;
-    z-index: -1;
+    padding: 50px;
 }
 .loading_icon_container div{
-    padding: 10px;
-}
-
-.first_layer,
-.second_layer,
-.third_layer,
-.fourth_layer,
-.fifth_layer,
-.sixth_layer,
-.seventh_layer,
-.eighth_layer,
-.ninth_layer,
-.tenth_layer{
-    border: 2.5vw solid rgba(255, 255, 255, 0.4);
+    padding: 5px;
+    border: 5px solid rgba(0, 0, 0, 0.4);
     border-radius: 50%;
-    animation: border_rotate 10s infinite;
+    animation: border_rotate 10s infinite linear;
     border-top-color: transparent;
     border-bottom-color: transparent;
 }
-
 @keyframes border_rotate {
     from {
         transform: rotate(0deg);
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+
+/* Dots loader */
+.dots_loader{
+    display: flex;
+    padding: 20px 0 0 0;
+    justify-self: center;
+    position: fixed;
+    gap: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.dots_loader p{
+    display: grid;
+    margin: 0;
+    padding: 10px; /* size of the dots */
+    background-color: red; /* color of the dots */
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate;
+}
+.dots_loader p:nth-child(2){
+    animation-delay: 0.2s;
+}
+.dots_loader p:nth-child(3){
+    animation-delay: 0.4s;
+}
+@keyframes bounce {
+    from {
+        transform: translateY(-20px);
     }
 }
