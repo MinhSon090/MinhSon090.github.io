@@ -2,3 +2,11 @@ model-viewer{
     width: 100%;
     height: 90%;
 }
+.description{
+    position: absolute;
+    top: 1%; left: 5%;
+    font-size: 20px;
+}
+.description p{
+    margin: 0;
+}
