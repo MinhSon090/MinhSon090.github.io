@@ -2,7 +2,7 @@
     --overlay-color-1: #ff0000;
     --overlay-color-2: #0000ff;
     --anim-duration: 1s;
-    --content:'Wellcome to my website';
+    --content:'Welcome to my website';
 }
 body{
     /* background-image: url('testHTML/AVE/Images/background/ab2.jpg');
@@ -77,23 +77,13 @@ body{
     aspect-ratio: 1/1;
     z-index: -1;
 }
-.loading_icon_container div{
-    padding: 10px;
-}
 
-.first_layer,
-.second_layer,
-.third_layer,
-.fourth_layer,
-.fifth_layer,
-.sixth_layer,
-.seventh_layer,
-.eighth_layer,
-.ninth_layer,
-.tenth_layer{
+
+.loading_icon_container div {
+    padding: 10px;
     border: 2.5vw solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
-    animation: border_rotate 10s infinite;
+    animation: border_rotate 25s infinite linear;
     border-top-color: transparent;
     border-bottom-color: transparent;
 }
