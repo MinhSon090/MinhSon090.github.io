@@ -3,6 +3,9 @@
 body{
     font-family: Roboto,sans-serif;
     background-color: #e2d7aa;
+    margin: 0 auto;
+    justify-content: center;
+    display: grid;
 }
 nav{
     text-align: center;
@@ -28,24 +31,48 @@ h1{
     margin: 15px 0;
 }
 .img-container{
-    text-align: center;
+    justify-self: center;
 }
 .img-container img{
     width: 1250px;
 }
 main{
     text-align: center;
-    margin-top: 50px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    column-gap: 20px;
+    margin-top: 20px;
+    /* grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); */
+    
 }
 main article{
-    width: 430px;
+    justify-self: center;
+    width: 405px;
     padding: 0 0;
 }
-main article img{
-    width: 400px;
+a{
+    text-decoration: none;
 }
-main article h2{
-    font-size: 30px;
+h2,h3{
+    margin: 5px 0;
+}
+main article img{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+main article p{
+    text-align: justify;
+    font-size: 24px;
+}
+main article p::first-letter {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+footer{
+    text-align: center;
+    margin: 20px 0;
 }
