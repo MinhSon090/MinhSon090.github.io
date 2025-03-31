@@ -1,0 +1,16 @@
+.text-hover-before:hover::before {
+    content: "> ";
+}
+
+/* Modal */
+.form-container {
+    perspective: 1000px;
+}
+.form {
+    backface-visibility: hidden;
+    transition: transform 0.6s;
+}
+.modal-backdrop{
+    z-index:0;
+ }
+ 

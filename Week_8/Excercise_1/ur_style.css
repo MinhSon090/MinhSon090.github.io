@@ -1,0 +1,21 @@
+.header{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px auto;
+}
+body{
+    background: #525255;
+}
+.container{
+    margin: 20px auto;
+}
+.reg{
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+.panel{
+    background: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
