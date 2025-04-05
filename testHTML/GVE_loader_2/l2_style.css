@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+    background-color: black;
+}
+.circle{
+    margin: 50px;
+    padding: 10px;
+    display: grid;
+    width: 300px;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 5em solid rgba(255, 255, 255, 1);
+}
+.circle > div{
+    width: 400px;
+    background-color: red;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
