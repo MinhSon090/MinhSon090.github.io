@@ -1,0 +1,10 @@
+body{
+    display: grid;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+}
+form{
+    float: right;
+    justify-content: center;
+}

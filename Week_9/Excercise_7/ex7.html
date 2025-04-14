@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ex7_style.css">
+    <title>New Account</title>
+</head>
+<body>
+    <form action="#">
+        <h1>Register New Account</h1>
+        <label for="username"><i>Username</i></label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password"><i>Password</i></label>
+        <input type="password" id="password" name="password"> <br>
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password"> 
+        <br>
+        <label for="gender"><i>Gender</i></label>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label>
+        <br>
+        <label for="phone"><i>Phone</i></label>
+        <input type="tel" id="phone" name="phone">
+        <br>
+        <label for="email"><i>Email</i></label>
+        <input type="email" id="email" name="email">
+        <br>
+        <label for="Fav"><i>Favourite</i></label>
+        <input type="checkbox" id="music" name="Fav" value="music">
+        <label for="music">Music</label>
+        <input type="checkbox" id="reading" name="Fav" value="reading">
+        <label for="reading">Reading</label>
+        <br>
+        <label for="picture"><i>Picture</i></label>
+        <input type="file" id="picture" name="picture" accept="image/*">
+        <br>
+        <label for="description"><i>Description</i></label>
+        <textarea id="description" name="description" rows="4" ></textarea>
+        <br>
+        <label for="education_level"><i>Education Level</i></label>
+        <select id="education_level" name="education_level">
+            <option value="high_school">High School</option>
+            <option value="bachelor">Bachelor's Degree</option>
+            <option value="master">Master's Degree</option>
+            <option value="phd">PhD</option>
+        </select>
+        <br>
+        <label for="language"><i>language</i></label>
+        <select id="language" name="language" multiple size="4">
+            <option value="english">English</option>
+            <option value="mandarin">Chinese</option>
+            <option value="hindi">Japanese</option>
+            <option value="spanish">Spanish</option>
+            <option value="french">French</option>
+            <option value="arabic">Arabic</option>
+            <option value="bengali">Vietnamese</option>
+            <option value="russian">Russian</option>
+            <option value="portuguese">Portuguese</option>
+            <option value="indonesian">Indonesian</option>
+        </select>
+        <br>
+
+        <button>Register</button>
+        <button>Reset</button>
+    </form>
+</body>
+</html>
