@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <td><label for="phone"><i>Phone</i></label></td>
-                <td><input type="tel" id="phone" name="phone"></td>
+                <td><input type="tel" id="phone" name="phone" placeholder="Optional"></td>
             </tr>
             <tr>
                 <td><label for="email"><i>Email</i></label></td>
@@ -101,7 +101,7 @@
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
 
-            if (username === "" || password === "" || confirmPassword === "" || email === "" || phone === "") {
+            if (username === "" || password === "" || confirmPassword === "" || email === "" ) {
                 alert("Please fill in all fields.");
                 return;
             }else if (password !== confirmPassword) {
