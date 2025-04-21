@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check NUmber</title>
+    <style>
+        body{display: grid;}
+        form{width: 390px;}
+        form>p{text-align: center;}
+    </style>
+</head>
+<body>
+    <form action="#">
+        <label for="number">Enter a number:</label>
+        <input type="text" id="number" name="number" required>
+        <button type="button" onclick="checknumber()" style="display: inline-block;" id="check_button">Check</button>
+        <button type="button" onclick="reset_input_and_output()" style="display: none;" id="reset_button">Reset</button>
+        <p id="result"></p>
+    </form>
+    <script>
+        // Global variables for buttons
+        var reset_button = document.getElementById("reset_button");
+        var check_button = document.getElementById("check_button");
+        var result = document.getElementById("result");
+        var number = document.getElementById("number");
+        // Function to check if the number is even or odd
+        function checknumber(){
+            var number_need_to_check = parseFloat(number.value);
+            if (isNaN(number_need_to_check)){
+                alert("Please enter a valid number.");
+                return;
+            } else if (number_need_to_check % 2 == 0) {
+                result.innerHTML = number_need_to_check + " is an <b>even</b> number.";
+                result.style.color = "blue";
+            } else {
+                result.innerHTML = number_need_to_check + " is an <b>odd</b> number.";
+                result.style.color = "red";
+            } 
+            // Hide the check button and show the reset button
+            reset_button.style.display = "inline-block";
+            check_button.style.display = "none";
+        }
+        // Function to reset the input and output fields
+        function reset_input_and_output() {
+            number.value = "";
+            result.innerHTML = "";
+            // Show the check button and hide the reset button
+            check_button.style.display = "inline-block";
+            reset_button.style.display = "none";
+        }
+    </script>
+</body>
+</html>
