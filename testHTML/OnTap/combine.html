@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ôn tập ISV2017</title>
+    <style>
+        /* CSS cơ bản cho bảng */
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Định dạng menu */
+        nav {
+            background-color: #333;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #4CAF50;
+        }
+        
+        /* Form cơ bản */
+        .form-container {
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        input[type="text"], 
+        input[type="email"], 
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Phần 1: Menu điều hướng -->
+    <nav id="mainNav">
+        <a href="#">Trang chủ</a> -
+        <a href="#">Sách &copy;</a> -
+        <a href="#">Tác giả &trade;</a> -
+        <a href="#">Liên hệ</a>
+    </nav>
+    <button onclick="toggleMenu()">Ẩn/Hiện Menu</button>
+
+    <!-- Phần 2: Bảng và nút tương tác -->
+    <h2>Bảng linh kiện máy tính &copy;</h2>
+    <table id="componentTable">
+        <tr>
+            <th>Tên linh kiện</th>
+            <th>Giá (VND)</th>
+            <th>Đánh giá &star;</th>
+        </tr>
+        <tr>
+            <td>CPU Intel&trade; Core i5</td>
+            <td>5000000</td>
+            <td>4.5/5</td>
+        </tr>
+        <tr>
+            <td>RAM DDR4 8GB</td>
+            <td>800000</td>
+            <td>4.0/5</td>
+        </tr>
+        <tr>
+            <td>Ổ cứng SSD 256GB</td>
+            <td>1200000</td>
+            <td>4.8/5</td>
+        </tr>
+    </table>
+    <button onclick="changeColor()">Đổi màu chữ</button>
+    <button onclick="sortTable()">Sắp xếp theo giá</button>
+
+    <!-- Phần 3: Form liên hệ -->
+    <div class="form-container">
+        <h3>Biểu mẫu liên hệ</h3>
+        <form onsubmit="return validateForm()">
+            <label>Họ tên:</label>
+            <input type="text" id="name">
+            
+            <label>Email:</label>
+            <input type="email" id="email">
+            
+            <label>Tin nhắn:</label>
+            <textarea id="message"></textarea>
+            
+            <input type="submit" value="Gửi">
+        </form>
+    </div>
+
+    <script>
+        // JavaScript cơ bản
+        let isRed = false;
+        
+        function changeColor() {
+            const table = document.getElementById("componentTable");
+            table.style.color = isRed ? "black" : "red";
+            isRed = !isRed;
+        }
+
+        function sortTable() {
+            const table = document.getElementById("componentTable");
+            const rows = Array.from(table.rows).slice(1);
+            rows.sort((a, b) => {
+                const priceA = parseInt(a.cells[1].innerText);
+                const priceB = parseInt(b.cells[1].innerText);
+                return priceA - priceB;
+            });
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        function toggleMenu() {
+            const nav = document.getElementById("mainNav");
+            nav.style.display = nav.style.display === "none" ? "block" : "none";
+        }
+
+        function validateForm() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            if (name === "" || email === "" || message === "") {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return false;
+            }
+            alert("Gửi thành công!");
+            return true;
+        }
+    </script>
+</body>
+</html>
