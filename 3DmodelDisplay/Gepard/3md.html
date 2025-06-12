@@ -38,48 +38,58 @@
       display: block;
     }
     .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 56px;
-      height: 56px;
+      position: fixed; /* Quan trọng: cố định toàn bộ trên viewport */
+      top: 0;
+      width: 20vw;
+      height: 100vh; /* Chiều cao bằng 100vh, đè lên cả footer */
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.2em;
       font-weight: bold;
       color: #555555;
-      background: rgba(0, 0, 0, 0.18);
-      border: 2.5px solid #0099ff;
-      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.00);
+      border: none;
+      border-radius: 0;
       cursor: pointer;
-      z-index: 2;
+      z-index: 1002; /* Lớn hơn video và footer */
       user-select: none;
-      transition: background 0.2s, color 0.2s, border-width 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px #0099ff22;
-      opacity: 0.95;
-    }
-    .nav-btn:active, .nav-btn.hold {
-      background: #ffffff;
-      color: #fff;
-      border-width: 3.5px;
-      box-shadow: 0 0 18px #0099ff66;
-      opacity: 1;
-    }
-    .nav-btn:hover {
-      background: #0099ff33;
-      color: #fff;
-      border-width: 3.5px;
-      box-shadow: 0 0 14px #0099ff88;
-      opacity: 1;
+      transition: 
+        border 0.2s,
+        color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+      box-shadow: none;
+      opacity: 0.1;
+      outline: none;
+      pointer-events: auto;
     }
     .nav-btn.left {
+      padding-right: 8em ;
       left: 2vw;
+      border-left: 0;
     }
     .nav-btn.right {
+      padding-left: 8em;
       right: 2vw;
+      border-right: 0;
     }
-
+    .nav-btn:hover{
+      opacity: 1;
+      color: #ffffff;
+    }
+    .nav-btn.left:hover, .nav-btn.left:focus {
+      border-left: 4px solid #0099ff;
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+    }
+    .nav-btn.right:hover, .nav-btn.right:focus {
+      border-right: 4px solid #0099ff;
+      border-left: none;
+      border-top: none;
+      border-bottom: none;
+    }
     .footer {
       height: 20vh;
       min-height: 120px;
@@ -120,7 +130,7 @@
       color: #1877f3;
       text-decoration: none;
       font-size: 1.1em;
-      transition: text-decoration 0.2s;
+      transition: text-decoration 0.2s, font-size 0.2s;
       text-align: center;
     }
     .facebook-link:hover {
