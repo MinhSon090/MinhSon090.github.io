@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>S's model</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+    }
+    #viewer {
+      width: 100%;
+      flex: 1 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      overflow: hidden;
+      background: #000000;
+      position: relative;
+    }
+    #viewer video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      background: #000000;
+      z-index: 1;
+      display: block;
+    }
+    .nav-btn {
+      position: fixed; /* Quan trọng: cố định toàn bộ trên viewport */
+      top: 0;
+      width: 20vw;
+      height: 100vh; /* Chiều cao bằng 100vh, đè lên cả footer */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2em;
+      font-weight: bold;
+      color: #555555;
+      background: rgba(0, 0, 0, 0.00);
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      z-index: 1002; /* Lớn hơn video và footer */
+      user-select: none;
+      transition: 
+        border 0.2s,
+        color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+      box-shadow: none;
+      opacity: 0.1;
+      outline: none;
+      pointer-events: auto;
+    }
+    .nav-btn.left {
+      padding-right: 8em ;
+      left: 2vw;
+      border-left: 0;
+    }
+    .nav-btn.right {
+      padding-left: 8em;
+      right: 2vw;
+      border-right: 0;
+    }
+    .nav-btn:hover{
+      opacity: 1;
+      color: #ffffff;
+    }
+    .nav-btn.left:hover, .nav-btn.left:focus {
+      border-left: 4px solid #0099ff;
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+    }
+    .nav-btn.right:hover, .nav-btn.right:focus {
+      border-right: 4px solid #0099ff;
+      border-left: none;
+      border-top: none;
+      border-bottom: none;
+    }
+    .footer {
+      height: 20vh;
+      min-height: 120px;
+      max-height: 250px;
+      width: 90%;
+      margin: 0 auto 2vh auto;
+      border: 2.5px solid #0099ff;
+      border-radius: 25px;
+      background: #fff;
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .footer-left {
+      flex: 1;
+      padding-left: 20px;
+    }
+    .footer-left p{
+      margin: 2px 0 2px 0;
+    }
+    .footer-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+    .author {
+        font-size: 1.5em;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .facebook-link {
+      color: #1877f3;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: text-decoration 0.2s, font-size 0.2s;
+      text-align: center;
+    }
+    .facebook-link:hover {
+        font-size: 1.5em;
+    }
+    @media (max-width: 600px) {
+      .nav-btn {
+        font-size: 1.4em;
+        min-width: 36px;
+        min-height: 36px;
+        width: 36px;
+        height: 36px;
+      }
+      .footer {
+        flex-direction: column;
+        height: auto;
+        min-height: 120px;
+      }
+      .footer-right, .footer-left {
+        align-items: flex-start;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer">
+    <button class="nav-btn left" id="btnPrev">&#9664;</button>
+    <video id="scrubVideo" src="0001-0500.mkv"></video>
+    <button class="nav-btn right" id="btnNext">&#9654;</button>
+  </div>
+  <div class="footer">
+    <div class="footer-left">
+      <!-- Ghi chú về model ở đây -->
+      <h2>2С25 «Спрут-СД» (2S25 Sprut-SD)</h2>
+      <p>2s25 là pháo chống tăng tự hành được thiết kế dựa trên khung gầm BMD-3.</p>
+      <p></p>
+    </div>
+    <div class="footer-right">
+      <div class="author">Nguyễn Minh Sơn</div>
+      <a class="facebook-link" href="" target="_blank">Facebook post</a>
+      <a class="facebook-link" href="https://www.facebook.com/SYNA.1147/" target="_blank">Facebook</a>
+    </div>
+  </div>
+  <script>
+    const video = document.getElementById('scrubVideo');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const FPS = 25; // 25fps
+    let videoDuration = 1;
+    let totalFrames = 500;
+    let frameIndex = 0;
+    let isHolding = false;
+    let holdTimer = null;
+    let direction = 0;
+    let resumeTimer = null;
+    let slowDownTimer = null;
+    let slowDownSpeed = 0;
+    let slowDownFrame = 0;
+    let lastHoldDirection = 0;
+
+    // Helper: nhảy đến frame
+    function seekToFrame(idx) {
+      idx = ((idx % totalFrames) + totalFrames) % totalFrames; // vòng qua lại
+      frameIndex = idx;
+      video.currentTime = frameIndex / FPS;
+    }
+
+    // Khi giữ nút, lặp liên tục 24fps
+    function holdStep() {
+      if (!isHolding) return;
+      frameIndex += direction;
+      seekToFrame(frameIndex);
+      holdTimer = setTimeout(holdStep, 1000 / FPS);
+    }
+
+    // Khi nhả nút, chậm dần rồi dừng hẳn sau 1s
+    function slowDownRelease(lastDir) {
+      let slowdownStart = Date.now();
+      let slowdownDuration = 250; // 0.25s
+      let initialSpeed = FPS;
+      function step() {
+        let now = Date.now();
+        let t = (now - slowdownStart) / slowdownDuration;
+        if (t >= 1) return;
+        let speed = initialSpeed * (1 - t);
+        if (speed < 1) return;
+        frameIndex += lastDir;
+        seekToFrame(frameIndex);
+        slowDownTimer = setTimeout(step, 1000 / speed);
+      }
+      step();
+    }
+
+    function handleHold(dir) {
+      if (isHolding) return;
+      isHolding = true;
+      direction = dir;
+      lastHoldDirection = dir;
+      if (holdTimer) clearTimeout(holdTimer);
+      holdStep();
+      pauseVideoForManual();
+    }
+    function handleRelease() {
+      if (!isHolding) return;
+      isHolding = false;
+      if (holdTimer) clearTimeout(holdTimer);
+      slowDownRelease(lastHoldDirection);
+      autoResumeVideo();
+    }
+
+    // Play video lại sau 5s không bấm nút
+    // function autoResumeVideo() {
+    //   if (resumeTimer) clearTimeout(resumeTimer);
+    //   resumeTimer = setTimeout(() => playVideoIfNotHolding(), 5000);
+    // }
+    // function playVideoIfNotHolding() {
+    //   if (!isHolding) {
+    //     video.play();
+    //   }
+    // }
+    // function pauseVideoForManual() {
+    //   video.pause();
+    //   if (resumeTimer) clearTimeout(resumeTimer);
+    // }
+
+    // Nút trái
+    btnPrev.addEventListener('mousedown', () => {
+      btnPrev.classList.add('hold');
+      handleHold(-1);
+    });
+    btnPrev.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      btnPrev.classList.add('hold');
+      handleHold(-1);
+    });
+    ['mouseup','mouseleave','touchend'].forEach(ev=>{
+      btnPrev.addEventListener(ev, () => {
+        btnPrev.classList.remove('hold');
+        handleRelease();
+      });
+    });
+    // Nút phải
+    btnNext.addEventListener('mousedown', () => {
+      btnNext.classList.add('hold');
+      handleHold(1);
+    });
+    btnNext.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      btnNext.classList.add('hold');
+      handleHold(1);
+    });
+    ['mouseup','mouseleave','touchend'].forEach(ev=>{
+      btnNext.addEventListener(ev, () => {
+        btnNext.classList.remove('hold');
+        handleRelease();
+      });
+    });
+
+    // Dừng video khi bấm nút
+    [btnPrev, btnNext].forEach(btn => {
+      btn.addEventListener('mousedown', pauseVideoForManual);
+      btn.addEventListener('touchstart', pauseVideoForManual);
+    });
+
+    // Khi video tự play, cập nhật frameIndex
+    video.addEventListener('loadedmetadata', () => {
+      videoDuration = video.duration;
+      totalFrames = Math.floor(videoDuration * FPS);
+      frameIndex = 0;
+      video.currentTime = 0;
+      video.play();
+    });
+    video.addEventListener('timeupdate', () => {
+      if (!isHolding) {
+        frameIndex = Math.round(video.currentTime * FPS);
+        // NẾU tới frame cuối thì phát lại từ đầu
+        if (frameIndex >= totalFrames - 1) {
+          video.currentTime = 0;
+          frameIndex = 0;
+        }
+      }
+    });
+
+    // Đảm bảo video không play khi giữ nút
+    video.addEventListener('play', () => {
+      if (isHolding) video.pause();
+    });
+
+    // Khi click lên video thì dừng/phát
+    video.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  </script>
+</body>
+</html>
