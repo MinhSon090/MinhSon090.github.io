@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hola Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <img src="images/4.jpg" class="bg-image" alt="Background Image">
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo">
+      <span>HOLA HOME</span>
+    </div>
+    <nav>
+      <a href="#">Trang chủ</a>
+      <a href="#">Liên hệ</a>
+      <a href="#">Lịch sử tìm kiếm</a>
+    </nav>
+    <div class="right-menu">
+      <a href="#"> Mục yêu thích</a>
+      <a href="#">Đăng nhập</a>
+    </div>
+  </header>
+
+  <div class="login">
+    <!-- Login Popup -->
+    <div id="login-popup-overlay" class="login-popup-overlay" style="display:none"></div>
+    <div id="login-popup" class="login-popup" style="display:none">
+      <span class="login-close">&times;</span>
+      <form class="login-form" autocomplete="off">
+        <label>Email or Username <span>*</span></label>
+        <input type="text" id="login-username" placeholder=" " required>
+        <div class="login-msg" id="login-username-msg">Email is required</div>
+
+        <label>Password <span>*</span></label>
+        <input type="password" id="login-password" placeholder=" " required>
+        <div class="login-msg" id="login-password-msg">Password is required</div>
+
+        <div class="login-row">
+          <label class="remember-me">
+            <input type="checkbox" id="login-remember">
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+          <a href="#" class="login-forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="login-btn-main">Log in</button>
+
+        <div class="login-divider"></div>
+
+        <div class="login-socials">
+          <button type="button" class="login-btn-google"><img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="G"> Google</button>
+          <button type="button" class="login-btn-facebook"><img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="F"> Facebook</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Nội dung chính -->
+  <main>
+    <!-- <h1><img src="house-64.png" class="house_icon">HOLA HOME</h1> -->
+    <h1><img src="logo.png" class="house_icon"></h1>
+    <div class="search-box">
+      <!-- Loại hình -->
+      <select>
+        <option disabled selected>Loại hình</option>
+        <option selected>Tất cả</option>
+        <option>Nhà trọ</option>
+        <option>Ký túc xá</option>
+      </select>
+
+      <!-- Khu vực -->
+      <select>
+        <option disabled selected>Khu vực</option>
+        <option selected>Tất cả</option>
+        <option>Xã Tiến Xuân</option>
+        <option>Xã Bình Yên</option>
+        <option>Xã Hạ Bằng</option>
+        <option>Xã Tân Xã</option>
+      </select>
+
+      <!-- Ô tìm kiếm -->
+      <input type="text" placeholder="Tìm theo tiêu đề, địa chỉ...">
+
+      <!-- Sắp xếp -->
+<select id="sapXepGia">
+  <option disabled selected>Sắp xếp giá</option>
+  <option selected >Mặc định</option>
+  <option>Giá tăng dần</option>
+  <option>Giá giảm dần</option>
+</select>
+
+      <!-- Nút bấm -->
+      <button class="btn-search">Tìm</button>
+      <button class="btn-clear">Xóa</button>
+    </div>
+
+    <div class="ct">
+      <!-- Nhà trọ
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 1">
+        <h3>Nhà trọ 1</h3>
+        <p>Địa chỉ: Xã Tiến Xuân</p>
+        <p>Giá: 1,500,000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 2">
+        <h3>Nhà trọ 2</h3>
+        <p>Địa chỉ: Xã Bình Yên</p>
+        <p>Giá: 1,500,000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 3">
+        <h3>Nhà trọ 3</h3>
+        <p>Địa chỉ: Xã Hạ Bằng</p>
+        <p>Giá: 2,500,000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 4">
+        <h3>Nhà trọ 4</h3>
+        <p>Địa chỉ: Xã Tân Xã</p>
+        <p>Giá: 1,800,000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 5">
+        <h3>Nhà trọ 5</h3>
+        <p>Địa chỉ: Xã Tiến Xuân</p>
+        <p>Giá: 2,200,000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 6">
+        <h3>Hoàng Khánh Luxury</h3>
+        <p>Địa chỉ: Xã Thạch Hòa</p>
+        <p>Giá: 2.000.000 VND/tháng</p>
+      </div>
+      <div class="property-card-ntro">
+        <img src="https://via.placeholder.com/300x200" alt="Nhà trọ 7">
+        <h3>Nhà trọ cô Thắm</h3>
+        <p>Địa chỉ: Xã Bình Yên</p>
+        <p>Giá: 1,700,000 VND/tháng</p>
+      </div>
+      Ký túc xá 
+      <div class="property-card-ktx">
+        <img src="images/nk.jpg" alt="Ký túc xá 1">
+        <h3>Nhà khách Đại học Quốc Gia</h3>
+        <p>Địa chỉ: Xã Tiến Xuân</p>
+      </div>
+      <div class="property-card-ktx">
+        <img src="images/vju.jpg" alt="Ký túc xá 2">
+        <h3>QHN-04</h3>
+        <p>Địa chỉ: Xã Bình Yên</p>
+      </div>
+      <div class="property-card-ktx">
+        <img src="images/bc.jpg" alt="Ký túc xá 3">
+        <h3>Ký túc xá Đại học Quốc Gia khu B&C</h3>
+        <p>Địa chỉ: Xã Tân Xã</p>
+      </div> -->
+    </div>
+  </main>
+    <!-- Modal -->
+  <div id="propertyModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>   <!-- thêm dòng này -->
+    <div class="modal-body">
+      <img id="modal-img" src="" alt="">
+      <div class="modal-thumbnails" id="modal-thumbnails"></div>
+      <h3 id="modal-title"></h3>
+      <p id="modal-address"></p>
+      <p id="modal-price"></p>
+      <p id="modal-description"></p>
+    </div>
+  </div>
+</div>
+  <script src="script.js"></script>
+</body>
+</html>
