@@ -150,10 +150,13 @@ document.querySelector(".btn-search").addEventListener("click", () => {
     let container = document.querySelector(".ct");
     visibleCards.forEach(card => container.appendChild(card));
   } else if (sapXepGia === "Mặc định") {
-    // render lại thứ tự ban đầu theo DOM
+    // render lại thứ tự ban đầu theo data.json
     let container = document.querySelector(".ct");
-    cards.forEach(card => {
-      if (card.style.display === "block") {
+    // Lấy danh sách id theo thứ tự data.json
+    let ids = propertyData.map(item => item.id);
+    ids.forEach(id => {
+      let card = cards.find(c => c.id === id && c.style.display === "block");
+      if (card) {
         container.appendChild(card);
       }
     });
