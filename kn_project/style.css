@@ -222,14 +222,14 @@ main h1 {
   height: 650px; /* Set a fixed height */
   object-fit: cover; /* Ensure image covers the area */
   border-radius: 6px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 /* Them anh cho modal */
 .modal-thumbnails {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin: 16px 0 12px 0;
+  margin: 0 0 12px 0;
 }
 .modal-thumbnails img {
   width: 64px;
@@ -237,7 +237,7 @@ main h1 {
   object-fit: cover;
   border-radius: 5px;
   cursor: pointer;
-  filter: blur(1px) grayscale(0.5) brightness(0.8);
+  filter: blur(0.8px) grayscale(0.5) brightness(0.8);
   opacity: 0.7;
   transition: filter 0.2s, opacity 0.2s, border 0.2s;
   border: 2px solid transparent;
