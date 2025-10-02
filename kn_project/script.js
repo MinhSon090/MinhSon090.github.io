@@ -279,3 +279,48 @@ function closeLoginPopup() {
   document.getElementById('login-popup').style.display = 'none';
 }
 
+// move-on-scroll
+window.addEventListener('scroll', function() {
+  const scrollTop = window.scrollY;
+  const customHeight = 500; // <-- Điền số thủ công (px) ở đây
+  const percent = customHeight ? (scrollTop / customHeight) : 0; // từ 0 đến 1
+
+  const minMargin = 0;   // vh nhỏ nhất khi scroll hết
+  const maxMargin = 22;  // vh lớn nhất khi ở đầu trang
+
+  const newMargin = maxMargin - (maxMargin - minMargin) * Math.min(percent, 1); // tránh vượt quá
+
+  document.querySelectorAll('.move-on-scroll').forEach(el => {
+    el.style.marginTop = `${newMargin}vh`;
+    el.style.marginBottom = `${newMargin}vh`;
+  });
+});
+
+// snap to snap-target at first scroll and snap back to top when scroll back to top
+let hasSnapped = false;
+let isProgrammaticScroll = false;
+window.addEventListener('scroll', function() {
+  if (isProgrammaticScroll) return;
+  const scrollTop = window.scrollY;
+  const moveEl = document.querySelector('.move-on-scroll');
+  const snapTarget = document.querySelector('.snap-target');
+  if (!moveEl || !snapTarget) return;
+
+  // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
+  const moveRect = moveEl.getBoundingClientRect();
+  const moveHeight = moveRect.height;
+  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight * 0.7;
+
+  if (scrollTop > 50 && !hasSnapped) {
+    isProgrammaticScroll = true;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+    setTimeout(() => { isProgrammaticScroll = false; }, 500);
+    hasSnapped = true;
+  } else if (scrollTop < targetY && hasSnapped) {
+    isProgrammaticScroll = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { isProgrammaticScroll = false; }, 500);
+    hasSnapped = false;
+  }
+});
+// Thêm class "move-on-scroll" vào phần tử cần hiệu ứng

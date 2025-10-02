@@ -88,9 +88,13 @@ main {
 }
 
 main h1 {
-  margin: 150px 0;
   font-size: 90px;
   font-weight: bold;
+}
+.move-on-scroll {
+  margin-top: 22vh;
+  margin-bottom: 22vh;
+  transition: margin 0.1s;
 }
 .house_icon{
   width: 35%;
@@ -140,6 +144,7 @@ main h1 {
   margin: 5px auto;
   padding: 20px 10px;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   background-color: white;
   border-radius: 10px;
