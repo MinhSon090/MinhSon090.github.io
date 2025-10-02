@@ -67,11 +67,12 @@ nav a:hover {
 }
 
 .right-menu {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
   align-items: center;
 }
 .right-menu a {
-  margin-left: 15px;
+  margin-left: 25px;
   text-decoration: none;
   color: black;
 }
@@ -263,35 +264,30 @@ main h1 {
 
 /* Login form */
 /* Overlay cho login popup */
-.login-popup-overlay {
-  position: fixed;
-  z-index: 998;
-  inset: 0;
-  background: rgba(0,0,0,0.14);
-  transition: opacity 0.2s;
-}
-
-/* Popup chính */
 .login-popup {
   position: fixed;
   top: 32px;
-  right: 32px;
+  right: 0;
   width: 350px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 32px rgba(0,0,0,0.14);
-  z-index: 1003;
+  border-radius: 0 0 0 12px;
+  /* box-shadow: 0 10px 32px rgba(0,0,0,0.14); */
+  z-index: 100;
+  margin: 18px 0 0 0;
   padding: 0 0 18px 0;
-  animation: loginpop 0.2s;
+  animation: loginpop 0.22s;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-@keyframes loginpop {
-  from{ opacity:0; transform: translateY(-18px) scale(.98);}
-  to  { opacity:1; transform: none;}
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
+@keyframes loginpop {
+  from{ opacity:0; transform: translateY(-48px);}
+  to  { opacity:1; transform: none;}
+}
 .login-close {
   position: absolute;
   top: 14px;
@@ -303,6 +299,7 @@ main h1 {
   transition: color 0.2s;
 }
 .login-close:hover { color: #e74c3c; }
+/* ... giữ nguyên CSS form bên trên ... */
 
 .login-form {
   padding: 15px 15px 5px 15px;
@@ -406,7 +403,8 @@ main h1 {
   justify-content: space-between;
 }
 .login-btn-google,
-.login-btn-facebook {
+.login-btn-facebook,
+.login-btn-vnu {
   flex: 1;
   display: flex;
   align-items: center;

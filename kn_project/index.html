@@ -20,44 +20,37 @@
       <a href="#">Lịch sử tìm kiếm</a>
     </nav>
     <div class="right-menu">
-      <a href="#"> Mục yêu thích</a>
+      <a href="#">Mục yêu thích</a>
       <a href="#">Đăng nhập</a>
     </div>
   </header>
 
-  <div class="login">
-    <!-- Login Popup -->
-    <div id="login-popup-overlay" class="login-popup-overlay" style="display:none"></div>
-    <div id="login-popup" class="login-popup" style="display:none">
-      <span class="login-close">&times;</span>
-      <form class="login-form" autocomplete="off">
-        <label>Email or Username <span>*</span></label>
-        <input type="text" id="login-username" placeholder=" " required>
-        <div class="login-msg" id="login-username-msg">Email is required</div>
-
-        <label>Password <span>*</span></label>
-        <input type="password" id="login-password" placeholder=" " required>
-        <div class="login-msg" id="login-password-msg">Password is required</div>
-
-        <div class="login-row">
-          <label class="remember-me">
-            <input type="checkbox" id="login-remember">
-            <span class="checkmark"></span>
-            Remember me
-          </label>
-          <a href="#" class="login-forgot">Forgot password?</a>
-        </div>
-
-        <button type="submit" class="login-btn-main">Log in</button>
-
-        <div class="login-divider"></div>
-
-        <div class="login-socials">
-          <button type="button" class="login-btn-google"><img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="G"> Google</button>
-          <button type="button" class="login-btn-facebook"><img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="F"> Facebook</button>
-        </div>
-      </form>
-    </div>
+  <!-- Popup đăng nhập -->
+  <div id="login-popup" class="login-popup" style="display:none">
+    <span class="login-close">&times;</span>
+    <form class="login-form" autocomplete="off">
+      <label>Email or Username <span>*</span></label>
+      <input type="text" id="login-username" placeholder=" " required>
+      <div class="login-msg" id="login-username-msg">Email is required</div>
+      <label>Password <span>*</span></label>
+      <input type="password" id="login-password" placeholder=" " required>
+      <div class="login-msg" id="login-password-msg">Password is required</div>
+      <div class="login-row">
+        <label class="remember-me">
+          <input type="checkbox" id="login-remember">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="login-forgot">Forgot password?</a>
+      </div>
+      <button type="submit" class="login-btn-main">Log in</button>
+      <div class="login-divider"></div>
+      <div class="login-socials">
+        <button type="button" class="login-btn-google"><img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="G"></button>
+        <button type="button" class="login-btn-facebook"><img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="F"></button>
+        <button type="button" class="login-btn-vnu"><img src="" alt="A"></button>
+      </div>
+    </form>
   </div>
 
   <!-- Nội dung chính -->
