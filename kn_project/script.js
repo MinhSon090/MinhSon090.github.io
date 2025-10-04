@@ -1,7 +1,7 @@
 document.querySelector(".btn-search").addEventListener("click", () => {
   // lấy giá trị dropdown
-  const loaiHinh = document.querySelectorAll(".search-box select")[0].value.trim();
-  const khuVuc   = document.querySelectorAll(".search-box select")[1].value.trim();
+  const loaiHinh = document.getElementById("filter-type").value.trim();
+  const khuVuc   = document.getElementById("filter-area").value.trim();
   const keyword  = document.querySelector(".search-box input").value.trim().toLowerCase();
 
   // duyệt qua tất cả card
@@ -64,7 +64,7 @@ cards.forEach(card => container.appendChild(card));
 });
 
 // nút Xóa: reset input & hiện lại tất cả
-document.querySelector(".btn-clear").addEventListener("click", () => {
+  document.querySelector(".btn-clear").addEventListener("click", () => {
   document.querySelectorAll(".search-box input").forEach(input => input.value = "");
   document.querySelectorAll(".search-box select").forEach(select => select.selectedIndex = 1);
 
@@ -227,10 +227,25 @@ function attachCardEvents() {
         modalImg.src = images[0] || "";
         modalImg.alt = item.title;
 
-        modalTitle.innerText = item.title;
-        modalAddress.innerText = item.address;
-        modalPrice.innerText = item.price;
-        modalDesc.innerText = "Mô tả chi tiết: " + item.description;
+        modalTitle.innerHTML = item.title;
+        modalAddress.innerHTML = item.address;
+        modalPrice.innerHTML = item.price;
+
+        // --- Xử lý description (nếu là txt thì fetch, nếu là html thì render luôn) ---
+        // Nếu là đường dẫn txt, fetch nội dung và render
+        if (item.description && typeof item.description === 'string' && item.description.endsWith('.txt')) {
+          fetch(item.description)
+            .then(res => res.text())
+            .then(text => {
+              modalDesc.innerHTML = text; // cho phép render HTML từ file txt
+            })
+            .catch(() => {
+              modalDesc.innerText = "Không thể tải mô tả.";
+            });
+        } else {
+          // Nếu là html hoặc text thì render bằng innerHTML
+          modalDesc.innerHTML = item.description ? item.description : "Không có mô tả";
+        }
 
         // Hiển thị thumbnail
         modalThumbnails.innerHTML = "";
@@ -309,7 +324,7 @@ window.addEventListener('scroll', function() {
   // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
   const moveRect = moveEl.getBoundingClientRect();
   const moveHeight = moveRect.height;
-  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight * 0.7;
+  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 160;
 
   if (scrollTop > 50 && !hasSnapped) {
     isProgrammaticScroll = true;

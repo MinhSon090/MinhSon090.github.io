@@ -3,35 +3,35 @@
     "id": "ntro1",
     "loai": "Nhà trọ",
     "title": "Nhà trọ 1",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,500,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
     "img": ["images/ntro1/phong1.jpg","images/ntro1/phong2.jpg","images/ntro1/wc.jpg"],
-    "description": "Phòng rộng 20m2, gần bến xe bus, có wifi miễn phí."
+    "description": "images/test_des.txt"
   },
   {
     "id": "ntro2",
     "loai": "Nhà trọ",
-    "title": "Nhà trọ 2",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,500,000 VND/tháng",
-    "img": ["images/ntro2/phong1.jpg","images/ntro2/phong2.jpg","images/ntro2/wc.jpg"],
-    "description": "Phòng thoáng mát, có ban công, gần chợ và trường học."
+    "title": "Nhà trọ Trung Hiếu",
+    "address": "<strong>Địa chỉ:</strong> Thôn 3, xã Hoà Lạc ( xã Thạch Hoà cũ) ( Cách trường FPT, VNU, HVTC ~ 800m)",
+    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
+    "img": ["images/nha_tro_trung_hieu/1.jpg","images/nha_tro_trung_hieu/2.jpg","images/nha_tro_trung_hieu/3.jpg","images/nha_tro_trung_hieu/4.jpg","images/nha_tro_trung_hieu/5.jpg","images/nha_tro_trung_hieu/6.jpg"],
+    "description": "images/nha_tro_trung_hieu/des.txt"
   },
   {
     "id": "ntro3",
     "loai": "Nhà trọ",
-    "title": "Nhà trọ 3",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,500,000 VND/tháng",
-    "img": ["images/ntro3/phong1.jpg","images/ntro3/phong2.jpg"],
-    "description": "Phòng rộng 18m2, đầy đủ nội thất cơ bản, có chỗ để xe."
+    "title": "Trọ Thôn 1",
+    "address": "<strong>Địa chỉ:</strong> thôn1, Thạch Hòa (gần đường đôi - gần Mixue Phú Cát)",
+    "price": "<strong>Giá:</strong> 2,000,000 VND/tháng",
+    "img": ["images/nha_tro_thon_1/1.jpg","images/nha_tro_thon_1/2.jpg","images/nha_tro_thon_1/3.jpg","images/nha_tro_thon_1/4.jpg"],
+    "description": "images/nha_tro_thon_1/des.txt"
   },
   {
     "id": "ntro4",
     "loai": "Nhà trọ",
     "title": "Nhà trọ 4",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,500,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
     "img": ["images/ntro4/phong1.jpg","images/ntro4/phong2.jpg","images/ntro4/wc.jpg"],
     "description": "Phòng sạch sẽ, an ninh, giờ giấc tự do."
   },
@@ -39,8 +39,8 @@
     "id": "ntro5",
     "loai": "Nhà trọ",
     "title": "Nhà trọ 5",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,500,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
     "img": ["images/ntro5/phong1.jpg","images/ntro5/phong2.jpg"],
     "description": "Phòng rộng 22m2, có điều hòa, tủ lạnh, gần siêu thị mini."
   },
@@ -48,8 +48,8 @@
     "id": "ntro6",
     "loai": "Nhà trọ",
     "title": "Hoàng Khánh Luxury",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 2,500,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Thôn 5, Thạch Hòa, Thạch Thất, Hà Nội",
+    "price": "<strong>Giá:</strong> 2,500,000 VND/tháng",
     "img": ["images/hkl/baoquat.webp","images/hkl/ocean.webp","images/hkl/phong1.webp","images/hkl/phong2.webp","images/hkl/santhuong.webp"],
     "description": "Phòng rộng 27m2, thiết kế hiện đại, có sân thượng và view đẹp."
   },
@@ -57,8 +57,8 @@
     "id": "ntro7",
     "loai": "Nhà trọ",
     "title": "Nhà trọ cô Thắm",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 10,500,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 10,500,000 VND/tháng",
     "img": ["images/ntro7/phong1.jpg","images/ntro7/phong2.jpg","images/ntro7/wc.jpg"],
     "description": "Phòng rộng 35m2, đầy đủ nội thất cao cấp, phù hợp gia đình nhỏ."
   },
@@ -66,8 +66,8 @@
     "id": "ktx1",
     "loai": "Ký túc xá",
     "title": "Nhà khách Đại học Quốc Gia",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 900,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 900,000 VND/tháng",
     "img": ["images/nk.jpg","images/nkhach/sanh.jpg","images/nkhach/phong.jpg","images/nkhach/gochoctap.jpg","images/nkhach/wc.jpg"],
     "description": "Phòng ký túc xá 4 người, có máy lạnh, bảo vệ 24/7."
   },
@@ -75,8 +75,8 @@
     "id": "ktx2",
     "loai": "Ký túc xá",
     "title": "QHN-04",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 900,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 900,000 VND/tháng",
     "img": ["images/vju.jpg","images/QHN04/phong.jpg","images/QHN04/nhaan.jpg","images/QHN04/canteen.jpg","images/QHN04/anh4.png"],
     "description": "Phòng ký túc xá 6 người, có căn tin và khu học tập chung."
   },
@@ -84,8 +84,8 @@
     "id": "ktx3",
     "loai": "Ký túc xá",
     "title": "Ký túc xá Đại học Quốc Gia khu B&C",
-    "address": "Địa chỉ: Xã Tiến Xuân",
-    "price": "Giá: 1,000,000 VND/tháng",
+    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
+    "price": "<strong>Giá:</strong> 1,000,000 VND/tháng",
     "img": ["images/bc.jpg","images/KTXBC/phong.jpg","images/KTXBC/sankhau.jpg","images/KTXBC/hanhlang.jpg"],
     "description": "Phòng ký túc xá 8 người, có không gian sinh hoạt cộng đồng rộng."
   }

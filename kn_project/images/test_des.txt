@@ -1,0 +1,13 @@
+<p>1. Customer Segments (Ph&acirc;n kh&uacute;c kh&aacute;ch h&agrave;ng)</p>
+    <ul>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>H&agrave;nh kh&aacute;ch phổ th&ocirc;ng, nhạy cảm về gi&aacute; (sinh vi&ecirc;n, c&ocirc;ng nh&acirc;n, người lao động, gia đ&igrave;nh).&nbsp;</span></li>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>Kh&aacute;ch du lịch trong nước v&agrave; quốc tế t&igrave;m chuyến bay gi&aacute; rẻ.&nbsp;</span></li>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>Doanh nghiệp nhỏ v&agrave; vừa c&oacute; nhu cầu đi c&ocirc;ng t&aacute;c tiết kiệm chi ph&iacute;.&nbsp;</span></li>
+    </ul>
+    <p>2. Value Propositions (Gi&aacute; trị cung cấp)</p>
+    <ul>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>Gi&aacute; v&eacute; rẻ, khuyến m&atilde;i thường xuy&ecirc;n (v&eacute; 0 đồng, v&eacute; giảm gi&aacute;).&nbsp;</span></li>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>Mạng lưới đường bay rộng trong nước v&agrave; quốc tế.&nbsp;</span></li>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>T&ugrave;y chọn dịch vụ linh hoạt: h&agrave;nh l&yacute;, suất ăn, chỗ ngồi.&nbsp;</span></li>
+        <li><span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span>Trải nghiệm &ldquo;Bay l&agrave; th&iacute;ch ngay&rdquo; với h&igrave;nh ảnh trẻ trung, năng động.&nbsp;</span></li>
+    </ul>

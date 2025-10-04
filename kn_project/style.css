@@ -137,14 +137,17 @@ main h1 {
 }
 
 
+
 /* content */
 .ct{
   width: 80%;
   display: grid;
   margin: 5px auto;
   padding: 20px 10px;
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  min-height: calc(3 * 250px); /* Adjust 250px to your card min height if needed */
   gap: 5px;
   background-color: white;
   border-radius: 10px;
