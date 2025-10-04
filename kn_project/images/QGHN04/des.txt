@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bảng lệ phí KTX</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 800px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14pt;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 6px 10px;
+    }
+    th {
+      text-align: center;
+      font-weight: bold;
+    }
+    td {
+      text-align: center;
+    }
+    /* Dòng "Ký túc xá QGHN04" */
+    .sub-header {
+      font-weight: bold;
+      text-align: left;
+    }
+    .contact-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .contact-list {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      list-style-type: disc;
+      padding-left: 25px;
+    }
+  </style>
+</head>
+<body>
+  <p><strong><span style="font-size: 20px;">M&ocirc; tả:</span></strong></p>
+  <table>
+    <tr>
+      <th>STT</th>
+      <th>CƠ CẤU PHÒNG Ở</th>
+      <th>LỆ PHÍ KTX/ SINH VIÊN/ THÁNG</th>
+      <th>GHI CHÚ</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Phòng ở 8</td>
+      <td>450.000VNĐ/Th&aacute;ng</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Phòng ở 6</td>
+      <td>500.000VNĐ/Th&aacute;ng</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Phòng ở 4</td>
+      <td>800.000VNĐ/Th&aacute;ng</td>
+      <td></td>
+    </tr>
+  </table>
+  <div class="contact-info">
+    <div class="contact-title">THÔNG TIN LIÊN HỆ</div>
+    <ul class="contact-list">
+      <li>Link đăng ký: <a href="http://cmcvnu.edu.vn/Dangkyphongktx.aspx" target="_blank">http://cmcvnu.edu.vn/Dangkyphongktx.aspx</a></li>
+    </ul>
+  </div>
+</body>
+</html>

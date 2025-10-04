@@ -59,18 +59,18 @@
     <h1 class="move-on-scroll"><img src="logo.png" class="house_icon"></h1>
     <div class="search-box snap-target">
       <!-- Loại hình -->
-      <select>
-        <option disabled selected>Loại hình</option>
-        <option>Tất cả</option>
+      <select id="filter-type">
+        <label>Loại hình</label>
+        <option selected>Tất cả</option>
         <option>Nhà trọ</option>
         <option>Ký túc xá</option>
       </select>
 
       <!-- Khu vực -->
-      <select>
-        <option disabled selected>Khu vực</option>
-        <option>Tất cả</option>
-        <option>Thạch Hòa</option>
+      <select id="filter-area">
+        <label>Khu vực</label>
+        <option selected>Tất cả</option>
+        <option>Thạch Hoà</option>
         <option>Xã Tiến Xuân</option>
         <option>Xã Bình Yên</option>
         <option>Xã Hạ Bằng</option>
@@ -82,7 +82,7 @@
 
       <!-- Sắp xếp -->
       <select id="sapXepGia">
-        <option disabled selected>Sắp xếp giá</option>
+        <label>Sắp xếp theo giá</label>
         <option>Mặc định</option>
         <option>Giá tăng dần</option>
         <option>Giá giảm dần</option>
@@ -158,7 +158,7 @@
     <!-- Modal -->
   <div id="propertyModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>   <!-- thêm dòng này -->
+    <span class="close">&times;</span>   
     <div class="modal-body">
       <img id="modal-img" src="" alt="">
       <div class="modal-thumbnails" id="modal-thumbnails"></div>

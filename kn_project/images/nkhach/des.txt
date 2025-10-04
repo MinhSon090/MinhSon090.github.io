@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>
+    </title>
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 800px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 14pt;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 6px 10px;
+    }
+    th {
+        text-align: center;
+        font-weight: bold;
+    }
+    td {
+        text-align: center;
+    }
+    /* Dòng "Ký túc xá QGHN04" */
+    .sub-header {
+      font-weight: bold;
+      text-align: left;
+    }
+    .contact-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .contact-list {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      list-style-type: disc;
+      padding-left: 25px;
+    }
+    </style>
+</head>
+
+<body>
+    <p><strong><span style="font-size: 20px;">M&ocirc; tả:</span></strong></p>
+    <ul>
+        <li style="font-size: 16px;">Ph&ograve;ng ở kh&eacute;p k&iacute;n, c&oacute; thang m&aacute;y, m&aacute;y giặt, nh&agrave; ăn hiện đại.</li>
+        <li style="font-size: 16px;">Dịch vụ tiện &iacute;ch, internet tốc độ cao, cảnh quan xanh, hệ thống an ninh 24/7.</li>
+        <li style="font-size: 16px;">Khu thể dục thể thao đa năng, kh&ocirc;ng gian thư viện phong ph&uacute; đầu s&aacute;ch, &hellip;.</li>
+        <li style="font-size: 16px;">K&yacute; t&uacute;c x&aacute; của Đại học Quốc gia H&agrave; Nội (ĐHQGHN) tại cơ sở H&ograve;a Lạc được x&acirc;y dựng với thiết kế hiện đại, kh&ocirc;ng gian xanh, nhằm tạo điều kiện sống tốt cho sinh vi&ecirc;n nội tr&uacute;.</li>
+        <li style="font-size: 16px;">Ph&ograve;ng ở được trang bị đầy đủ tiện nghi: giường, tủ, b&agrave;n học, m&aacute;y lọc nước, điều h&ograve;a, hệ thống vệ sinh kh&eacute;p k&iacute;n sang trọng - đ&aacute;p ứng ti&ecirc;u chuẩn sinh hoạt tốt cho sinh vi&ecirc;n.&nbsp;</li>
+        <li style="font-size: 16px;">C&aacute;c ph&ograve;ng được thiết kế để đảm bảo sự thuận tiện, gọn g&agrave;ng v&agrave; sạch sẽ, kh&ocirc;ng gian học tập &ndash; sinh hoạt kết hợp h&agrave;i h&ograve;a với thi&ecirc;n nhi&ecirc;n.</li>
+    </ul>
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>CƠ CẤU PHÒNG Ở</th>
+            <th>LỆ PHÍ KTX/ SINH VIÊN/ THÁNG</th>
+            <th>GHI CHÚ</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Phòng ở 4</td>
+            <td>900.000VNĐ/Th&aacute;ng</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Phòng ở 6</td>
+            <td>600.000VNĐ/Th&aacute;ng</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Phòng ở 10</td>
+            <td>900.000VNĐ/Th&aacute;ng</td>
+            <td></td>
+        </tr>
+    </table>
+    <div class="contact-info">
+        <div class="contact-title">THÔNG TIN LIÊN HỆ</div>
+        <ul class="contact-list">
+            
+        </ul>
+    </div>
+</body>
+
+</html>
