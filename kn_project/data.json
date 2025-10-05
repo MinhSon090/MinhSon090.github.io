@@ -63,6 +63,24 @@
     "description": "Phòng rộng 35m2, đầy đủ nội thất cao cấp, phù hợp gia đình nhỏ."
   },
   {
+    "id": "ntro8",
+    "loai": "Nhà trọ",
+    "title": "Nhà trọ 8",
+    "address": "<strong>Địa chỉ:</strong> Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội (gần trường FPT, VNU, Khu CNC Hòa Lạc)",
+    "price": "<strong>Giá:</strong> 2,300,000 - 3,500,000 VND/tháng",
+    "img": ["images/nha_tro_8/1.jpg","images/nha_tro_8/2.jpg","images/nha_tro_8/3.jpg","images/nha_tro_8/4.jpg","images/nha_tro_8/5.jpg"],
+    "description": "images/nha_tro_8/des.html"
+  },
+  {
+    "id": "ntro9",
+    "loai": "Nhà trọ",
+    "title": "Nhà trọ 9",
+    "address": "<strong>Địa chỉ:</strong> Tân Xã",
+    "price": "<strong>Giá:</strong> 2,200,000 VND/tháng",
+    "img": ["images/nha_tro_9/1.jpg","images/nha_tro_9/2.jpg","images/nha_tro_9/3.jpg","images/nha_tro_9/4.jpg"],
+    "description": "images/nha_tro_9/des.html"
+  },
+  {
     "id": "ktx1",
     "loai": "Ký túc xá",
     "title": "Nhà khách Đại học Quốc Gia",
