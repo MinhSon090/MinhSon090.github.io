@@ -448,9 +448,17 @@ main h1 {
 .login-btn-facebook {
   background: #3b5998;
 }
+.login-btn-vnu {
+  background: green;
+}
 .login-btn-google img,
-.login-btn-facebook img {
-  width: 24px; height: 24px; background: #fff; border-radius: 50%;
+.login-btn-facebook img,
+.login-btn-vnu img {
+  width: 30px; 
+  height: 30px; 
+  border-radius: 50%;
+  background: white ;
+  padding: 1px;
 }
 
 @media (max-width:600px) {

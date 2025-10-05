@@ -13,8 +13,9 @@ document.querySelector(".btn-search").addEventListener("click", () => {
     const address = card.querySelector("p").innerText.toLowerCase();
     let show = true;
 
-    if (khuVuc !== "Tất cả" && !address.includes(khuVuc.toLowerCase())) show = false;
-    if (loaiHinh !== "Tất cả") {
+    // Nếu khuVuc là "Tất cả" hoặc "" hoặc "none" thì không lọc theo khu vực
+    if (khuVuc !== "Tất cả" && khuVuc !== "Khu vực" && khuVuc !== "none" && !address.includes(khuVuc.toLowerCase())) show = false;
+    if (loaiHinh !== "Tất cả" && loaiHinh !== "Loại hình" && loaiHinh !== "none") {
       const item = propertyData.find(p => p.id === card.id);
       if (!item || item.loai !== loaiHinh) show = false;
     }
@@ -35,9 +36,16 @@ document.querySelector(".btn-search").addEventListener("click", () => {
     visibleCards.forEach(card => container.appendChild(card));
   } else if (sapXepGia === "Mặc định") {
     let container = document.querySelector(".ct");
+    // Gom nhóm cards theo loại như trong data.json
+    let groups = {};
     propertyData.forEach(item => {
+      if (!groups[item.loai]) groups[item.loai] = [];
       let card = cards.find(c => c.id === item.id && c.style.display === "block");
-      if (card) container.appendChild(card);
+      if (card) groups[item.loai].push(card);
+    });
+    // Duyệt theo thứ tự loại xuất hiện trong data.json
+    Object.keys(groups).forEach(loai => {
+      groups[loai].forEach(card => container.appendChild(card));
     });
   }
 });
