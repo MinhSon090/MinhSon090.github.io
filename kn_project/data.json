@@ -2,11 +2,11 @@
   {
     "id": "ntro1",
     "loai": "Nhà trọ",
-    "title": "Nhà trọ 1",
-    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
-    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
-    "img": ["images/ntro1/phong1.jpg","images/ntro1/phong2.jpg","images/ntro1/wc.jpg"],
-    "description": "images/test_des.txt"
+    "title": "SUHA HOME",
+    "address": "<strong>Địa chỉ:</strong> Thạch Hoà, Thạch Thất, Hà Nội, Việt Nam (gần ĐH FPT, ĐG QGHN)",
+    "price": "<strong>Giá:</strong> 2,800,000 - 3,000,000 VND/tháng",
+    "img": ["images/suha_home/1.jpg","images/suha_home/2.jpg","images/suha_home/3.jpg","images/suha_home/4.jpg","images/suha_home/5.jpg"],
+    "description": "images/suha_home/des.html"
   },
   {
     "id": "ntro2",
@@ -29,20 +29,20 @@
   {
     "id": "ntro4",
     "loai": "Nhà trọ",
-    "title": "Nhà trọ 4",
-    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
-    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
-    "img": ["images/ntro4/phong1.jpg","images/ntro4/phong2.jpg","images/ntro4/wc.jpg"],
-    "description": "Phòng sạch sẽ, an ninh, giờ giấc tự do."
+    "title": "Trọ mới tinh",
+    "address": "<strong>Địa chỉ:</strong> Thạch Hoà, Thạch Thất, Hà Nội",
+    "price": "<strong>Giá:</strong> 1,800,000 VND/tháng",
+    "img": ["images/tro_moi_tinh/1.jpg","images/tro_moi_tinh/2.jpg","images/tro_moi_tinh/3.jpg","images/tro_moi_tinh/4.jpg","images/tro_moi_tinh/5.jpg"],
+    "description": "images/tro_moi_tinh/des.txt"
   },
   {
     "id": "ntro5",
     "loai": "Nhà trọ",
-    "title": "Nhà trọ 5",
-    "address": "<strong>Địa chỉ:</strong> Xã Tiến Xuân",
-    "price": "<strong>Giá:</strong> 1,500,000 VND/tháng",
-    "img": ["images/ntro5/phong1.jpg","images/ntro5/phong2.jpg"],
-    "description": "Phòng rộng 22m2, có điều Hoà, tủ lạnh, gần siêu thị mini."
+    "title": "MINH ANH",
+    "address": "<strong>Địa chỉ:</strong> Thôn 3, Thạch Hoà, Thạch Thất, Hà Nội - Khu nhà ở Sinh viên Minh Anh",
+    "price": "<strong>Giá:</strong> 1,800,000 - 3,500,000 VND/tháng",
+    "img": ["images/minh_anh/1.jpg","images/minh_anh/2.jpg","images/minh_anh/3.jpg","images/minh_anh/4.jpg"],
+    "description": "images/minh_anh/des.txt"
   },
   {
     "id": "ntro6",
@@ -67,7 +67,7 @@
     "loai": "Ký túc xá",
     "title": "Nhà khách Đại học Quốc Gia",
     "address": "<strong>Địa chỉ:</strong> Tuyến Đ. Số 11, Tiến Xuân, Thạch Thất, Hà Nội, Việt Nam",
-    "price": "<strong>Giá:</strong> 900,000 VND/tháng",
+    "price": "<strong>Giá:</strong> 500,000 - 900,000 VND/tháng",
     "img": ["images/nk.jpg","images/nkhach/sanh.jpg","images/nkhach/phong.jpg","images/nkhach/gochoctap.jpg","images/nkhach/wc.jpg"],
     "description": "images/nkhach/des.txt"
   },
@@ -85,7 +85,7 @@
     "loai": "Ký túc xá",
     "title": "Ký túc xá Đại học Quốc Gia khu B&C",
     "address": "<strong>Địa chỉ:</strong> Thạch Hoà, Thạch Thất, Hà Nội, Việt Nam",
-    "price": "<strong>Giá:</strong> 700,000 VND/tháng",
+    "price": "<strong>Giá:</strong> 310,000 - 700,000 VND/tháng",
     "img": ["images/bc.jpg","images/KTXBC/phong.jpg","images/KTXBC/sankhau.jpg","images/KTXBC/hanhlang.jpg"],
     "description": "images/KTXBC/des.txt"
   }

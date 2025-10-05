@@ -66,6 +66,14 @@ document.querySelector(".btn-clear").addEventListener("click", () => {
 // Hàm lấy số từ chuỗi "Giá: xxx VND/tháng"
 function getPriceNumber(card) {
   const priceText = card.querySelector("p.price")?.innerText || card.querySelector("p:nth-of-type(2)")?.innerText || "";
+  // Tìm dải giá, ví dụ: "900,000 - 1,200,000"
+  const rangeMatch = priceText.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
+  if (rangeMatch) {
+    const num1 = parseInt(rangeMatch[1].replace(/[^0-9]/g, ""), 10) || 0;
+    const num2 = parseInt(rangeMatch[2].replace(/[^0-9]/g, ""), 10) || 0;
+    return Math.round((num1 + num2) / 2);
+  }
+  // Nếu chỉ có 1 giá
   let num = priceText.replace(/[^0-9]/g, "");
   return parseInt(num, 10) || 0;
 }
@@ -133,7 +141,7 @@ function attachCardEvents() {
 
         // --- Xử lý description (nếu là txt thì fetch, nếu là html thì render luôn) ---
         // Nếu là đường dẫn txt, fetch nội dung và render
-        if (item.description && typeof item.description === 'string' && item.description.endsWith('.txt')) {
+        if (item.description && typeof item.description === 'string' && (item.description.endsWith('.txt') || item.description.endsWith('.html'))) {
           fetch(item.description)
             .then(res => res.text())
             .then(text => {

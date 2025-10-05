@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bảng lệ phí KTX</title>
+  <style>
+    .contact-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .contact-list {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      list-style-type: disc;
+      padding-left: 25px;
+    }
+    ul li{
+      font-size: 16px;
+    }
+    ul{
+      margin: 0 0 0 5px;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+    <p>Bạn đang tìm kiếm một nơi ở rộng rãi, thoáng đãng, tiện nghi và an ninh tốt? Hãy đến với chúng tôi tại 2 toà nhà Minh Anh - nơi đáng sống và lựa chọn lý tưởng cho cuộc sống sinh viên!</p>
+    <p><strong><span style="font-size: 20px;">M&ocirc; tả:</span></strong></p>
+    <p>Các ưu điểm nổi bật của chúng tôi:</p>
+    <ul>
+        <li>Diện tích phòng rộng từ 18m2 đến 25m2, đảm bảo không gian thoải mái và tiện ích cho bạn.</li>
+        <li>Nội thất xịn đẹp với đầy đủ tiện nghi như điều hòa, nóng lạnh, giường và tủ quần áo, giúp bạn tận hưởng cuộc sống thoải mái và tiện nghi.</li>
+        <li>Chỗ nấu ăn riêng biệt, không sợ ám mùi trong phòng, giúp bạn có không gian tư nhân và thoải mái thưởng thức các món ăn yêu thích.</li>
+        <li>Tất cả các phòng đều có ban công và cửa sổ thoáng mát, giúp bạn cảm nhận được hơi thở của thiên nhiên và không gian xanh quanh năm.</li>
+        <li>Toà nhà có trạm điện riêng biệt, đảm bảo nhu cầu sử dụng tối ưu nhất cho tất cả các phòng, giúp bạn không lo về các vấn đề về điện năng.</li>
+        <li>Wifi riêng từng phòng, giúp bạn tiện lợi trong việc học tập và làm việc online.</li>
+        <li>Có thang máy, giúp bạn dễ dàng di chuyển và tiết kiệm thời gian hàng ngày.</li>
+        <li>Chỗ để xe miễn phí và rộng rãi, đảm bảo an toàn cho phương tiện của bạn. Ngoài ra, chúng tôi còn có sân vườn trên tầng thượng, là nơi bạn có thể tổ chức tiệc buffet, sinh nhật và các buổi gặp gỡ vui vẻ cùng bạn bè.</li>
+        <li>An ninh tốt với hệ thống bảo vệ, khóa mã vân tay và camera an ninh hoạt động 24/24, giúp bạn yên tâm sống và học tập.</li>
+        <li>Môi trường xung quanh sạch sẽ, không khí trong lành, giúp bạn có không gian sống trong lành và thoải mái.</li>
+        <li>Khu trọ có siêu thị, hệ thống giặt là và các dịch vụ khác nhằm phục vụ tốt nhất cho việc đi lại, ăn ở, sinh hoạt của các bạn sinh viên.</li>
+    </ul>
+    <p>Vị trí toà nhà cực kỳ thuận tiện:</p>
+    <ul>
+        <li>Nằm sát cổng phụ của Đại học Quốc gia Hà Nội, giúp bạn tiết kiệm thời gian di chuyển đến trường.</li>
+        <li>Cách đường Quốc lộ 21 và bến xe buýt chỉ 50m, giúp bạn dễ dàng di chuyển trong khu vực và đến các điểm đến khác.</li>
+        <li>Cách trường Đại học FPT chỉ 1,5km, giúp bạn dễ dàng kết nối và tham gia các hoạt động sinh viên.</li>
+        <li>Xe tải chở đồ có thể vào tận cửa toà nhà, tiện lợi trong việc chuyển đồ và đồ dùng cá nhân.</li>
+    </ul>
+    <div class="contact-info">
+        <div class="contact-title">THÔNG TIN LIÊN HỆ</div>
+        <ul class="contact-list">
+            
+        </ul>
+    </div>
+</body>
+</html>
