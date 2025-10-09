@@ -79,6 +79,19 @@ nav a:hover {
   text-decoration: none;
   color: black;
 }
+#login-btn-aa{
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  background-color: #000000;
+}
+#login-btn-aa.clicked {
+  background-color: white;
+  color: #000000;
+  border: 2px solid #000000;
+  transition: background 0.2s, color 0.2s;
+}
 
 .right-menu .icon {
   margin-right: 5px;
