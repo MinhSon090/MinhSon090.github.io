@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HolaHome</title>
-  <link rel="icon" type="image/x-icon" href="logo/logo.PNG">
+  <link rel="icon" type="image/x-icon" href="logo/logo_v2.PNG">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Logo">
+      <img src="logo/balck_logo.PNG" alt="Logo">
       <span>HOLA HOME</span>
     </div>
     <nav>
@@ -57,7 +57,7 @@
   <!-- Nội dung chính -->
   <main>
     <!-- <h1><img src="house-64.png" class="house_icon">HOLA HOME</h1> -->
-    <h1 class="move-on-scroll"><img src="logo.png" class="house_icon"></h1>
+    <h1 class="move-on-scroll"><img src="logo/white HH logo v2.PNG" class="house_icon"></h1>
     <div class="search-box snap-target">
       <!-- Loại hình -->
       <select id="filter-type">
@@ -167,9 +167,24 @@
       <p id="modal-address"></p>
       <p id="modal-price"></p>
       <p id="modal-description"></p>
+
+      <hr style="margin: 16px 0;">
+      <div class="modal-rating-comment">
+        <div class="modal-rating">          
+          <span class="stars"></span>
+        </div>
+        <div class="modal-comment">
+          <textarea id="modal-comment-input" placeholder="Đánh giá của bạn về phòng trọ/ký túc xá (Chỉ áp dụng cho người đã ở)" rows="2"></textarea>
+          <button id="modal-comment-submit" class="button-trapezoid">Gửi</button>
+          <div class="modal-rating-label">
+            <span class="modal-rating-stars"></span>
+            <span class="modal-rating-text"></span>
+          </div>
+        </div>
+        <div id="modal-comment-list"></div>
+      </div>      
     </div>
   </div>
-</div>
   <script src="script.js"></script>
 </body>
 </html>

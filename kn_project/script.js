@@ -168,6 +168,9 @@ function attachCardEvents() {
           };
           modalThumbnails.appendChild(thumb);
         });
+
+        // Gọi hàm attachRatingStars khi mở modal cho card này
+        attachRatingStars(card.id);
       }
       modal.style.display = "block";
       document.body.style.overflow = "hidden";
@@ -184,6 +187,142 @@ function attachCardEvents() {
     modal.style.display = "none";
     document.body.style.overflow = "";
   }
+  // Xử lý đánh giá & nhận xét
+  function attachRatingAndComment(cardId) {
+  const starsEl = document.querySelector('.modal-rating .stars');
+  const commentInput = document.getElementById('modal-comment-input');
+  const commentSubmit = document.getElementById('modal-comment-submit');
+  const commentList = document.getElementById('modal-comment-list');
+
+  let selectedStar = 0;
+  let hoverStar = 0;
+
+  // Simple local store (session only, can replace with localStorage if needed)
+  window._modalComments = window._modalComments || {};
+  window._modalRatings = window._modalRatings || {};
+
+  // Render stars
+  starsEl.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.innerHTML = '&#9733;'; // unicode ⭐
+    star.dataset.value = i;
+
+    // Hover effect
+    star.onmouseenter = () => {
+      hoverStar = i;
+      renderStars();
+    };
+    star.onmouseleave = () => {
+      hoverStar = 0;
+      renderStars();
+    };
+    // Click chọn số sao
+    star.onclick = () => {
+      selectedStar = i;
+      window._modalRatings[cardId] = i;
+      renderStars();
+    };
+
+    starsEl.appendChild(star);
+  }
+
+  function renderStars() {
+    for (let i = 0; i < 5; i++) {
+      const star = starsEl.children[i];
+      star.classList.remove('active', 'selected', 'hovered');
+      if (hoverStar) {
+        if (i < hoverStar) star.classList.add('hovered');
+      } else if (selectedStar) {
+        if (i < selectedStar) star.classList.add('selected');
+      }
+    }
+  }
+  // Hiển thị số sao đã chọn (nếu có)
+  selectedStar = window._modalRatings[cardId] || 0;
+  renderStars();
+
+  // Comment submit
+  commentSubmit.onclick = () => {
+    const txt = commentInput.value.trim();
+    if (!txt) return;
+    window._modalComments[cardId] = window._modalComments[cardId] || [];
+    window._modalComments[cardId].push({
+      text: txt,
+      star: selectedStar || 0,
+      time: new Date().toLocaleString('vi')
+    });
+    commentInput.value = '';
+    renderComments();
+  };
+
+  function renderComments() {
+    const items = window._modalComments[cardId] || [];
+    commentList.innerHTML = items.map(com => `
+      <div class="comment-item">
+        <span class="comment-stars">${'★'.repeat(com.star)}${'☆'.repeat(5-com.star)}</span>
+        <span class="comment-text">${com.text}</span>
+        <span style="float:right; color:#aaa; font-size:0.85em;">${com.time}</span>
+      </div>
+    `).join('');
+  }
+  renderComments();
+}
+function attachRatingStars(cardId) {
+  const starsEl = document.querySelector('.modal-rating-stars');
+  const textEl = document.querySelector('.modal-rating-text');
+
+  const texts = ["Rất tệ", "Tệ", "Bình thường", "Tốt", "Xuất sắc"];
+  let selectedStar = 0;
+  let hoverStar = 0;
+
+  window._modalRatings = window._modalRatings || {};
+
+  // Render stars
+  starsEl.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.innerHTML = '&#9733;'; // unicode star
+    star.dataset.value = i;
+
+    star.onmouseenter = () => {
+      hoverStar = i;
+      renderStars();
+    };
+    star.onmouseleave = () => {
+      hoverStar = 0;
+      renderStars();
+    };
+    star.onclick = () => {
+      selectedStar = i;
+      window._modalRatings[cardId] = i;
+      renderStars();
+    };
+
+    starsEl.appendChild(star);
+  }
+
+  function renderStars() {
+    for (let i = 0; i < 5; i++) {
+      const star = starsEl.children[i];
+      star.classList.remove('active', 'selected', 'hovered');
+      if (hoverStar) {
+        if (i < hoverStar) star.classList.add('hovered');
+      } else if (selectedStar) {
+        if (i < selectedStar) star.classList.add('selected');
+      }
+    }
+    // Text
+    let idx = (hoverStar || selectedStar) - 1;
+    textEl.textContent = idx >= 0 ? texts[idx] : "";
+  }
+
+  // Hiển thị số sao đã chọn (nếu có)
+  selectedStar = window._modalRatings[cardId] || 0;
+  renderStars();
+}
 }
 
 
@@ -232,7 +371,7 @@ window.addEventListener('scroll', function() {
   // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
   const moveRect = moveEl.getBoundingClientRect();
   const moveHeight = moveRect.height;
-  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 160;
+  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 260;
 
   if (scrollTop > 50 && !hasSnapped) {
     isProgrammaticScroll = true;
