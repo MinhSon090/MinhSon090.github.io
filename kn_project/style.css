@@ -46,7 +46,7 @@ header .logo {
   font-size: 1.2em;
 }
 header .logo img {
-  width: 34px;
+  width: 40px;
   margin: -5px 5px 0 -10px;
 }
 
@@ -71,7 +71,8 @@ nav a:hover {
 
 .right-menu {
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(3, auto);
+  gap: 10px;
   align-items: center;
 }
 .right-menu a {
@@ -80,17 +81,20 @@ nav a:hover {
   color: black;
 }
 #login-btn-aa{
+  margin: 0;
   padding: 8px 15px;
   border-radius: 6px;
   font-weight: bold;
   color: white;
+  border: black 2px solid;
   background-color: #000000;
 }
-#login-btn-aa.clicked {
-  background-color: white;
-  color: #000000;
-  border: 2px solid #000000;
-  transition: background 0.2s, color 0.2s;
+#register-btn-aa{
+  margin: 0;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 6px;
+  border: black 2px solid;
 }
 
 .right-menu .icon {
