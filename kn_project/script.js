@@ -1,8 +1,8 @@
 // --- Search & Sort ---
 document.querySelector(".btn-search").addEventListener("click", () => {
   const loaiHinh = document.getElementById("filter-type").value.trim();
-  const khuVuc   = document.getElementById("filter-area").value.trim();
-  const keyword  = document.querySelector(".search-box input").value.trim().toLowerCase();
+  const khuVuc = document.getElementById("filter-area").value.trim();
+  const keyword = document.querySelector(".search-box input").value.trim().toLowerCase();
   const sapXepGia = document.querySelector("#sapXepGia").value;
 
   let cards = Array.from(document.querySelectorAll(".ct > div"));
@@ -189,146 +189,146 @@ function attachCardEvents() {
   }
   // Xử lý đánh giá & nhận xét
   function attachRatingAndComment(cardId) {
-  const starsEl = document.querySelector('.modal-rating .stars');
-  const commentInput = document.getElementById('modal-comment-input');
-  const commentSubmit = document.getElementById('modal-comment-submit');
-  const commentList = document.getElementById('modal-comment-list');
+    const starsEl = document.querySelector('.modal-rating .stars');
+    const commentInput = document.getElementById('modal-comment-input');
+    const commentSubmit = document.getElementById('modal-comment-submit');
+    const commentList = document.getElementById('modal-comment-list');
 
-  let selectedStar = 0;
-  let hoverStar = 0;
+    let selectedStar = 0;
+    let hoverStar = 0;
 
-  // Simple local store (session only, can replace with localStorage if needed)
-  window._modalComments = window._modalComments || {};
-  window._modalRatings = window._modalRatings || {};
+    // Simple local store (session only, can replace with localStorage if needed)
+    window._modalComments = window._modalComments || {};
+    window._modalRatings = window._modalRatings || {};
 
-  // Render stars
-  starsEl.innerHTML = '';
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement('span');
-    star.className = 'star';
-    star.innerHTML = '&#9733;'; // unicode ⭐
-    star.dataset.value = i;
+    // Render stars
+    starsEl.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.className = 'star';
+      star.innerHTML = '&#9733;'; // unicode ⭐
+      star.dataset.value = i;
 
-    // Hover effect
-    star.onmouseenter = () => {
-      hoverStar = i;
-      renderStars();
-    };
-    star.onmouseleave = () => {
-      hoverStar = 0;
-      renderStars();
-    };
-    // Click chọn số sao
-    star.onclick = () => {
-      selectedStar = i;
-      window._modalRatings[cardId] = i;
-      renderStars();
-    };
+      // Hover effect
+      star.onmouseenter = () => {
+        hoverStar = i;
+        renderStars();
+      };
+      star.onmouseleave = () => {
+        hoverStar = 0;
+        renderStars();
+      };
+      // Click chọn số sao
+      star.onclick = () => {
+        selectedStar = i;
+        window._modalRatings[cardId] = i;
+        renderStars();
+      };
 
-    starsEl.appendChild(star);
-  }
+      starsEl.appendChild(star);
+    }
 
-  function renderStars() {
-    for (let i = 0; i < 5; i++) {
-      const star = starsEl.children[i];
-      star.classList.remove('active', 'selected', 'hovered');
-      if (hoverStar) {
-        if (i < hoverStar) star.classList.add('hovered');
-      } else if (selectedStar) {
-        if (i < selectedStar) star.classList.add('selected');
+    function renderStars() {
+      for (let i = 0; i < 5; i++) {
+        const star = starsEl.children[i];
+        star.classList.remove('active', 'selected', 'hovered');
+        if (hoverStar) {
+          if (i < hoverStar) star.classList.add('hovered');
+        } else if (selectedStar) {
+          if (i < selectedStar) star.classList.add('selected');
+        }
       }
     }
-  }
-  // Hiển thị số sao đã chọn (nếu có)
-  selectedStar = window._modalRatings[cardId] || 0;
-  renderStars();
+    // Hiển thị số sao đã chọn (nếu có)
+    selectedStar = window._modalRatings[cardId] || 0;
+    renderStars();
 
-  // Comment submit
-  commentSubmit.onclick = () => {
-    const txt = commentInput.value.trim();
-    if (!txt) return;
-    window._modalComments[cardId] = window._modalComments[cardId] || [];
-    window._modalComments[cardId].push({
-      text: txt,
-      star: selectedStar || 0,
-      time: new Date().toLocaleString('vi')
-    });
-    commentInput.value = '';
-    renderComments();
-  };
+    // Comment submit
+    commentSubmit.onclick = () => {
+      const txt = commentInput.value.trim();
+      if (!txt) return;
+      window._modalComments[cardId] = window._modalComments[cardId] || [];
+      window._modalComments[cardId].push({
+        text: txt,
+        star: selectedStar || 0,
+        time: new Date().toLocaleString('vi')
+      });
+      commentInput.value = '';
+      renderComments();
+    };
 
-  function renderComments() {
-    const items = window._modalComments[cardId] || [];
-    commentList.innerHTML = items.map(com => `
+    function renderComments() {
+      const items = window._modalComments[cardId] || [];
+      commentList.innerHTML = items.map(com => `
       <div class="comment-item">
-        <span class="comment-stars">${'★'.repeat(com.star)}${'☆'.repeat(5-com.star)}</span>
+        <span class="comment-stars">${'★'.repeat(com.star)}${'☆'.repeat(5 - com.star)}</span>
         <span class="comment-text">${com.text}</span>
         <span style="float:right; color:#aaa; font-size:0.85em;">${com.time}</span>
       </div>
     `).join('');
-  }
-  renderComments();
-}
-function attachRatingStars(cardId) {
-  const starsEl = document.querySelector('.modal-rating-stars');
-  const textEl = document.querySelector('.modal-rating-text');
-
-  const texts = ["Rất tệ", "Tệ", "Bình thường", "Tốt", "Xuất sắc"];
-  let selectedStar = 0;
-  let hoverStar = 0;
-
-  window._modalRatings = window._modalRatings || {};
-
-  // Render stars
-  starsEl.innerHTML = '';
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement('span');
-    star.className = 'star';
-    star.innerHTML = '&#9733;'; // unicode star
-    star.dataset.value = i;
-
-    star.onmouseenter = () => {
-      hoverStar = i;
-      renderStars();
-    };
-    star.onmouseleave = () => {
-      hoverStar = 0;
-      renderStars();
-    };
-    star.onclick = () => {
-      selectedStar = i;
-      window._modalRatings[cardId] = i;
-      renderStars();
-    };
-
-    starsEl.appendChild(star);
-  }
-
-  function renderStars() {
-    for (let i = 0; i < 5; i++) {
-      const star = starsEl.children[i];
-      star.classList.remove('active', 'selected', 'hovered');
-      if (hoverStar) {
-        if (i < hoverStar) star.classList.add('hovered');
-      } else if (selectedStar) {
-        if (i < selectedStar) star.classList.add('selected');
-      }
     }
-    // Text
-    let idx = (hoverStar || selectedStar) - 1;
-    textEl.textContent = idx >= 0 ? texts[idx] : "";
+    renderComments();
   }
+  function attachRatingStars(cardId) {
+    const starsEl = document.querySelector('.modal-rating-stars');
+    const textEl = document.querySelector('.modal-rating-text');
 
-  // Hiển thị số sao đã chọn (nếu có)
-  selectedStar = window._modalRatings[cardId] || 0;
-  renderStars();
-}
+    const texts = ["Rất tệ", "Tệ", "Bình thường", "Tốt", "Xuất sắc"];
+    let selectedStar = 0;
+    let hoverStar = 0;
+
+    window._modalRatings = window._modalRatings || {};
+
+    // Render stars
+    starsEl.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.className = 'star';
+      star.innerHTML = '&#9733;'; // unicode star
+      star.dataset.value = i;
+
+      star.onmouseenter = () => {
+        hoverStar = i;
+        renderStars();
+      };
+      star.onmouseleave = () => {
+        hoverStar = 0;
+        renderStars();
+      };
+      star.onclick = () => {
+        selectedStar = i;
+        window._modalRatings[cardId] = i;
+        renderStars();
+      };
+
+      starsEl.appendChild(star);
+    }
+
+    function renderStars() {
+      for (let i = 0; i < 5; i++) {
+        const star = starsEl.children[i];
+        star.classList.remove('active', 'selected', 'hovered');
+        if (hoverStar) {
+          if (i < hoverStar) star.classList.add('hovered');
+        } else if (selectedStar) {
+          if (i < selectedStar) star.classList.add('selected');
+        }
+      }
+      // Text
+      let idx = (hoverStar || selectedStar) - 1;
+      textEl.textContent = idx >= 0 ? texts[idx] : "";
+    }
+
+    // Hiển thị số sao đã chọn (nếu có)
+    selectedStar = window._modalRatings[cardId] || 0;
+    renderStars();
+  }
 }
 
 
 // Mở popup khi click nút đăng nhập
 document.querySelectorAll('a,button').forEach(el => {
-  if(el.textContent.trim().toLowerCase().includes('đăng nhập')) {
+  if (el.textContent.trim().toLowerCase().includes('đăng nhập')) {
     el.addEventListener('click', toggleLoginPopup);
   }
 });
@@ -349,7 +349,7 @@ function closeLoginPopup() {
 
 // Mở popup đăng ký khi click nút đăng ký
 document.querySelectorAll('a,button').forEach(el => {
-  if(el.textContent.trim().toLowerCase().includes('đăng ký')) {
+  if (el.textContent.trim().toLowerCase().includes('đăng ký')) {
     el.addEventListener('click', toggleRegisterPopup);
   }
 });
@@ -370,7 +370,7 @@ function closeRegisterPopup() {
 
 
 // move-on-scroll
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
   const scrollTop = window.scrollY;
   const customHeight = 500; // <-- Điền số thủ công (px) ở đây
   const percent = customHeight ? (scrollTop / customHeight) : 0; // từ 0 đến 1
@@ -388,7 +388,7 @@ window.addEventListener('scroll', function() {
 // snap to snap-target at first scroll and snap back to top when scroll back to top
 let hasSnapped = false;
 let isProgrammaticScroll = false;
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
   if (isProgrammaticScroll) return;
   const scrollTop = window.scrollY;
   const moveEl = document.querySelector('.move-on-scroll');
