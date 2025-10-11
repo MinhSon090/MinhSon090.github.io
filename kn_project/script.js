@@ -329,17 +329,45 @@ function attachRatingStars(cardId) {
 // Mở popup khi click nút đăng nhập
 document.querySelectorAll('a,button').forEach(el => {
   if(el.textContent.trim().toLowerCase().includes('đăng nhập')) {
-    el.addEventListener('click', showLoginPopup);
+    el.addEventListener('click', toggleLoginPopup);
   }
 });
-function showLoginPopup(e) {
+function toggleLoginPopup(e) {
   e.preventDefault();
-  document.getElementById('login-popup').style.display = 'flex';
+  const loginPopup = document.getElementById('login-popup');
+  const registerPopup = document.getElementById('register-popup');
+  // Ẩn popup đăng ký nếu đang mở
+  if (registerPopup && registerPopup.style.display === 'flex') {
+    registerPopup.style.display = 'none';
+  }
+  loginPopup.style.display = (loginPopup.style.display === 'flex') ? 'none' : 'flex';
 }
 document.querySelector('.login-close').onclick = closeLoginPopup;
 function closeLoginPopup() {
   document.getElementById('login-popup').style.display = 'none';
 }
+
+// Mở popup đăng ký khi click nút đăng ký
+document.querySelectorAll('a,button').forEach(el => {
+  if(el.textContent.trim().toLowerCase().includes('đăng ký')) {
+    el.addEventListener('click', toggleRegisterPopup);
+  }
+});
+function toggleRegisterPopup(e) {
+  e.preventDefault();
+  const registerPopup = document.getElementById('register-popup');
+  const loginPopup = document.getElementById('login-popup');
+  // Ẩn popup đăng nhập nếu đang mở
+  if (loginPopup && loginPopup.style.display === 'flex') {
+    loginPopup.style.display = 'none';
+  }
+  registerPopup.style.display = (registerPopup.style.display === 'flex') ? 'none' : 'flex';
+}
+document.getElementById('register-close').onclick = closeRegisterPopup;
+function closeRegisterPopup() {
+  document.getElementById('register-popup').style.display = 'none';
+}
+
 
 // move-on-scroll
 window.addEventListener('scroll', function() {
@@ -348,12 +376,11 @@ window.addEventListener('scroll', function() {
   const percent = customHeight ? (scrollTop / customHeight) : 0; // từ 0 đến 1
 
   const minMargin = 0;   // vh nhỏ nhất khi scroll hết
-  const maxMargin = 22;  // vh lớn nhất khi ở đầu trang
+  const maxMargin = 32;  // vh lớn nhất khi ở đầu trang
 
   const newMargin = maxMargin - (maxMargin - minMargin) * Math.min(percent, 1); // tránh vượt quá
 
   document.querySelectorAll('.move-on-scroll').forEach(el => {
-    el.style.marginTop = `${newMargin}vh`;
     el.style.marginBottom = `${newMargin}vh`;
   });
 });
@@ -371,7 +398,7 @@ window.addEventListener('scroll', function() {
   // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
   const moveRect = moveEl.getBoundingClientRect();
   const moveHeight = moveRect.height;
-  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 260;
+  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 74;
 
   if (scrollTop > 50 && !hasSnapped) {
     isProgrammaticScroll = true;
@@ -385,4 +412,12 @@ window.addEventListener('scroll', function() {
     hasSnapped = false;
   }
 });
-// Thêm class "move-on-scroll" vào phần tử cần hiệu ứng
+
+// Nhấn vào .logo sẽ scroll về đầu trang
+document.querySelectorAll('.logo').forEach(logo => {
+  logo.style.cursor = 'pointer';
+  logo.addEventListener('click', (e) => {
+    e.preventDefault(); // nếu logo là link
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});

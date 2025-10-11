@@ -54,11 +54,47 @@
       </div>
     </form>
   </div>
+  <!-- Popup đăng ký -->
+  <div id="register-popup" class="login-popup" style="display:none">
+    <span class="login-close" id="register-close">&times;</span>
+    <form class="login-form" autocomplete="off">
+      <label>Email <span>*</span></label>
+      <input type="email" id="register-email" placeholder=" " required>
+
+      <label>Username</label>
+      <input type="text" id="register-username" placeholder=" " required>
+
+      <label>Password <span>*</span></label>
+      <input type="password" id="register-password" placeholder=" " required>
+
+      <label>Nhập lại Password <span>*</span></label>
+      <input type="password" id="register-password2" placeholder=" " required>
+
+      <div class="login-row">
+        <label class="remember-me">
+          <input type="checkbox" id="register-accept">
+          <span class="checkmark"></span>
+          <p style="margin: 0;">Tôi đồng ý với <a href="#" style="text-decoration: none;">điều khoản</a></p>
+        </label>
+      </div>
+      <button type="submit" class="login-btn-main">Đăng ký</button>
+      <div class="login-divider"></div>
+      <div class="login-socials">
+        <button type="button" class="login-btn-google"><img src="logo/google.png" alt="G"></button>
+        <button type="button" class="login-btn-vnu"><img src="logo/vnu.png" alt="A"></button>
+        <button type="button" class="login-btn-facebook"><img src="logo/facebook.png" alt="F"></button>
+      </div>
+    </form>
+  </div>
+
 
   <!-- Nội dung chính -->
   <main>
     <!-- <h1><img src="house-64.png" class="house_icon">HOLA HOME</h1> -->
-    <h1 class="move-on-scroll"><img src="logo/white HH logo v2.PNG" class="house_icon"></h1>
+    <div class="move-on-scroll">
+      <h1><img src="logo/logo_v2.PNG" class="house_icon"></h1>
+      <h2 class="main_title">HOLA HOME</h2>
+    </div>
     <div class="search-box snap-target">
       <!-- Loại hình -->
       <select id="filter-type">
