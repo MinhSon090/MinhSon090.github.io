@@ -42,8 +42,8 @@ body {
 header {
   background: white;
   color: black;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 10px 40px;
   position: fixed;
@@ -54,6 +54,15 @@ header {
   box-sizing: border-box;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+header .logo {
+  justify-self: start;
+}
+header nav {
+  justify-self: center;
+}
+header .right-menu {
+  justify-self: end;
 }
 
 header .logo {
@@ -96,7 +105,7 @@ nav a:hover {
   align-items: center;
 }
 .right-menu a {
-  margin-left: 25px;
+  margin: 0;
   text-decoration: none;
   color: black;
 }
