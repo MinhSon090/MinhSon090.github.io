@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HolaHome - User</title>
+	<link rel="icon" type="image/x-icon" href="../logo/logo_v2.PNG">
+	<link rel="stylesheet" href="../user_ui.css">
+	<meta name="robots" content="noindex">
+	<meta name="referrer" content="same-origin">
+  
+</head>
+
+<body>
+	<img src="../images/4.jpg" class="bg-image" alt="Background Image">
+	<!-- Header copied from index.html (paths adjusted) -->
+	<header>
+		<div class="logo">
+			<button class="hamburger" aria-label="Menu" aria-expanded="false">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+			<img src="../logo/balck_logo.PNG" alt="Logo">
+			<span>HOLA HOME</span>
+		</div>
+		<nav>
+			<a href="../index.html" class="nav-home">Trang chủ</a>
+			<a href="#" class="nav-contact">Liên hệ</a>
+			<a href="#" class="nav-history">Lịch sử tìm kiếm</a>
+		</nav>
+		<div class="right-menu">
+			<a href="#" class="fav-link">Mục yêu thích</a>
+			<p><a href="#" id="partner-btn">Trở thành đối tác</a></p>
+			<span class="vertical-divider"></span>
+			<p><a href="#" id="login-btn-aa">Đăng nhập</a></p>
+			<p><a href="#" id="register-btn-aa">Đăng ký</a></p>
+		</div>
+	</header>
+
+	<!-- Optional: keep popup DOM to avoid broken interactions if scripts are added later -->
+	<div id="login-popup" class="login-popup" style="display:none">
+		<span class="login-close">&times;</span>
+		<form class="login-form" autocomplete="off">
+			<label>Email or Username <span>*</span></label>
+			<input type="text" id="login-username" placeholder=" " required>
+			<div class="login-msg" id="login-username-msg">Email is required</div>
+			<label>Password <span>*</span></label>
+			<input type="password" id="login-password" placeholder=" " required>
+			<div class="login-msg" id="login-password-msg">Password is required</div>
+			<div class="login-row">
+				<label class="remember-me">
+					<input type="checkbox" id="login-remember">
+					<span class="checkmark"></span>
+					Remember me
+				</label>
+				<a href="#" class="login-forgot">Forgot password?</a>
+			</div>
+			<button type="submit" class="login-btn-main">Log in</button>
+			<div class="login-divider"></div>
+			<div class="login-socials">
+				<button type="button" class="login-btn-google"><img src="../logo/google.png" alt="G"></button>
+				<button type="button" class="login-btn-vnu"><img src="../logo/vnu.png" alt="A"></button>
+				<button type="button" class="login-btn-facebook"><img src="../logo/facebook.png" alt="F"></button>
+			</div>
+		</form>
+	</div>
+
+	<div id="register-popup" class="login-popup" style="display:none">
+		<span class="login-close" id="register-close">&times;</span>
+		<form class="login-form" autocomplete="off">
+			<label>Email <span>*</span></label>
+			<input type="email" id="register-email" placeholder=" " required>
+
+			<label>Username</label>
+			<input type="text" id="register-username" placeholder=" " required>
+
+			<label>Password <span>*</span></label>
+			<input type="password" id="register-password" placeholder=" " required>
+
+			<label>Nhập lại Password <span>*</span></label>
+			<input type="password" id="register-password2" placeholder=" " required>
+
+			<div class="login-row">
+				<label class="remember-me">
+					<input type="checkbox" id="register-accept">
+					<span class="checkmark"></span>
+					<p style="margin: 0;">Tôi đồng ý với <a href="#" style="text-decoration: none;">điều khoản</a></p>
+				</label>
+			</div>
+			<button type="submit" class="login-btn-main">Đăng ký</button>
+			<div class="login-divider"></div>
+			<div class="login-socials">
+				<button type="button" class="login-btn-google"><img src="../logo/google.png" alt="G"></button>
+				<button type="button" class="login-btn-vnu"><img src="../logo/vnu.png" alt="A"></button>
+				<button type="button" class="login-btn-facebook"><img src="../logo/facebook.png" alt="F"></button>
+			</div>
+		</form>
+	</div>
+
+	<main>
+
+	</main>
+
+		<!-- Lightweight behaviors for this page only: nav scroll + popup toggles -->
+		<script>
+			// Scroll to bottom when clicking on Liên hệ in nav
+			document.querySelectorAll('.nav-contact').forEach(link => {
+				link.addEventListener('click', (e) => {
+					e.preventDefault();
+					const bottom = Math.max(
+						document.body.scrollHeight,
+						document.documentElement.scrollHeight
+					);
+					window.scrollTo({ top: bottom, behavior: 'smooth' });
+				});
+			});
+
+			// Scroll to top when clicking on Trang chủ in nav
+			document.querySelectorAll('.nav-home').forEach(link => {
+				link.addEventListener('click', (e) => {
+					e.preventDefault();
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+			});
+
+			// Simple popup toggles
+			function show(el) { el.style.display = 'flex'; }
+			function hide(el) { el.style.display = 'none'; }
+
+			const loginPopup = document.getElementById('login-popup');
+			const registerPopup = document.getElementById('register-popup');
+			const loginBtn = document.getElementById('login-btn-aa');
+			const registerBtn = document.getElementById('register-btn-aa');
+			const loginClose = document.querySelector('#login-popup .login-close');
+			const registerClose = document.getElementById('register-close');
+
+			if (loginBtn && loginPopup) {
+				loginBtn.addEventListener('click', (e) => { e.preventDefault(); hide(registerPopup); show(loginPopup); });
+			}
+			if (registerBtn && registerPopup) {
+				registerBtn.addEventListener('click', (e) => { e.preventDefault(); hide(loginPopup); show(registerPopup); });
+			}
+			if (loginClose) {
+				loginClose.addEventListener('click', () => hide(loginPopup));
+			}
+			if (registerClose) {
+				registerClose.addEventListener('click', () => hide(registerPopup));
+			}
+		</script>
+</body>
+</html>

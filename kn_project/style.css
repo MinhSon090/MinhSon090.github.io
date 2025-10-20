@@ -45,7 +45,7 @@ header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 10px 40px;
+  padding: 10px 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -61,6 +61,11 @@ header .logo {
 header nav {
   justify-self: center;
 }
+@media(max-width: 1600px) {
+  header nav {
+    justify-self: start;
+  }
+}
 header .right-menu {
   justify-self: end;
 }
@@ -71,12 +76,38 @@ header .logo {
   font-weight: bold;
   font-size: 18px;
 }
+/* Hamburger button */
+.hamburger {
+  width: 34px;
+  height: 28px;
+  display: none; /* Hidden by default on large screens */
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 6px;
+  background: transparent;
+  border: none;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #000;
+  border-radius: 2px;
+}
+/* Show hamburger only below 1600px */
+@media (max-width: 1500px) {
+  .hamburger {
+    display: inline-flex;
+  }
+}
 .logo span {
   font-size: 1.2em;
 }
 header .logo img {
   width: 40px;
-  margin: -5px 5px 0 -10px;
+  margin: -5px 5px 0 0;
 }
 
 nav{
@@ -85,6 +116,7 @@ nav{
   align-self: center;
   gap: 10px;
 }
+
 nav a {
   margin: 0 15px;
   text-decoration: none;
@@ -101,7 +133,7 @@ nav a:hover {
 .right-menu {
   display: grid;
   grid-template-columns: repeat(5, auto);
-  gap: 10px;
+  gap: 5px;
   align-items: center;
 }
 .right-menu a {
@@ -151,16 +183,49 @@ nav a:hover {
   width: 2px;
   height: 32px;
   background: #ddd;
-  margin: 0 5px;
+  margin: 0 2px;
   border-radius: 2px;
   vertical-align: middle;
   box-shadow: 0 0 2px #bbb;
 }
 
+/* === Responsive Navigation Fix cho HolaHome === */
+@media (max-width: 1500px) {
+  header {
+    grid-template-columns: auto 1fr auto;
+  }
+}
+@media (max-width: 1150px) {
+  /* Hide Lịch sử tìm kiếm */
+  nav .nav-history { display: none; }
+}
+
+@media (max-width: 1000px) {
+  /* Hide Mục yêu thích link in right-menu */
+  .right-menu .fav-link { display: none; }
+}
+@media (max-width: 900px) {
+  /* Hide Liên hệ next */
+  nav .nav-contact { display: none; }
+}
+@media (max-width: 840px) {
+  /* Hide Trang chủ first */
+  nav .nav-home { display: none; }
+}
+@media (max-width: 720px) {
+  /* Hide Trở thành đối tác and vertical divider together */
+  #partner-btn { display: none; }
+  .vertical-divider { display: none; }
+}
+@media (max-width: 540px) {
+  /* Hide logo text */
+  .logo>span { display: none; }
+}
+
 /* Footer */
 .main-footer {
   width: auto;
-  height: 500px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   background: #222;
@@ -218,6 +283,11 @@ main {
   width: 15%;
   vertical-align: top;
 }
+@media (max-width: 800px) {
+  .house_icon{
+    width: 30%;
+  }
+}
 .move-on-scroll h1{
   margin: 0 0 25px 0
 }
@@ -229,6 +299,11 @@ main {
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   margin-top: -10px;
 }
+@media (max-width: 900px) {
+  .main_title {
+    font-size: 5rem;
+  }
+}
 
 .search-box {
   background: white;
@@ -237,6 +312,34 @@ main {
   display: inline-flex;
   gap: 10px;
   margin-bottom: 10px;
+}
+
+/* Make search box responsive: input on top when narrow */
+@media (max-width: 900px) {
+  .search-box {
+    display: flex;           /* switch to flex (already inline-flex) */
+    flex-wrap: wrap;         /* allow wrapping */
+    gap: 8px;                /* slightly tighter gap */
+    width: 94%;              /* give it some breathing room */
+    max-width: 100%;
+    height: 12em;
+  }
+  /* Put the text input on its own row at the top */
+  .search-box input[type="text"] {
+    order: -1;               /* move before others */
+    flex: 1 1 100%;          /* take full row */
+  }
+  /* Other controls share space below (2 per row when possible) */
+  .search-box select,
+  .search-box button {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+  }
+  /* Make the search button always stick to the bottom as the last row */
+  .search-box .btn-search {
+    order: 999;              /* ensure it is last */
+    flex: 1 1 100%;          /* full-width row at the bottom */
+  }
 }
 
 .search-box input,
@@ -288,11 +391,8 @@ main {
   display: grid;
   margin: 5px auto;
   padding: 20px 10px;
-  display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  min-height: calc(3 * 250px); /* Adjust 250px to your card min height if needed */
-  gap: 5px;
+  gap: 8px;
   background-color: white;
   border-radius: 10px;
 }
@@ -312,7 +412,6 @@ main {
   box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
   z-index: 2;
 }
-
 .property-card-ntro img, .property-card-ktx img {
   width: calc(100% + 10px);
   height: 200px;
@@ -320,7 +419,20 @@ main {
   display: block;
   margin: -0px -5px 0 -5px;
 }
-
+/* Responsive grid for content cards */
+@media (max-width: 1200px) {
+  .ct { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .ct { width: 94vw; grid-template-columns: repeat(2, 1fr); }
+  .property-card-ntro:hover, .property-card-ktx:hover{
+    transform: scale(1);
+  }
+}
+@media (max-width: 600px) {
+  .ct { width: 98vw; grid-template-columns: 1fr; }
+  .property-card-ntro img, .property-card-ktx img { height: 180px; }
+}
 
 
 /* Popup card */
@@ -357,15 +469,20 @@ main {
 .modal-content .close {
   visibility: hidden;
   position: absolute;
-  top: 10px;
-  right: 15px;
+  align-items: center;
+  top: 1px;
+  right: 1px;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
   color: #666;
+  background-color: #969696;
+  padding: 5px 15px;
+  border-radius: 0 10px 0 10px;
 }
 .modal-content .close:hover {
   color: #000;
+  background-color: #cdcdcd ;
 }
 
 /* Hình ảnh trong modal */
@@ -400,7 +517,6 @@ main {
   border: 2px solid #0077ff;
 }
 
-
 /* Comment and rating */
 .modal-rating-comment { margin-top: 18px; }
 .modal-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 8px;}
@@ -428,26 +544,33 @@ main {
   font-size: 1rem;
   margin-bottom: 6px;
 }
-.modal-comment button {
-  background: #d8d8d8;
-  width: 25em;
-  height: 2.5em;
-  color: #000;
-  border: none;
-  border-radius: 0 0 6px 6px;
-  padding: 7px 18px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 8px;
-  float: right;
-  margin-top: -4px;
-  transition: background 0.5s, color 0.2s;
-}
-.modal-comment button:hover {
-  background: #0597F2;
-  color: #fff;
-}
+ .modal-comment button {
+   background: #d8d8d8;
+   width: 25em;
+   height: 2.5em;
+   color: #000;
+   border: none;
+   border-radius: 0 0 6px 6px;
+   padding: 7px 18px;
+   font-size: 1rem;
+   font-weight: 500;
+   cursor: pointer;
+   margin-bottom: 8px;
+   float: right;
+   margin-top: -4px;
+   transition: background 0.5s, color 0.2s;
+ }
+ /* Smaller size for the specific submit button on desktop */
+ #modal-comment-submit {
+   width: 14em;
+   height: 2.2em;
+   padding: 6px 14px;
+   font-size: 0.95rem;
+ }
+ .modal-comment button:hover {
+   background: #0597F2;
+   color: #fff;
+ }
 #modal-comment-list {
   margin-top: 8px;
   font-size: 0.97rem;
@@ -469,6 +592,46 @@ main {
   font-size: 0.97rem;
   color: #555;
   margin-left: 1px;
+}
+/* Responsive modal */
+@media (max-width: 1200px) {
+  .modal-content { width: 72%; max-width: 900px; }
+  .modal-content img { height: 520px; }
+  .modal-thumbnails { gap: 8px; }
+  .modal-thumbnails img { width: 56px; height: 38px; }
+}
+@media (max-width: 1000px) {
+  .modal { padding: 20px 8px; }
+  .modal-content {
+    width: 92vw;
+    max-width: 92vw;
+    padding: 14px;
+    border-radius: 10px;
+    max-height: calc(100vh - 32px);
+    /* overflow-y: auto; scroll inside on small screens */
+  }
+  .modal-content img { height: 45vh; }
+  .modal-thumbnails { gap: 8px; }
+  .modal-thumbnails img { width: 56px; height: 38px; }
+  .button-trapezoid { width: 100%; }
+  .modal-content .close {
+    visibility: visible;
+    display: block;
+  }
+  .button-trapezoid { width: 100%; }
+}
+@media (max-width: 660px) {
+  .modal { padding: 12px 6px; }
+  .modal-content {
+    width: 92vw;
+    max-width: 92vw;
+    padding: 12px;
+    border-radius: 10px;
+    max-height: calc(100vh - 20px);
+  }
+  .modal-content img { height: 38vh; }
+  .modal-thumbnails img { width: 52px; height: 36px; }
+  .button-trapezoid { width: 100%; }
 }
 
 

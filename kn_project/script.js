@@ -385,33 +385,33 @@ window.addEventListener('scroll', function () {
   });
 });
 
-// snap to snap-target at first scroll and snap back to top when scroll back to top
-let hasSnapped = false;
-let isProgrammaticScroll = false;
-window.addEventListener('scroll', function () {
-  if (isProgrammaticScroll) return;
-  const scrollTop = window.scrollY;
-  const moveEl = document.querySelector('.move-on-scroll');
-  const snapTarget = document.querySelector('.snap-target');
-  if (!moveEl || !snapTarget) return;
+// // snap to snap-target at first scroll and snap back to top when scroll back to top
+// let hasSnapped = false;
+// let isProgrammaticScroll = false;
+// window.addEventListener('scroll', function () {
+//   if (isProgrammaticScroll) return;
+//   const scrollTop = window.scrollY;
+//   const moveEl = document.querySelector('.move-on-scroll');
+//   const snapTarget = document.querySelector('.snap-target');
+//   if (!moveEl || !snapTarget) return;
 
-  // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
-  const moveRect = moveEl.getBoundingClientRect();
-  const moveHeight = moveRect.height;
-  const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 74;
+//   // Tính vị trí snap: snap-target cao hơn moveEl 90% chiều cao của moveEl
+//   const moveRect = moveEl.getBoundingClientRect();
+//   const moveHeight = moveRect.height;
+//   const targetY = snapTarget.getBoundingClientRect().top + window.scrollY - moveHeight + 74;
 
-  if (scrollTop > 50 && !hasSnapped) {
-    isProgrammaticScroll = true;
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-    setTimeout(() => { isProgrammaticScroll = false; }, 500);
-    hasSnapped = true;
-  } else if (scrollTop < targetY && hasSnapped) {
-    isProgrammaticScroll = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => { isProgrammaticScroll = false; }, 500);
-    hasSnapped = false;
-  }
-});
+//   if (scrollTop > 50 && !hasSnapped) {
+//     isProgrammaticScroll = true;
+//     window.scrollTo({ top: targetY, behavior: 'smooth' });
+//     setTimeout(() => { isProgrammaticScroll = false; }, 500);
+//     hasSnapped = true;
+//   } else if (scrollTop < targetY && hasSnapped) {
+//     isProgrammaticScroll = true;
+//     window.scrollTo({ top: 0, behavior: 'smooth' });
+//     setTimeout(() => { isProgrammaticScroll = false; }, 500);
+//     hasSnapped = false;
+//   }
+// });
 
 // Nhấn vào .logo sẽ scroll về đầu trang
 document.querySelectorAll('.logo').forEach(logo => {
