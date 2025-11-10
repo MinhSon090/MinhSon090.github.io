@@ -108,6 +108,90 @@ nav a:hover { font-size: 18px; }
 #partner-btn:hover{ color: white; background-color: #4a90e2; }
 #register-btn-aa:hover{ background-color: #ddd; }
 
+/* Profile Container & Icon */
+.profile-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	position: relative;
+}
+.profile-icon {
+	background: transparent;
+	border: 2px solid #000;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	padding: 0;
+}
+.profile-icon:hover {
+	background-color: #f0f0f0;
+	transform: scale(1.05);
+}
+.profile-icon svg {
+	color: #000;
+}
+.profile-username {
+	font-weight: 600;
+	color: #000;
+	font-size: 14px;
+	max-width: 120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Profile Popup Menu */
+.profile-popup {
+	position: fixed;
+	top: 70px;
+	right: 20px;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+	z-index: 1000;
+	min-width: 220px;
+}
+.profile-popup-content {
+	display: flex;
+	flex-direction: column;
+	padding: 8px 0;
+}
+.profile-menu-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 20px;
+	color: #333;
+	text-decoration: none;
+	transition: background-color 0.2s ease;
+	cursor: pointer;
+}
+.profile-menu-item:hover {
+	background-color: #f5f5f5;
+}
+.profile-menu-item svg {
+	color: #666;
+	flex-shrink: 0;
+}
+.profile-menu-item span {
+	font-size: 14px;
+	font-weight: 500;
+}
+.profile-menu-item:last-child {
+	color: #d32f2f;
+}
+.profile-menu-item:last-child svg {
+	color: #d32f2f;
+}
+.profile-menu-item:last-child:hover {
+	background-color: #ffebee;
+}
+
 .vertical-divider {
 	display: inline-block;
 	width: 2px;
@@ -119,6 +203,7 @@ nav a:hover { font-size: 18px; }
 	box-shadow: 0 0 2px #bbb;
 }
 
+
 /* Responsive navigation behavior (same as main site) */
 @media (max-width: 1500px) { header { grid-template-columns: auto 1fr auto; } }
 @media (max-width: 1150px) { nav .nav-history { display: none; } }
@@ -127,4 +212,6 @@ nav a:hover { font-size: 18px; }
 @media (max-width: 840px)  { nav .nav-home { display: none; } }
 @media (max-width: 720px)  { #partner-btn, .vertical-divider { display: none; } }
 @media (max-width: 540px)  { .logo>span { display: none; } }
+
+
 

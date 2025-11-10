@@ -1,0 +1,24 @@
+{
+  "user#00002": [
+    {
+      "type": "Tất cả",
+      "area": "Khu vực",
+      "keyword": "",
+      "timestamp": "2025-10-20T14:03:13.040040"
+    },
+    {
+      "type": "Ký túc xá",
+      "area": "Khu vực",
+      "keyword": "",
+      "timestamp": "2025-10-20T14:02:53.363111"
+    }
+  ],
+  "user#00004": [
+    {
+      "type": "Loại hình",
+      "area": "Khu vực",
+      "keyword": "",
+      "timestamp": "2025-10-20T14:40:30.568017"
+    }
+  ]
+}

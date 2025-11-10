@@ -7,6 +7,7 @@
   <title>HolaHome</title>
   <link rel="icon" type="image/x-icon" href="logo/logo_v2.PNG">
   <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,14 +28,54 @@
       <a href="#" class="nav-contact">Liên hệ</a>
       <a href="#" class="nav-history">Lịch sử tìm kiếm</a>
     </nav>
+    
     <div class="right-menu">
       <a href="#" class="fav-link">Mục yêu thích</a>
       <p><a href="#" id="partner-btn">Trở thành đối tác</a></p>
       <span class="vertical-divider"></span>
       <p><a href="#" id="login-btn-aa">Đăng nhập</a></p>
       <p><a href="#" id="register-btn-aa">Đăng ký</a></p>
+      <!-- Profile icon (hidden by default, shown when logged in) -->
+      <div class="profile-container" style="display:none;">
+        <button class="profile-icon" id="profile-btn" aria-label="Profile">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <span class="profile-username"></span>
+      </div>
     </div>
   </header>
+
+
+
+
+  <!-- Profile Popup Menu -->
+  <div id="profile-popup" class="profile-popup" style="display:none">
+    <div class="profile-popup-content">
+      <a href="account/user_ui.html" class="profile-menu-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>Thông tin</span>
+      </a>
+      <a href="#" class="profile-menu-item" id="settings-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Cài đặt tài khoản</span>
+      </a>
+      <a href="#" class="profile-menu-item" id="logout-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Đăng xuất</span>
+      </a>
+    </div>
+  </div>
 
   <!-- Popup đăng nhập -->
   <div id="login-popup" class="login-popup" style="display:none">
@@ -63,7 +104,7 @@
       </div>
     </form>
   </div>
-  <!-- Popup đăng ký -->
+  <!-- Popup đăng ký user -->
   <div id="register-popup" class="login-popup" style="display:none">
     <span class="login-close" id="register-close">&times;</span>
     <form class="login-form" autocomplete="off">
@@ -71,7 +112,7 @@
       <input type="email" id="register-email" placeholder=" " required>
 
       <label>Username</label>
-      <input type="text" id="register-username" placeholder=" " required>
+      <input type="text" id="register-username" placeholder=" ">
 
       <label>Password <span>*</span></label>
       <input type="password" id="register-password" placeholder=" " required>
@@ -94,6 +135,40 @@
         <button type="button" class="login-btn-facebook"><img src="logo/facebook.png" alt="F"></button>
       </div>
     </form>
+  </div>
+
+  <!-- Popup đăng ký partner (tạm thời không hoạt động) -->
+  <div id="partner-popup" class="login-popup" style="display:none">
+    <span class="login-close" id="partner-close">&times;</span>
+    <form class="login-form" autocomplete="off">
+      <label>Email <span>*</span></label>
+      <input type="email" id="partner-email" placeholder=" " required disabled>
+
+      <label>Username</label>
+      <input type="text" id="partner-username" placeholder=" " required disabled>
+
+      <label>Password <span>*</span></label>
+      <input type="password" id="partner-password" placeholder=" " required disabled>
+
+      <label>Nhập lại Password <span>*</span></label>
+      <input type="password" id="partner-password2" placeholder=" " required disabled>
+
+      <div class="login-row">
+        <label class="remember-me">
+          <input type="checkbox" id="partner-accept" disabled>
+          <span class="checkmark"></span>
+          <p style="margin: 0;">Tôi đồng ý với <a href="#" style="text-decoration: none;">điều khoản</a></p>
+        </label>
+      </div>
+      <button type="button" class="login-btn-main" disabled>Đăng ký đối tác (tạm thời chưa mở)</button>
+      <div class="login-divider"></div>
+      <div class="login-socials">
+        <button type="button" class="login-btn-google" disabled><img src="logo/google.png" alt="G"></button>
+        <button type="button" class="login-btn-vnu" disabled><img src="logo/vnu.png" alt="A"></button>
+        <button type="button" class="login-btn-facebook" disabled><img src="logo/facebook.png" alt="F"></button>
+      </div>
+    </form>
+    <div style="text-align:center;color:#d32f2f;margin-top:10px;">Chức năng đăng ký đối tác sẽ mở sau!</div>
   </div>
 
 
@@ -233,31 +308,140 @@
       </div>
     </div>
   </div>
+  <!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbox Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <!-- Footer -->
-  <footer class="main-footer">
-    <div class="footer-topcontent">
-      <div>
-        <p>LMEO</p>
-        <p>LMEO</p>
-      </div>
-      <div>
-        <p>LMEO</p>
-      </div>
-      <div>
-        <p>LMEO</p>
-      </div>
-      <div>
-        <p>LMEO</p>
+  <!-- Nút mở chat -->
+  <button id="chatButton">💬</button>
+
+  <!-- Khung chat -->
+  <div id="chatBox">
+    <div class="chatHeader">
+      Haan - Hỗ trợ
+      <button id="closeChat">×</button>
+    </div>
+    <div class="chatBody">
+      <div class="chatMessage">
+        Xin chào! 👋<br>
+        Mình là Haan. Bạn cần hỗ trợ gì hôm nay?
       </div>
     </div>
-    <div class="footer-lowercontent">
-      <span>&copy; 2025 Hola Home</span>
-      <span> | Liên hệ: <a href="mailto:contact@holahome.vn">contact@holahome.vn</a></span>
-      <!-- <span> | Designed by MinhSon090</span> -->
+    
+    <!-- FAQ Suggestions Box -->
+    <div class="faqSuggestions" id="faqSuggestions">
+      <div class="faqTitle">
+        <span>💡 Câu hỏi thường gặp:</span>
+        <button class="faqToggle" id="faqToggleBtn" aria-label="Toggle FAQ">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="faqItems" id="faqItems">
+        <div class="faqItem" data-faq-index="0">
+          <span class="faqQuestion">Đang tải câu hỏi...</span>
+        </div>
+        <div class="faqItem" data-faq-index="1">
+          <span class="faqQuestion">Đang tải câu hỏi...</span>
+        </div>
+      </div>
     </div>
-  </footer>
+    
+    <div class="chatInput">
+      <input type="text" id="chatInputField" placeholder="Nhập tin nhắn...">
+      <button id="chatSendBtn">Gửi</button>
+    </div>
+  </div>
+
+  <script src="chatbot.js"></script>
+</body>
+</html>
+
+
+   <!-- Footer Section -->
+    <footer class="younghouse-footer">
+        <div class="footer-container">
+            <!-- Logo và Slogan -->
+            <div class="footer-brand">
+                <h2 class="brand-name">HOLA HOME</h2>
+                <p class="slogan">Hơn cả mái nhà - Đó là mái ấm</p>
+                <p class="brand-description">
+                    Khi nhà trọ cũng là nhà, HOLA HO tin rằng một không gian tiện nghi, lối sống hiện đại là nền móng để cư dân trẻ có thể tự do sống tích cực và thành công trong cuộc sống.
+                </p>
+            </div>
+
+            <!-- Liên kết nhanh -->
+            <div class="footer-links">
+                <div class="links-column">
+                    <h3>Liên kết nhanh</h3>
+                    <div class="links-grid">
+                        <div class="link-group">
+                            <a href="#" class="footer-link">Trang chủ</a>
+                            <a href="#" class="footer-link">Hệ thống nhà trọ</a>
+                            <a href="#" class="footer-link">Về HOLA HOME</a>
+                            <a href="#" class="footer-link">Liên hệ</a>
+                        </div>
+                        <div class="link-group">
+                            <a href="#" class="footer-link">Cho thuê phòng trọ</a>
+                            <a href="#" class="footer-link">Tìm kiếm phòng trọ</a>
+                            <div class="contact-info">
+                                <p>Hỗ trợ kỹ thuật: <strong>XXXXXXXXX</strong></p>
+                                <p>Tư vấn hợp đồng: <strong>XXXXXXXXX</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin liên hệ -->
+            <div class="footer-contact">
+                <h3>Thông tin liên hệ</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Số  đường  - -  - Thạch Thất - Hà Nội</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>XXXXXXX</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>holahome@gmail.com</span>
+                </div>
+            </div>
+
+            <!-- Đăng ký nhận tin -->
+            <div class="footer-newsletter">
+                <h3>Đăng ký nhận tin</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email của bạn" class="email-input">
+                    <button class="subscribe-btn">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    © 2025 HOLA HOME. Designed by Minh Son.
+                </div>
+                <div class="bottom-links">
+                    <a href="#" class="bottom-link">Chính sách bảo mật</a>
+                    <a href="#" class="bottom-link">Điều khoản sử dụng</a>
+                    <a href="#" class="bottom-link">Sitemap</a>
+                    <span class="visitor-count">Tổng số lượt truy cập: 0</span>
+                </div>
+            </div>
+        </div>
+    </footer>
   <script src="script_backend.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>
 

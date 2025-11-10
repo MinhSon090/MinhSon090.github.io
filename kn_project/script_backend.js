@@ -1,5 +1,5 @@
-// API Configuration
-const API_BASE_URL = 'http://localhost:5500/api';
+// API Configuration: use same origin to avoid localhost/IP mismatch
+const API_BASE_URL = `${window.location.origin}/api`;
 
 // Auth state
 let currentUser = null;
@@ -14,10 +14,50 @@ if (authToken) {
 // --- Authentication Functions ---
 function updateUIForLoggedInUser() {
   if (currentUser) {
+    // Hide login and register buttons
     const loginBtn = document.getElementById('login-btn-aa');
     const registerBtn = document.getElementById('register-btn-aa');
-    if (loginBtn) loginBtn.textContent = currentUser.username;
+    const profileContainer = document.querySelector('.profile-container');
+    const profileUsername = document.querySelector('.profile-username');
+    
+    if (loginBtn) loginBtn.style.display = 'none';
     if (registerBtn) registerBtn.style.display = 'none';
+    
+    // Show profile icon and username
+    if (profileContainer) {
+      profileContainer.style.display = 'flex';
+      if (profileUsername) {
+        // Use username if available, otherwise use ID
+        profileUsername.textContent = currentUser.username || currentUser.id;
+      }
+    }
+  }
+}
+
+function logout() {
+  // Clear localStorage
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('currentUser');
+  authToken = null;
+  currentUser = null;
+  
+  // Reset UI
+  const loginBtn = document.getElementById('login-btn-aa');
+  const registerBtn = document.getElementById('register-btn-aa');
+  const profileContainer = document.querySelector('.profile-container');
+  const profilePopup = document.getElementById('profile-popup');
+  
+  if (loginBtn) loginBtn.style.display = '';
+  if (registerBtn) registerBtn.style.display = '';
+  if (profileContainer) profileContainer.style.display = 'none';
+  if (profilePopup) profilePopup.style.display = 'none';
+  
+  alert('Đã đăng xuất thành công!');
+  // Optionally redirect to home
+  if (window.location.pathname.includes('account')) {
+    window.location.href = '../index.html';
+  } else {
+    window.location.reload();
   }
 }
 
@@ -69,7 +109,7 @@ document.querySelector('#register-popup form').addEventListener('submit', async 
     const response = await fetch(`${API_BASE_URL}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, username, password })
+        body: JSON.stringify({ email, username, password, account_type: 'user' })
     });
 
     const data = await response.json();
@@ -90,6 +130,23 @@ document.querySelector('#register-popup form').addEventListener('submit', async 
   }
 });
 
+  // Partner button opens disabled popup
+  const partnerBtn = document.getElementById('partner-btn');
+  const partnerPopup = document.getElementById('partner-popup');
+  const partnerClose = document.getElementById('partner-close');
+  if (partnerBtn && partnerPopup) {
+    partnerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      partnerPopup.style.display = 'flex';
+      document.getElementById('register-popup').style.display = 'none';
+      document.getElementById('login-popup').style.display = 'none';
+    });
+  }
+  if (partnerClose && partnerPopup) {
+    partnerClose.addEventListener('click', () => {
+      partnerPopup.style.display = 'none';
+    });
+  }
 // --- Search & Sort ---
 document.querySelector(".btn-search").addEventListener("click", async () => {
   const loaiHinh = document.getElementById("filter-type").value.trim();
@@ -246,50 +303,12 @@ function attachCardEvents() {
     card.addEventListener("click", async () => {
       const item = propertyData.find(p => p.id === card.id);
       if (item) {
-        let images = [];
-        if (Array.isArray(item.img)) images = item.img;
-        else if (item.img) images = [item.img];
-        else images = [];
-
-        modalImg.src = images[0] || "";
-        modalImg.alt = item.title;
-        modalTitle.innerHTML = item.title;
-        modalAddress.innerHTML = item.address;
-        modalPrice.innerHTML = item.price;
-
-        // Load description
-        if (item.description && typeof item.description === 'string' && (item.description.endsWith('.txt') || item.description.endsWith('.html'))) {
-          fetch(item.description)
-            .then(res => res.text())
-            .then(text => {
-              modalDesc.innerHTML = text;
-            })
-            .catch(() => {
-              modalDesc.innerText = "Không thể tải mô tả.";
-            });
-        } else {
-          modalDesc.innerHTML = item.description ? item.description : "Không có mô tả";
-        }
-
-        // Thumbnails
-        modalThumbnails.innerHTML = "";
-        images.forEach((src, idx) => {
-          const thumb = document.createElement("img");
-          thumb.src = src;
-          thumb.className = idx === 0 ? "active" : "";
-          thumb.onclick = () => {
-            modalImg.src = src;
-            modalThumbnails.querySelectorAll("img").forEach(i => i.classList.remove("active"));
-            thumb.classList.add("active");
-          };
-          modalThumbnails.appendChild(thumb);
-        });
-
-        // Load ratings and comments from backend
-        await loadRatingsAndComments(card.id);
+        // Update URL without page reload using hash
+        const propertyUrl = `?room=${item.id}`;
+        window.history.pushState({ propertyId: item.id }, '', propertyUrl);
+        
+        openPropertyModal(item);
       }
-      modal.style.display = "block";
-      document.body.style.overflow = "hidden";
     });
   });
 
@@ -299,10 +318,70 @@ function attachCardEvents() {
   });
 }
 
+// Open property modal with data
+async function openPropertyModal(item) {
+  const modal = document.getElementById("propertyModal");
+  const modalImg = document.getElementById("modal-img");
+  const modalThumbnails = document.getElementById("modal-thumbnails");
+  const modalTitle = document.getElementById("modal-title");
+  const modalAddress = document.getElementById("modal-address");
+  const modalPrice = document.getElementById("modal-price");
+  const modalDesc = document.getElementById("modal-description");
+  
+  let images = [];
+  if (Array.isArray(item.img)) images = item.img;
+  else if (item.img) images = [item.img];
+  else images = [];
+
+  modalImg.src = images[0] || "";
+  modalImg.alt = item.title;
+  modalTitle.innerHTML = item.title;
+  modalAddress.innerHTML = item.address;
+  modalPrice.innerHTML = item.price;
+
+  // Load description
+  if (item.description && typeof item.description === 'string' && (item.description.endsWith('.txt') || item.description.endsWith('.html'))) {
+    fetch(item.description)
+      .then(res => res.text())
+      .then(text => {
+        modalDesc.innerHTML = text;
+      })
+      .catch(() => {
+        modalDesc.innerText = "Không thể tải mô tả.";
+      });
+  } else {
+    modalDesc.innerHTML = item.description ? item.description : "Không có mô tả";
+  }
+
+  // Thumbnails
+  modalThumbnails.innerHTML = "";
+  images.forEach((src, idx) => {
+    const thumb = document.createElement("img");
+    thumb.src = src;
+    thumb.className = idx === 0 ? "active" : "";
+    thumb.onclick = () => {
+      modalImg.src = src;
+      modalThumbnails.querySelectorAll("img").forEach(i => i.classList.remove("active"));
+      thumb.classList.add("active");
+    };
+    modalThumbnails.appendChild(thumb);
+  });
+
+  // Load ratings and comments from backend
+  await loadRatingsAndComments(item.id);
+  
+  modal.style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
 function closeModal() {
   const modal = document.getElementById("propertyModal");
   modal.style.display = "none";
   document.body.style.overflow = "";
+  
+  // Remove query parameter and return to clean URL
+  const baseUrl = window.location.origin + window.location.pathname;
+  window.history.pushState({}, '', baseUrl);
 }
 
 // --- Ratings & Comments Integration ---
@@ -433,11 +512,11 @@ async function saveRating(propertyId, rating) {
 }
 
 // --- Popup Controls ---
-document.querySelectorAll('a,button').forEach(el => {
-  if (el.textContent.trim().toLowerCase().includes('đăng nhập')) {
-    el.addEventListener('click', toggleLoginPopup);
-  }
-});
+// Login button in header opens popup
+const headerLoginBtn = document.getElementById('login-btn-aa');
+if (headerLoginBtn) {
+  headerLoginBtn.addEventListener('click', toggleLoginPopup);
+}
 
 function toggleLoginPopup(e) {
   e.preventDefault();
@@ -454,11 +533,11 @@ function closeLoginPopup() {
   document.getElementById('login-popup').style.display = 'none';
 }
 
-document.querySelectorAll('a,button').forEach(el => {
-  if (el.textContent.trim().toLowerCase().includes('đăng ký')) {
-    el.addEventListener('click', toggleRegisterPopup);
-  }
-});
+// Register button in header opens popup
+const headerRegisterBtn = document.getElementById('register-btn-aa');
+if (headerRegisterBtn) {
+  headerRegisterBtn.addEventListener('click', toggleRegisterPopup);
+}
 
 function toggleRegisterPopup(e) {
   e.preventDefault();
@@ -545,3 +624,95 @@ document.querySelectorAll('.nav-home').forEach(link => {
   });
 });
 
+// --- Profile Popup Controls ---
+const profileBtn = document.getElementById('profile-btn');
+const profilePopup = document.getElementById('profile-popup');
+const logoutBtn = document.getElementById('logout-btn');
+
+if (profileBtn && profilePopup) {
+  profileBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    profilePopup.style.display = profilePopup.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  // Close popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!profilePopup.contains(e.target) && e.target !== profileBtn) {
+      profilePopup.style.display = 'none';
+    }
+  });
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    logout();
+  });
+}
+
+// --- URL Routing for Property Links ---
+// Handle browser back/forward buttons
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.propertyId) {
+    // User navigated to a property URL
+    const item = propertyData.find(p => p.id === event.state.propertyId);
+    if (item) {
+      openPropertyModal(item);
+    }
+  } else {
+    // User navigated back to home
+    closeModal();
+  }
+});
+
+// Handle direct URL access (when page loads with property URL)
+window.addEventListener('DOMContentLoaded', function() {
+  // Check for query parameter ?room=xxx
+  const urlParams = new URLSearchParams(window.location.search);
+  const propertyId = urlParams.get('room');
+  
+  if (propertyId) {
+    // Wait for propertyData to load, then open modal
+    const checkData = setInterval(() => {
+      if (propertyData && propertyData.length > 0) {
+        clearInterval(checkData);
+        const item = propertyData.find(p => p.id === propertyId);
+        if (item) {
+          openPropertyModal(item);
+        } else {
+          // Property not found, remove query parameter
+          const baseUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, '', baseUrl);
+        }
+      }
+    }, 100);
+  }
+});
+
+const chatButton = document.getElementById('chatButton');
+const chatBox = document.getElementById('chatBox');
+const closeChat = document.getElementById('closeChat');
+
+// Mở chatbox
+chatButton.addEventListener('click', () => {
+  chatBox.style.display = 'flex';
+  chatButton.style.display = 'none';
+});
+
+// Đóng chat khi nhấn nút X
+closeChat.addEventListener('click', () => {
+  chatBox.style.display = 'none';
+  chatButton.style.display = 'flex';
+});
+
+// Đóng chat khi click ra ngoài khung chat
+document.addEventListener('click', (event) => {
+  const isClickInsideChat = chatBox.contains(event.target);
+  const isClickChatButton = chatButton.contains(event.target);
+
+  // Nếu chat đang mở, và click không nằm trong chatBox hoặc nút chatButton
+  if (chatBox.style.display === 'flex' && !isClickInsideChat && !isClickChatButton) {
+    chatBox.style.display = 'none';
+    chatButton.style.display = 'flex';
+  }
+});

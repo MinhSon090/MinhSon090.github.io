@@ -9,13 +9,15 @@
 	<link rel="stylesheet" href="../user_ui.css">
 	<meta name="robots" content="noindex">
 	<meta name="referrer" content="same-origin">
-  
+	
+
 </head>
 
 <body>
 	<img src="../images/4.jpg" class="bg-image" alt="Background Image">
 	<!-- Header copied from index.html (paths adjusted) -->
 	<header>
+		
 		<div class="logo">
 			<button class="hamburger" aria-label="Menu" aria-expanded="false">
 				<span></span>
@@ -36,8 +38,44 @@
 			<span class="vertical-divider"></span>
 			<p><a href="#" id="login-btn-aa">Đăng nhập</a></p>
 			<p><a href="#" id="register-btn-aa">Đăng ký</a></p>
+			<!-- Profile icon (hidden by default, shown when logged in) -->
+			<div class="profile-container" style="display:none;">
+				<button class="profile-icon" id="profile-btn" aria-label="Profile">
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+						<path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+					</svg>
+				</button>
+				<span class="profile-username"></span>
+			</div>
 		</div>
 	</header>
+
+	<!-- Profile Popup Menu -->
+	<div id="profile-popup" class="profile-popup" style="display:none">
+		<div class="profile-popup-content">
+			<a href="user_ui.html" class="profile-menu-item">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+					<path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2"/>
+				</svg>
+				<span>Thông tin</span>
+			</a>
+			<a href="#" class="profile-menu-item" id="settings-btn">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+					<path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+				</svg>
+				<span>Cài đặt tài khoản</span>
+			</a>
+			<a href="#" class="profile-menu-item" id="logout-btn">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<span>Đăng xuất</span>
+			</a>
+		</div>
+	</div>
 
 	<!-- Optional: keep popup DOM to avoid broken interactions if scripts are added later -->
 	<div id="login-popup" class="login-popup" style="display:none">
@@ -100,11 +138,48 @@
 	</div>
 
 	<main>
-
+		
 	</main>
 
 		<!-- Lightweight behaviors for this page only: nav scroll + popup toggles -->
 		<script>
+			// Auth state management for this page
+			let currentUser = null;
+			let authToken = localStorage.getItem('authToken');
+			
+			if (authToken) {
+				currentUser = JSON.parse(localStorage.getItem('currentUser'));
+				updateUIForLoggedInUser();
+			}
+			
+			function updateUIForLoggedInUser() {
+				if (currentUser) {
+					const loginBtn = document.getElementById('login-btn-aa');
+					const registerBtn = document.getElementById('register-btn-aa');
+					const profileContainer = document.querySelector('.profile-container');
+					const profileUsername = document.querySelector('.profile-username');
+					
+					if (loginBtn) loginBtn.style.display = 'none';
+					if (registerBtn) registerBtn.style.display = 'none';
+					
+					if (profileContainer) {
+						profileContainer.style.display = 'flex';
+						if (profileUsername) {
+							profileUsername.textContent = currentUser.username || currentUser.id;
+						}
+					}
+				}
+			}
+			
+			function logout() {
+				localStorage.removeItem('authToken');
+				localStorage.removeItem('currentUser');
+				authToken = null;
+				currentUser = null;
+				alert('Đã đăng xuất thành công!');
+				window.location.href = '../index.html';
+			}
+			
 			// Scroll to bottom when clicking on Liên hệ in nav
 			document.querySelectorAll('.nav-contact').forEach(link => {
 				link.addEventListener('click', (e) => {
@@ -147,6 +222,31 @@
 			}
 			if (registerClose) {
 				registerClose.addEventListener('click', () => hide(registerPopup));
+			}
+			
+			// Profile popup controls
+			const profileBtn = document.getElementById('profile-btn');
+			const profilePopup = document.getElementById('profile-popup');
+			const logoutBtn = document.getElementById('logout-btn');
+
+			if (profileBtn && profilePopup) {
+				profileBtn.addEventListener('click', (e) => {
+					e.stopPropagation();
+					profilePopup.style.display = profilePopup.style.display === 'block' ? 'none' : 'block';
+				});
+				
+				document.addEventListener('click', (e) => {
+					if (!profilePopup.contains(e.target) && e.target !== profileBtn) {
+						profilePopup.style.display = 'none';
+					}
+				});
+			}
+
+			if (logoutBtn) {
+				logoutBtn.addEventListener('click', (e) => {
+					e.preventDefault();
+					logout();
+				});
 			}
 		</script>
 </body>
