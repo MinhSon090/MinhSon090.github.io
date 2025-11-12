@@ -30,7 +30,23 @@
     </nav>
     
     <div class="right-menu">
-      <a href="#" class="fav-link">Mục yêu thích</a>
+      <div class="favorites-container">
+        <a href="#" class="fav-link" id="favorites-btn">
+          Mục yêu thích
+          <span class="favorites-count" style="display:none;">0</span>
+        </a>
+        <div class="favorites-dropdown" id="favorites-dropdown">
+          <div class="favorites-header">
+            <h3>Mục yêu thích</h3>
+          </div>
+          <div class="favorites-list" id="favorites-list">
+            <div class="favorites-empty">
+              <i class="fas fa-heart"></i>
+              <p>Chưa có phòng trọ yêu thích</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <p><a href="#" id="partner-btn">Trở thành đối tác</a></p>
       <span class="vertical-divider"></span>
       <p><a href="#" id="login-btn-aa">Đăng nhập</a></p>
@@ -48,7 +64,8 @@
     </div>
   </header>
 
-
+  <!-- Backdrop for login/register popups -->
+  <div id="auth-backdrop" class="auth-backdrop"></div>
 
 
   <!-- Profile Popup Menu -->
@@ -200,7 +217,10 @@
       </select>
 
       <!-- Ô tìm kiếm -->
-      <input type="text" placeholder="Tìm theo tiêu đề, địa chỉ...">
+      <div class="search-input-wrapper">
+        <input type="text" id="search-input" placeholder="Tìm theo tiêu đề, địa chỉ...">
+        <div id="search-history-dropdown" class="search-history-dropdown"></div>
+      </div>
 
       <!-- Sắp xếp -->
       <select id="sapXepGia">
@@ -282,9 +302,31 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <div class="modal-body">
-        <img id="modal-img" src="" alt="">
+        <div class="modal-image-container">
+          <img id="modal-img" src="" alt="">
+          <button class="image-nav-btn prev-btn" id="prev-image-btn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="image-nav-btn next-btn" id="next-image-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="image-counter" id="image-counter">1 / 1</div>
+        </div>
         <div class="modal-thumbnails" id="modal-thumbnails"></div>
-        <h3 id="modal-title"></h3>
+        <div class="modal-title-row">
+          <h3 id="modal-title"></h3>
+          <button class="booking-btn" id="booking-btn" title="Đặt lịch hẹn xem phòng">
+            <i class="fas fa-calendar-check"></i>
+            <span>Đặt lịch hẹn</span>
+          </button>
+          <button class="map-location-btn" id="map-location-btn" title="Xem trên bản đồ">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Bản đồ</span>
+          </button>
+          <button class="favorite-heart-btn" title="Lưu yêu thích">
+            <i class="fas fa-heart favorite-heart"></i>
+          </button>
+        </div>
         <p id="modal-address"></p>
         <p id="modal-price"></p>
         <p id="modal-description"></p>
@@ -308,6 +350,18 @@
       </div>
     </div>
   </div>
+
+  <!-- Favorites Modal -->
+  <div id="favoritesModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeFavoritesModal">&times;</span>
+      <h2>Mục yêu thích</h2>
+      <div id="favoritesList" class="favorites-list">
+        <!-- Favorite items will be injected here -->
+      </div>
+    </div>
+  </div>
+
   <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -319,18 +373,20 @@
 <body>
 
   <!-- Nút mở chat -->
-  <button id="chatButton">💬</button>
+  <button id="chatButton">
+    <i class="fas fa-comment-dots"></i>
+  </button>
 
   <!-- Khung chat -->
   <div id="chatBox">
     <div class="chatHeader">
-      Haan - Hỗ trợ
+      Haan36 - Hỗ trợ
       <button id="closeChat">×</button>
     </div>
     <div class="chatBody">
-      <div class="chatMessage">
+      <div class="chatMessage botMessage">
         Xin chào! 👋<br>
-        Mình là Haan. Bạn cần hỗ trợ gì hôm nay?
+        Mình là Haan36, bạn cần hỗ trợ gì?
       </div>
     </div>
     
@@ -358,7 +414,152 @@
     </div>
   </div>
 
+  <!-- Search History Modal -->
+  <div id="search-history-modal" class="info-modal">
+    <div class="info-modal-content">
+      <div class="info-modal-header">
+        <h2><i class="fas fa-clock-rotate-left"></i> Lịch sử tìm kiếm</h2>
+        <button class="info-modal-close" onclick="closeSearchHistoryModal()">&times;</button>
+      </div>
+      <div class="info-modal-body">
+        <div id="history-modal-list" class="history-modal-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="info-modal">
+    <div class="info-modal-content">
+      <div class="info-modal-header">
+        <h3><i class="fas fa-phone"></i> Liên hệ với chúng tôi</h3>
+        <button class="info-modal-close" onclick="closeContactModal()">&times;</button>
+      </div>
+      <div class="info-modal-body">
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div class="contact-item-content">
+              <div class="contact-item-label">Địa chỉ</div>
+              <p class="contact-item-text">Số  đường  - -  - Thạch Thất - Hà Nội</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <div class="contact-item-content">
+              <div class="contact-item-label">Điện thoại</div>
+              <p class="contact-item-text"><a href="tel:XXXXXXX" style="color: #667eea; text-decoration: none;">XXXXXXX</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div class="contact-item-content">
+              <div class="contact-item-label">Email</div>
+              <p class="contact-item-text"><a href="mailto:holahome@gmail.com" style="color: #667eea; text-decoration: none;">holahome@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div class="contact-item-content">
+              <div class="contact-item-label">Giờ làm việc</div>
+              <p class="contact-item-text">Thứ 2 - Chủ nhật: 8:00 - 20:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://zalo.me" target="_blank" class="social-link" title="Zalo">
+            <i class="fas fa-comment-dots"></i>
+          </a>
+          <a href="https://m.me" target="_blank" class="social-link" title="Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Appointment Modal -->
+  <div id="booking-modal" class="info-modal">
+    <div class="info-modal-content booking-modal-content">
+      <div class="info-modal-header">
+        <h3><i class="fas fa-calendar-check"></i> Đặt lịch hẹn xem phòng</h3>
+        <button class="info-modal-close" onclick="closeBookingModal()">&times;</button>
+      </div>
+      <div class="info-modal-body">
+        <form id="booking-form">
+          <div class="booking-property-info" id="booking-property-info">
+            <img src="" alt="" id="booking-property-img">
+            <div>
+              <div class="booking-property-title" id="booking-property-title"></div>
+              <div class="booking-property-price" id="booking-property-price"></div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="booking-name">
+              <i class="fas fa-user"></i> Họ và tên *
+            </label>
+            <input type="text" id="booking-name" name="name" required placeholder="Nhập họ và tên của bạn">
+          </div>
+          
+          <div class="form-group">
+            <label for="booking-phone">
+              <i class="fas fa-phone"></i> Số điện thoại *
+            </label>
+            <input type="tel" id="booking-phone" name="phone" required placeholder="Nhập số điện thoại">
+          </div>
+          
+          <div class="form-group">
+            <label for="booking-cccd">
+              <i class="fas fa-id-card"></i> Số CCCD *
+            </label>
+            <input type="text" id="booking-cccd" name="cccd" required pattern="[0-9]{12}" maxlength="12" placeholder="Nhập 12 số CCCD">
+            <small class="form-hint">Nhập đầy đủ 12 số để xác thực danh tính</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="booking-email">
+              <i class="fas fa-envelope"></i> Email
+            </label>
+            <input type="email" id="booking-email" name="email" readonly placeholder="Email của bạn">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="booking-date">
+                <i class="fas fa-calendar"></i> Ngày hẹn *
+              </label>
+              <input type="date" id="booking-date" name="date" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="booking-time">
+                <i class="fas fa-clock"></i> Giờ hẹn *
+              </label>
+              <input type="time" id="booking-time" name="time" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="booking-note">
+              <i class="fas fa-comment"></i> Ghi chú
+            </label>
+            <textarea id="booking-note" name="note" rows="3" placeholder="Ghi chú thêm (nếu có)"></textarea>
+          </div>
+          
+          <button type="submit" class="booking-submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Gửi yêu cầu đặt lịch
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="chatbot.js"></script>
+
 </body>
 </html>
 
@@ -435,7 +636,10 @@
                     <a href="#" class="bottom-link">Chính sách bảo mật</a>
                     <a href="#" class="bottom-link">Điều khoản sử dụng</a>
                     <a href="#" class="bottom-link">Sitemap</a>
-                    <span class="visitor-count">Tổng số lượt truy cập: 0</span>
+                    <span class="visitor-stats">
+                        <i class="fas fa-users"></i> <span id="online-count">0</span> đang online | 
+                        <i class="fas fa-eye"></i> <span id="total-visits">0</span> lượt truy cập
+                    </span>
                 </div>
             </div>
         </div>

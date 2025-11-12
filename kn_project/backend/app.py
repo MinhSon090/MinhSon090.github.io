@@ -3,12 +3,13 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
+import re
 from datetime import datetime, timedelta
 import jwt
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Load environment variables for Gemini API
+# Load environment variables for API keys
 load_dotenv()
 
 app = Flask(__name__)
@@ -18,13 +19,25 @@ CORS(app)  # Enable CORS for all routes
 app.config['SECRET_KEY'] = 'your-secret-key-change-in-production'
 app.config['DATA_DIR'] = os.path.join(os.path.dirname(os.path.dirname(__file__)))
 
-# Configure Gemini AI
+# AI Configuration - Support both Gemini and OpenAI
+USE_OPENAI = os.getenv('USE_OPENAI', 'false').lower() == 'true'
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-if GEMINI_API_KEY:
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+# Configure AI based on settings
+if USE_OPENAI and OPENAI_API_KEY:
+    try:
+        import openai
+        openai.api_key = OPENAI_API_KEY
+        print('✅ OpenAI GPT configured')
+    except ImportError:
+        print('⚠️ WARNING: openai package not installed. Run: pip install openai')
+        USE_OPENAI = False
+elif GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
     print('✅ Gemini API configured')
 else:
-    print('⚠️ WARNING: GEMINI_API_KEY not found in .env file!')
+    print('⚠️ WARNING: No AI API key found in .env file!')
 
 # System prompt cho chatbot phòng trọ
 CHATBOT_SYSTEM_PROMPT = """Bạn là trợ lý tư vấn phòng trọ ở khu vực Hòa Lạc, Hà Nội. 
@@ -446,6 +459,207 @@ def add_search_history():
     
     return jsonify({'message': 'Đã lưu lịch sử tìm kiếm'}), 200
 
+# Get favorites with details
+@app.route('/api/favorites/<user_id>', methods=['GET'])
+def get_favorites_with_details(user_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    favorites = load_json(FAVORITES_FILE)
+    user_favorites = favorites.get(user_id, [])
+    
+    # Load properties data to get details
+    try:
+        properties = load_json('data.json', subfolder=None)
+        favorite_items = []
+        
+        for prop_id in user_favorites:
+            # Find property by ID
+            for prop in properties.values():
+                if isinstance(prop, list):
+                    for item in prop:
+                        if item.get('id') == prop_id or item.get('property_id') == prop_id:
+                            favorite_items.append({
+                                'id': prop_id,
+                                'title': item.get('title') or item.get('name'),
+                                'created_at': datetime.utcnow().isoformat()
+                            })
+                elif isinstance(prop, dict) and (prop.get('id') == prop_id or prop.get('property_id') == prop_id):
+                    favorite_items.append({
+                        'id': prop_id,
+                        'title': prop.get('title') or prop.get('name'),
+                        'created_at': datetime.utcnow().isoformat()
+                    })
+        
+        return jsonify({'favorites': favorite_items}), 200
+    except:
+        return jsonify({'favorites': []}), 200
+
+# Remove from favorites (with user_id)
+@app.route('/api/favorites/<user_id>/<property_id>', methods=['DELETE'])
+def remove_favorite_v2(user_id, property_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    favorites = load_json(FAVORITES_FILE)
+    
+    if user_id in favorites and property_id in favorites[user_id]:
+        favorites[user_id].remove(property_id)
+        save_json(FAVORITES_FILE, favorites)
+        return jsonify({'message': 'Đã xóa khỏi yêu thích'}), 200
+    
+    return jsonify({'message': 'Không tìm thấy trong danh sách yêu thích'}), 404
+
+# Get search history (with user_id)
+@app.route('/api/search-history/<user_id>', methods=['GET'])
+def get_search_history_v2(user_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    history = load_json(SEARCH_HISTORY_FILE)
+    user_history = history.get(user_id, [])
+    
+    return jsonify({'history': user_history}), 200
+
+# Remove from search history
+@app.route('/api/search-history/<user_id>/<history_id>', methods=['DELETE'])
+def remove_search_history(user_id, history_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    history = load_json(SEARCH_HISTORY_FILE)
+    
+    if user_id in history:
+        history[user_id] = [item for item in history[user_id] if item.get('id') != history_id]
+        save_json(SEARCH_HISTORY_FILE, history)
+        return jsonify({'message': 'Đã xóa khỏi lịch sử'}), 200
+    
+    return jsonify({'message': 'Không tìm thấy'}), 404
+
+# Update user username
+@app.route('/api/user/<user_id>/update-username', methods=['PUT'])
+def update_username(user_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    data = request.get_json()
+    new_username = data.get('username', '').strip()
+    
+    if not new_username:
+        return jsonify({'message': 'Tên đăng nhập không được để trống'}), 400
+    
+    if len(new_username) < 2:
+        return jsonify({'message': 'Tên đăng nhập phải có ít nhất 2 ký tự'}), 400
+    
+    accounts = load_json(ACCOUNTS_FILE, subfolder='account')
+    users = accounts.get('users', {})
+    
+    # Check if username already exists (by other users)
+    for uid, user_data in users.items():
+        if uid != user_id and user_data.get('username') == new_username:
+            return jsonify({'message': 'Tên đăng nhập đã tồn tại'}), 400
+    
+    if user_id in users:
+        users[user_id]['username'] = new_username
+        accounts['users'] = users
+        save_json(ACCOUNTS_FILE, accounts, subfolder='account')
+        return jsonify({'message': 'Cập nhật tên đăng nhập thành công'}), 200
+    
+    return jsonify({'message': 'Người dùng không tồn tại'}), 404
+
+# Update user email
+@app.route('/api/user/<user_id>/update-email', methods=['PUT'])
+def update_email(user_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    data = request.get_json()
+    new_email = data.get('email', '').strip()
+    
+    if not new_email:
+        return jsonify({'message': 'Email không được để trống'}), 400
+    
+    # Validate email format
+    if not re.match(r'^[^\s@]+@[^\s@]+\.[^\s@]+$', new_email):
+        return jsonify({'message': 'Email không hợp lệ'}), 400
+    
+    accounts = load_json(ACCOUNTS_FILE, subfolder='account')
+    users = accounts.get('users', {})
+    
+    # Check if email already exists (by other users)
+    for uid, user_data in users.items():
+        if uid != user_id and user_data.get('email') == new_email:
+            return jsonify({'message': 'Email đã được đăng ký'}), 400
+    
+    if user_id in users:
+        users[user_id]['email'] = new_email
+        accounts['users'] = users
+        save_json(ACCOUNTS_FILE, accounts, subfolder='account')
+        return jsonify({'message': 'Cập nhật email thành công'}), 200
+    
+    return jsonify({'message': 'Người dùng không tồn tại'}), 404
+
+# Update user password
+@app.route('/api/user/<user_id>/update-password', methods=['PUT'])
+def update_password(user_id):
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    current_user_id = verify_token(token)
+    
+    if not current_user_id or current_user_id != user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    data = request.get_json()
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    
+    if not current_password or not new_password:
+        return jsonify({'message': 'Vui lòng điền tất cả các trường'}), 400
+    
+    if len(new_password) < 6:
+        return jsonify({'message': 'Mật khẩu phải có ít nhất 6 ký tự'}), 400
+    
+    accounts = load_json(ACCOUNTS_FILE, subfolder='account')
+    users = accounts.get('users', {})
+    
+    if user_id not in users:
+        return jsonify({'message': 'Người dùng không tồn tại'}), 404
+    
+    user = users[user_id]
+    
+    # Verify current password
+    try:
+        is_valid = check_password_hash(user.get('password', ''), current_password)
+    except:
+        is_valid = False
+    
+    if not is_valid:
+        return jsonify({'message': 'Mật khẩu hiện tại không đúng'}), 401
+    
+    # Update password
+    users[user_id]['password'] = generate_password_hash(new_password)
+    accounts['users'] = users
+    save_json(ACCOUNTS_FILE, accounts, subfolder='account')
+    
+    return jsonify({'message': 'Cập nhật mật khẩu thành công'}), 200
+
 # ============================================
 # CHATBOT WITH GOOGLE GEMINI AI
 # ============================================
@@ -490,51 +704,98 @@ def chat():
                 'response': 'Bạn chưa nhập câu hỏi. Hãy hỏi tôi về phòng trọ nhé! 😊'
             }), 400
         
-        # Check if API key exists
-        if not GEMINI_API_KEY:
-            print('❌ GEMINI_API_KEY not found in environment variables')
+        # Choose AI model based on configuration
+        if USE_OPENAI and OPENAI_API_KEY:
+            # Use OpenAI GPT
+            try:
+                import openai
+                
+                # Build conversation messages
+                messages = [
+                    {"role": "system", "content": CHATBOT_SYSTEM_PROMPT}
+                ]
+                
+                # Add conversation history (last 5 messages)
+                if conversation_history:
+                    recent_history = conversation_history[-5:]
+                    for msg in recent_history:
+                        role = 'user' if msg.get('role') == 'user' else 'assistant'
+                        content = msg.get('content', '')
+                        messages.append({"role": role, "content": content})
+                
+                # Add current message
+                messages.append({"role": "user", "content": message})
+                
+                # Call OpenAI API
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",  # or "gpt-4" for better quality
+                    messages=messages,
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                
+                bot_reply = response.choices[0].message.content
+                print(f'✅ OpenAI GPT called successfully. Message: "{message[:50]}..."')
+                
+                return jsonify({
+                    'success': True,
+                    'response': bot_reply,
+                    'model': 'gpt-3.5-turbo'
+                })
+                
+            except Exception as e:
+                print(f'❌ OpenAI API error: {str(e)}')
+                return jsonify({
+                    'error': 'OpenAI API error',
+                    'response': f'Lỗi kết nối OpenAI: {str(e)}'
+                }), 500
+        
+        elif GEMINI_API_KEY:
+            # Use Google Gemini (existing code)
+            # Initialize Gemini model
+            model = genai.GenerativeModel(
+                'gemini-pro',
+                generation_config={
+                    'temperature': 0.7,
+                    'top_k': 40,
+                    'top_p': 0.95,
+                    'max_output_tokens': 500,
+                }
+            )
+            
+            # Build conversation context
+            full_prompt = CHATBOT_SYSTEM_PROMPT + '\n\n'
+            
+            # Add conversation history (last 5 messages)
+            if conversation_history:
+                recent_history = conversation_history[-5:]
+                full_prompt += 'LỊCH SỬ HỘI THOẠI:\n'
+                for msg in recent_history:
+                    role = 'Khách' if msg.get('role') == 'user' else 'Bạn'
+                    content = msg.get('content', '')
+                    full_prompt += f'{role}: {content}\n'
+                full_prompt += '\n'
+            
+            full_prompt += f'KHÁCH HỎI: {message}\n\nTRẢ LỜI:'
+            
+            # Call Gemini API
+            response = model.generate_content(full_prompt)
+            bot_reply = response.text
+            
+            print(f'✅ Gemini API called successfully. Message: "{message[:50]}..."')
+            
+            return jsonify({
+                'success': True,
+                'response': bot_reply,
+                'model': 'gemini-pro'
+            })
+        else:
+            # No API key configured
+            print('❌ No AI API key found')
             return jsonify({
                 'error': 'API key not configured',
                 'response': 'Xin lỗi, chatbot đang bảo trì. Vui lòng thử lại sau! 🔧'
             }), 500
-        
-        # Initialize Gemini model
-        model = genai.GenerativeModel(
-            'gemini-pro',
-            generation_config={
-                'temperature': 0.7,
-                'top_k': 40,
-                'top_p': 0.95,
-                'max_output_tokens': 500,
-            }
-        )
-        
-        # Build conversation context
-        full_prompt = CHATBOT_SYSTEM_PROMPT + '\n\n'
-        
-        # Add conversation history (last 5 messages)
-        if conversation_history:
-            recent_history = conversation_history[-5:]
-            full_prompt += 'LỊCH SỬ HỘI THOẠI:\n'
-            for msg in recent_history:
-                role = 'Khách' if msg.get('role') == 'user' else 'Bạn'
-                content = msg.get('content', '')
-                full_prompt += f'{role}: {content}\n'
-            full_prompt += '\n'
-        
-        full_prompt += f'KHÁCH HỎI: {message}\n\nTRẢ LỜI:'
-        
-        # Call Gemini API
-        response = model.generate_content(full_prompt)
-        bot_reply = response.text
-        
-        print(f'✅ Gemini API called successfully. Message: "{message[:50]}..."')
-        
-        return jsonify({
-            'success': True,
-            'response': bot_reply,
-            'model': 'gemini-pro'
-        })
     
     except Exception as e:
         print(f'❌ Error calling Gemini API: {str(e)}')
@@ -554,6 +815,65 @@ def health():
         'hasApiKey': bool(GEMINI_API_KEY),
         'timestamp': datetime.utcnow().isoformat()
     })
+
+# ============================================
+# VISITOR TRACKING (Realtime)
+# ============================================
+
+# In-memory storage for online visitors (production should use Redis)
+online_visitors = {}
+VISITOR_TIMEOUT = 30  # seconds
+
+# File to store total visits
+VISITOR_FILE = 'visitor_stats.json'
+init_data_file(VISITOR_FILE, {'total_visits': 0, 'unique_visitors': set()}, subfolder='backend')
+
+@app.route('/api/visitor/ping', methods=['POST'])
+def visitor_ping():
+    data = request.get_json()
+    session_id = data.get('sessionId')
+    
+    if not session_id:
+        return jsonify({'error': 'Session ID required'}), 400
+    
+    current_time = datetime.now()
+    
+    # Load visitor stats
+    visitor_stats = load_json(VISITOR_FILE)
+    
+    # Check if this is a new visitor
+    is_new_visitor = session_id not in online_visitors
+    
+    # Update online visitors with timestamp
+    online_visitors[session_id] = current_time
+    
+    # If new visitor, increment total visits
+    if is_new_visitor:
+        visitor_stats['total_visits'] = visitor_stats.get('total_visits', 0) + 1
+        save_json(VISITOR_FILE, visitor_stats)
+    
+    # Clean up expired visitors (timeout after 30 seconds)
+    expired_sessions = [
+        sid for sid, timestamp in online_visitors.items()
+        if (current_time - timestamp).total_seconds() > VISITOR_TIMEOUT
+    ]
+    for sid in expired_sessions:
+        del online_visitors[sid]
+    
+    return jsonify({
+        'online': len(online_visitors),
+        'total': visitor_stats.get('total_visits', 0)
+    }), 200
+
+@app.route('/api/visitor/disconnect', methods=['POST'])
+def visitor_disconnect():
+    data = request.get_json()
+    session_id = data.get('sessionId')
+    
+    if session_id and session_id in online_visitors:
+        del online_visitors[session_id]
+    
+    return jsonify({'status': 'ok'}), 200
 
 # ============================================
 # STATIC FILES

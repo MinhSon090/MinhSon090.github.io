@@ -1,6 +1,24 @@
 {
   "user#00002": [
     {
+      "type": "Nhà trọ",
+      "area": "Khu vực",
+      "keyword": "giá 1000",
+      "timestamp": "2025-11-12T06:21:05.113185"
+    },
+    {
+      "type": "Nhà trọ",
+      "area": "Khu vực",
+      "keyword": "",
+      "timestamp": "2025-11-12T06:20:37.945499"
+    },
+    {
+      "type": "Loại hình",
+      "area": "Khu vực",
+      "keyword": "",
+      "timestamp": "2025-11-12T06:20:24.581152"
+    },
+    {
       "type": "Tất cả",
       "area": "Khu vực",
       "keyword": "",

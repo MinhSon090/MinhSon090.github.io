@@ -138,7 +138,120 @@
 	</div>
 
 	<main>
-		
+		<div class="account-wrapper">
+			<!-- Tab Navigation -->
+			<div class="account-tabs">
+				<button class="tab-btn active" data-tab="profile">Thông tin cá nhân</button>
+				<button class="tab-btn" data-tab="settings">Cài đặt tài khoản</button>
+				<button class="tab-btn" data-tab="favorites">Mục yêu thích</button>
+				<button class="tab-btn" data-tab="search-history">Lịch sử tìm kiếm</button>
+			</div>
+
+			<!-- Profile Tab -->
+			<div class="tab-content active" id="profile-tab">
+				<div class="profile-card">
+					<h2>Thông tin cá nhân</h2>
+					<div class="profile-info">
+						<div class="info-item">
+							<label>Tên đăng nhập</label>
+							<p id="profile-username"></p>
+						</div>
+						<div class="info-item">
+							<label>Email</label>
+							<p id="profile-email"></p>
+						</div>
+						<div class="info-item">
+							<label>ID tài khoản</label>
+							<p id="profile-id"></p>
+						</div>
+						<div class="info-item">
+							<label>Ngày tạo tài khoản</label>
+							<p id="profile-created"></p>
+						</div>
+						<div class="info-item">
+							<label>Loại tài khoản</label>
+							<p id="profile-type"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Settings Tab -->
+			<div class="tab-content" id="settings-tab">
+				<div class="settings-card">
+					<h2>Cài đặt tài khoản</h2>
+					
+					<!-- Change Username -->
+					<div class="settings-section">
+						<h3>Thay đổi tên đăng nhập</h3>
+						<div class="form-group">
+							<label for="new-username">Tên đăng nhập mới</label>
+							<input type="text" id="new-username" placeholder="Nhập tên đăng nhập mới">
+							<button class="btn-update" id="btn-update-username">Cập nhật</button>
+							<div class="message" id="msg-username"></div>
+						</div>
+					</div>
+
+					<!-- Change Email -->
+					<div class="settings-section">
+						<h3>Thay đổi email</h3>
+						<div class="form-group">
+							<label for="new-email">Email mới</label>
+							<input type="email" id="new-email" placeholder="Nhập email mới">
+							<button class="btn-update" id="btn-update-email">Cập nhật</button>
+							<div class="message" id="msg-email"></div>
+						</div>
+					</div>
+
+					<!-- Change Password -->
+					<div class="settings-section">
+						<h3>Thay đổi mật khẩu</h3>
+						<div class="form-group">
+							<label for="current-password">Mật khẩu hiện tại</label>
+							<input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+						</div>
+						<div class="form-group">
+							<label for="new-password">Mật khẩu mới</label>
+							<input type="password" id="new-password" placeholder="Nhập mật khẩu mới">
+						</div>
+						<div class="form-group">
+							<label for="confirm-password">Xác nhận mật khẩu mới</label>
+							<input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới">
+							<button class="btn-update" id="btn-update-password">Cập nhật</button>
+							<div class="message" id="msg-password"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Favorites Tab -->
+			<div class="tab-content" id="favorites-tab">
+				<div class="favorites-card">
+					<h2>Mục yêu thích</h2>
+					<div id="favorites-list" class="items-list">
+						<!-- Favorites will be loaded here -->
+					</div>
+					<div id="favorites-empty" class="empty-state">
+						<p>Bạn chưa yêu thích phòng nào</p>
+						<a href="../index.html" class="btn-primary">Khám phá phòng trọ</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Search History Tab -->
+			<div class="tab-content" id="search-history-tab">
+				<div class="history-card">
+					<h2>Lịch sử tìm kiếm</h2>
+					<div id="search-history-list" class="items-list">
+						<!-- Search history will be loaded here -->
+					</div>
+					<div id="search-history-empty" class="empty-state">
+						<p>Bạn chưa tìm kiếm gì</p>
+						<a href="../index.html" class="btn-primary">Bắt đầu tìm kiếm</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
 
 		<!-- Lightweight behaviors for this page only: nav scroll + popup toggles -->

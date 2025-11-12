@@ -4,11 +4,247 @@ const API_BASE_URL = `${window.location.origin}/api`;
 // Auth state
 let currentUser = null;
 let authToken = localStorage.getItem('authToken');
+let userFavorites = new Set();
+
+// Image slideshow state
+let autoSlideInterval = null;
+
+// --- Favorite Properties Functions ---
+async function loadUserFavorites() {
+  if (!authToken) {
+    userFavorites.clear();
+    updateFavoritesDropdown();
+    return;
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/favorites`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (response.ok) {
+      const favorites = await response.json();
+      // Backend returns array of property IDs
+      userFavorites = new Set(Array.isArray(favorites) ? favorites : []);
+      updateFavoritesDropdown();
+    } else {
+      console.error('Failed to load favorites');
+    }
+  } catch (error) {
+    console.error('Error loading favorites:', error);
+  }
+}
+
+async function toggleFavorite(propertyId, heartBtn) {
+  if (!authToken) {
+    showLoginRequired('Đăng nhập để lưu phòng trọ yêu thích');
+    return;
+  }
+
+  try {
+    const isFavorited = userFavorites.has(propertyId);
+    const method = isFavorited ? 'DELETE' : 'POST';
+    
+    const response = await fetch(`${API_BASE_URL}/favorites/${propertyId}`, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+
+    const data = await response.json();
+    
+    // Handle unauthorized - token expired or invalid
+    if (response.status === 401) {
+      // Clear invalid token
+      authToken = null;
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('currentUser');
+      userFavorites.clear();
+      updateUIForLoggedOutUser();
+      
+      showLoginRequired('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!');
+      return;
+    }
+    
+    if (response.ok) {
+      if (!isFavorited) {
+        userFavorites.add(propertyId);
+        heartBtn.classList.add('favorited');
+        showNotification('Đã lưu vào mục yêu thích! ❤️');
+      } else {
+        userFavorites.delete(propertyId);
+        heartBtn.classList.remove('favorited');
+        showNotification('Đã xóa khỏi mục yêu thích');
+      }
+      updateFavoritesDropdown();
+    } else {
+      showNotification('❌ ' + (data.error || 'Không thể cập nhật mục yêu thích'));
+    }
+  } catch (error) {
+    console.error('Error toggling favorite:', error);
+    showNotification('❌ Không thể kết nối server. Vui lòng kiểm tra backend!');
+  }
+}
+
+// Show notification message
+function showNotification(message) {
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = 'favorite-notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  // Show notification
+  setTimeout(() => notification.classList.add('show'), 100);
+  
+  // Hide and remove notification after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// Show login required notification and open login popup
+function showLoginRequired(message = 'Vui lòng đăng nhập để sử dụng tính năng này') {
+  // Create auth notification
+  const notification = document.createElement('div');
+  notification.className = 'auth-notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  // Show notification with animation
+  setTimeout(() => notification.classList.add('show'), 50);
+  
+  // Hide notification after 4 seconds
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 400);
+  }, 4000);
+}
+
+// Update favorites dropdown with current favorites
+async function updateFavoritesDropdown() {
+  const favoritesList = document.getElementById('favorites-list');
+  const favoritesCount = document.querySelector('.favorites-count');
+  
+  if (!authToken || userFavorites.size === 0) {
+    favoritesList.innerHTML = `
+      <div class="favorites-empty">
+        <i class="fas fa-heart"></i>
+        <p>Chưa có phòng trọ yêu thích</p>
+      </div>
+    `;
+    if (favoritesCount) {
+      favoritesCount.style.display = 'none';
+    }
+    return;
+  }
+  
+  // Show count
+  if (favoritesCount) {
+    favoritesCount.textContent = userFavorites.size;
+    favoritesCount.style.display = userFavorites.size > 0 ? 'inline' : 'none';
+  }
+  
+  // Get property details for favorites
+  const favoriteProperties = propertyData.filter(p => userFavorites.has(p.id));
+  
+  if (favoriteProperties.length === 0) {
+    favoritesList.innerHTML = `
+      <div class="favorites-empty">
+        <i class="fas fa-heart"></i>
+        <p>Chưa có phòng trọ yêu thích</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Render favorites
+  favoritesList.innerHTML = favoriteProperties.map(property => {
+    const mainImg = Array.isArray(property.img) ? property.img[0] : property.img;
+    return `
+      <div class="favorite-item" data-property-id="${property.id}">
+        <img src="${mainImg}" alt="${property.title}">
+        <div class="favorite-info">
+          <h4>${property.title}</h4>
+          <p class="favorite-price">${property.price || 'Liên hệ'}</p>
+        </div>
+        <button class="favorite-remove" data-property-id="${property.id}" title="Xóa khỏi yêu thích">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    `;
+  }).join('');
+  
+  // Add click events for favorite items
+  favoritesList.querySelectorAll('.favorite-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.favorite-remove')) return; // Don't trigger if clicking remove button
+      
+      const propertyId = item.dataset.propertyId;
+      const property = propertyData.find(p => p.id === propertyId);
+      if (property) {
+        // Close dropdown with animation
+        const dropdown = document.getElementById('favorites-dropdown');
+        if (dropdown) dropdown.classList.remove('show');
+        // Open property modal
+        openPropertyModal(property);
+        // Update URL
+        const propertyUrl = `?room=${property.id}`;
+        window.history.pushState({ propertyId: property.id }, '', propertyUrl);
+      }
+    });
+  });
+  
+  // Add click events for remove buttons
+  favoritesList.querySelectorAll('.favorite-remove').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const propertyId = btn.dataset.propertyId;
+      
+      // Find heart button if modal is open for this property
+      const modal = document.getElementById('propertyModal');
+      const modalTitle = document.getElementById('modal-title');
+      let heartBtn = null;
+      
+      if (modal.style.display === 'flex' && modalTitle) {
+        const currentProperty = propertyData.find(p => p.title === modalTitle.innerHTML);
+        if (currentProperty && currentProperty.id === propertyId) {
+          heartBtn = modal.querySelector('.favorite-heart-btn');
+        }
+      }
+      
+      // Toggle favorite (remove it)
+      if (heartBtn) {
+        await toggleFavorite(propertyId, heartBtn);
+      } else {
+        // Remove without heart icon reference
+        try {
+          const response = await fetch(`${API_BASE_URL}/favorites/${propertyId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            }
+          });
+          
+          if (response.ok) {
+            userFavorites.delete(propertyId);
+            updateFavoritesDropdown();
+            showNotification('Đã xóa khỏi mục yêu thích');
+          }
+        } catch (error) {
+          console.error('Error removing favorite:', error);
+        }
+      }
+    });
+  });
+}
 
 // Check if user is logged in on page load
 if (authToken) {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   updateUIForLoggedInUser();
+  loadUserFavorites();
 }
 
 // --- Authentication Functions ---
@@ -40,6 +276,7 @@ function logout() {
   localStorage.removeItem('currentUser');
   authToken = null;
   currentUser = null;
+  userFavorites.clear();
   
   // Reset UI
   const loginBtn = document.getElementById('login-btn-aa');
@@ -52,6 +289,9 @@ function logout() {
   if (profileContainer) profileContainer.style.display = 'none';
   if (profilePopup) profilePopup.style.display = 'none';
   
+  // Clear favorites dropdown
+  updateFavoritesDropdown();
+  
   alert('Đã đăng xuất thành công!');
   // Optionally redirect to home
   if (window.location.pathname.includes('account')) {
@@ -62,72 +302,130 @@ function logout() {
 }
 
 // Login form submission
-document.querySelector('#login-popup form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const username = document.getElementById('login-username').value;
-  const password = document.getElementById('login-password').value;
+const loginForm = document.querySelector('#login-popup form');
+if (loginForm) {
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: username, password })
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      authToken = data.token;
-      currentUser = data.user;
-      localStorage.setItem('authToken', authToken);
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      updateUIForLoggedInUser();
-      closeLoginPopup();
-      alert('Đăng nhập thành công!');
-    } else {
-      alert(data.error || 'Đăng nhập thất bại');
+    if (!username || !password) {
+      showNotification('⚠️ Vui lòng nhập đầy đủ thông tin!');
+      return;
     }
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('Có lỗi xảy ra khi đăng nhập');
-  }
-});
+
+    try {
+      console.log('Attempting login to:', `${API_BASE_URL}/login`);
+      
+      const response = await fetch(`${API_BASE_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username, password })
+      });
+
+      const data = await response.json();
+      console.log('Login response:', response.status, data);
+      
+      if (response.ok) {
+        authToken = data.token;
+        currentUser = data.user;
+        localStorage.setItem('authToken', authToken);
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUIForLoggedInUser();
+        await loadUserFavorites(); // Load favorites after login
+        closeLoginPopup();
+        showNotification('Đăng nhập thành công! 🎉');
+      } else {
+        showNotification('❌ ' + (data.error || 'Đăng nhập thất bại'));
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      showNotification('❌ Không thể kết nối đến server. Vui lòng kiểm tra backend!');
+    }
+  });
+}
 
 // Register form submission
-document.querySelector('#register-popup form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('register-email').value;
-  const username = document.getElementById('register-username').value;
-  const password = document.getElementById('register-password').value;
-  const password2 = document.getElementById('register-password2').value;
+const registerForm = document.querySelector('#register-popup form');
+if (registerForm) {
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const username = document.getElementById('register-username').value;
+    const password = document.getElementById('register-password').value;
+    const password2 = document.getElementById('register-password2').value;
 
-  if (password !== password2) {
-    alert('Mật khẩu không khớp');
-    return;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password, account_type: 'user' })
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      authToken = data.token;
-      currentUser = data.user;
-      localStorage.setItem('authToken', authToken);
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      updateUIForLoggedInUser();
-      closeRegisterPopup();
-      alert('Đăng ký thành công!');
-    } else {
-      alert(data.error || 'Đăng ký thất bại');
+    if (!email || !password) {
+      showNotification('⚠️ Vui lòng nhập email và mật khẩu!');
+      return;
     }
-  } catch (error) {
-    console.error('Register error:', error);
-    alert('Có lỗi xảy ra khi đăng ký');
-  }
+
+    if (password !== password2) {
+      showNotification('⚠️ Mật khẩu không khớp!');
+      return;
+    }
+
+    try {
+      console.log('Attempting register to:', `${API_BASE_URL}/register`);
+      
+      const response = await fetch(`${API_BASE_URL}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, username, password, account_type: 'user' })
+      });
+
+      const data = await response.json();
+      console.log('Register response:', response.status, data);
+      
+      if (response.ok) {
+        authToken = data.token;
+        currentUser = data.user;
+        localStorage.setItem('authToken', authToken);
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUIForLoggedInUser();
+        await loadUserFavorites(); // Load favorites after register
+        closeRegisterPopup();
+        showNotification('Đăng ký thành công! 🎉');
+      } else {
+        showNotification('❌ ' + (data.error || 'Đăng ký thất bại'));
+      }
+    } catch (error) {
+      console.error('Register error:', error);
+      showNotification('❌ Không thể kết nối đến server. Vui lòng kiểm tra backend!');
+    }
+  });
+}
+
+// Google Login Button Handler
+const googleLoginBtns = document.querySelectorAll('.login-btn-google');
+googleLoginBtns.forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    // For now, show info message - need backend OAuth setup
+    showNotification('⚠️ Đăng nhập Google đang được phát triển. Vui lòng dùng email/password!');
+    
+    // TODO: Implement Google OAuth flow
+    // window.location.href = `${API_BASE_URL}/auth/google`;
+  });
+});
+
+// Facebook Login Button Handler  
+const facebookLoginBtns = document.querySelectorAll('.login-btn-facebook');
+facebookLoginBtns.forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    showNotification('⚠️ Đăng nhập Facebook đang được phát triển. Vui lòng dùng email/password!');
+  });
+});
+
+// VNU Login Button Handler
+const vnuLoginBtns = document.querySelectorAll('.login-btn-vnu');
+vnuLoginBtns.forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    showNotification('⚠️ Đăng nhập VNU đang được phát triển. Vui lòng dùng email/password!');
+  });
 });
 
   // Partner button opens disabled popup
@@ -140,11 +438,16 @@ document.querySelector('#register-popup form').addEventListener('submit', async 
       partnerPopup.style.display = 'flex';
       document.getElementById('register-popup').style.display = 'none';
       document.getElementById('login-popup').style.display = 'none';
+      
+      const backdrop = document.getElementById('auth-backdrop');
+      if (backdrop) backdrop.classList.add('show');
     });
   }
   if (partnerClose && partnerPopup) {
     partnerClose.addEventListener('click', () => {
       partnerPopup.style.display = 'none';
+      const backdrop = document.getElementById('auth-backdrop');
+      if (backdrop) backdrop.classList.remove('show');
     });
   }
 // --- Search & Sort ---
@@ -261,6 +564,10 @@ fetch(`${API_BASE_URL}/properties`)
     });
 
     attachCardEvents();
+    // Update favorites dropdown after properties are loaded
+    if (authToken && userFavorites.size > 0) {
+      updateFavoritesDropdown();
+    }
   })
   .catch(error => {
     console.error('Error loading properties:', error);
@@ -285,6 +592,10 @@ fetch(`${API_BASE_URL}/properties`)
           container.appendChild(card);
         });
         attachCardEvents();
+        // Update favorites dropdown after properties are loaded
+        if (authToken && userFavorites.size > 0) {
+          updateFavoritesDropdown();
+        }
       });
   });
 
@@ -300,7 +611,10 @@ function attachCardEvents() {
   const closeBtn = document.querySelector(".modal .close");
 
   document.querySelectorAll(".property-card-ntro, .property-card-ktx").forEach(card => {
-    card.addEventListener("click", async () => {
+    card.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const item = propertyData.find(p => p.id === card.id);
       if (item) {
         // Update URL without page reload using hash
@@ -321,170 +635,311 @@ function attachCardEvents() {
 // Open property modal with data
 async function openPropertyModal(item) {
   const modal = document.getElementById("propertyModal");
-  const modalImg = document.getElementById("modal-img");
+  let modalImg = document.getElementById("modal-img");
   const modalThumbnails = document.getElementById("modal-thumbnails");
   const modalTitle = document.getElementById("modal-title");
   const modalAddress = document.getElementById("modal-address");
   const modalPrice = document.getElementById("modal-price");
   const modalDesc = document.getElementById("modal-description");
-  
+  const heartBtn = modal.querySelector('.favorite-heart-btn');
+  const prevBtn = document.getElementById("prev-image-btn");
+  const nextBtn = document.getElementById("next-image-btn");
+  const imageCounter = document.getElementById("image-counter");
+  const imageContainer = document.querySelector('.modal-image-container');
+
+  // Add to view history
+  addToViewHistory(item);
+
+  // Basic data
+  const propertyId = item.id;
   let images = [];
   if (Array.isArray(item.img)) images = item.img;
   else if (item.img) images = [item.img];
   else images = [];
 
-  modalImg.src = images[0] || "";
-  modalImg.alt = item.title;
-  modalTitle.innerHTML = item.title;
-  modalAddress.innerHTML = item.address;
-  modalPrice.innerHTML = item.price;
+  // Image slideshow management
+  let currentImageIndex = 0;
+  let isAnimating = false;
 
-  // Load description
-  if (item.description && typeof item.description === 'string' && (item.description.endsWith('.txt') || item.description.endsWith('.html'))) {
-    fetch(item.description)
-      .then(res => res.text())
-      .then(text => {
-        modalDesc.innerHTML = text;
-      })
-      .catch(() => {
-        modalDesc.innerText = "Không thể tải mô tả.";
-      });
-  } else {
-    modalDesc.innerHTML = item.description ? item.description : "Không có mô tả";
+  function updateImage(index, direction = 'next') {
+    if (images.length === 0 || isAnimating) return;
+    
+    isAnimating = true;
+    const previousIndex = currentImageIndex;
+    currentImageIndex = (index + images.length) % images.length;
+    
+    // Get current modal image
+    const currentImg = document.getElementById('modal-img');
+    if (!currentImg) {
+      isAnimating = false;
+      return;
+    }
+    
+    // Create new image element for animation
+    const newImg = document.createElement('img');
+    newImg.src = images[currentImageIndex];
+    newImg.alt = item.title || '';
+    newImg.style.width = '100%';
+    newImg.style.height = '100%';
+    newImg.style.objectFit = 'contain';
+    newImg.style.position = 'absolute';
+    newImg.style.top = '0';
+    newImg.style.left = '0';
+    
+    // Add animation classes based on direction
+    if (direction === 'next') {
+      currentImg.classList.add('slide-out-left');
+      newImg.classList.add('slide-in-right');
+    } else {
+      currentImg.classList.add('slide-out-right');
+      newImg.classList.add('slide-in-left');
+    }
+    
+    // Add new image to container
+    imageContainer.appendChild(newImg);
+    
+    // After animation completes, replace the old image
+    setTimeout(() => {
+      if (currentImg.parentElement) {
+        currentImg.remove();
+      }
+      newImg.id = 'modal-img';
+      isAnimating = false;
+    }, 500);
+    
+    imageCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+    
+    // Update thumbnail active state
+    modalThumbnails.querySelectorAll('img').forEach((img, i) => {
+      img.classList.toggle('active', i === currentImageIndex);
+    });
+  }
+
+  function startAutoSlide() {
+    if (images.length <= 1) {
+      console.log('Not enough images for auto-slide:', images.length);
+      return;
+    }
+    stopAutoSlide();
+    console.log('Auto-slide started');
+    autoSlideInterval = setInterval(() => {
+      console.log('Auto-slide tick, current index:', currentImageIndex);
+      updateImage(currentImageIndex + 1, 'next');
+    }, 3000); // Change image every 3 seconds
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      console.log('Auto-slide stopped');
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  // Navigation button handlers
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      console.log('Prev button clicked');
+      stopAutoSlide();
+      updateImage(currentImageIndex - 1, 'prev');
+      setTimeout(() => startAutoSlide(), 100);
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      console.log('Next button clicked');
+      stopAutoSlide();
+      updateImage(currentImageIndex + 1, 'next');
+      setTimeout(() => startAutoSlide(), 100);
+    };
+  }
+
+  // Initialize first image
+  const initialImg = document.getElementById('modal-img');
+  if (initialImg) {
+    initialImg.src = images[0] || "";
+    initialImg.alt = item.title || '';
+  }
+  if (imageCounter) {
+    imageCounter.textContent = `1 / ${images.length}`;
+  }
+  
+  modalTitle.innerHTML = item.title || '';
+  modalAddress.innerHTML = item.address || '';
+  modalPrice.innerHTML = item.price || '';
+
+  // Start auto-slide after a short delay
+  setTimeout(() => {
+    console.log('Starting auto-slide with', images.length, 'images');
+    startAutoSlide();
+  }, 500);
+
+  // Update heart button state and behavior
+  if (heartBtn) {
+    if (userFavorites.has(propertyId)) {
+      heartBtn.classList.add('favorited');
+    } else {
+      heartBtn.classList.remove('favorited');
+    }
+    heartBtn.onclick = () => toggleFavorite(propertyId, heartBtn);
+  }
+
+  // Map location button
+  const mapBtn = document.getElementById('map-location-btn');
+  if (mapBtn) {
+    mapBtn.onclick = () => {
+      // Create Google Maps URL with address
+      const address = item.address || '';
+      const title = item.title || '';
+      
+      // Remove HTML tags and "Địa chỉ:" text from address
+      let cleanAddress = address.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+      cleanAddress = cleanAddress.replace(/^Địa chỉ:\s*/i, '').trim();
+      
+      // Try to use coordinates if available, otherwise use address
+      let mapsUrl;
+      if (item.lat && item.lng) {
+        // If coordinates exist, use them for precise location
+        mapsUrl = `https://www.google.com/maps?q=${item.lat},${item.lng}&t=m&z=16`;
+      } else {
+        // Use clean address for search (more accurate than title + address)
+        const searchQuery = encodeURIComponent(cleanAddress + ', Hòa Lạc, Hà Nội');
+        mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+      }
+      
+      // Open in new tab
+      window.open(mapsUrl, '_blank');
+      showNotification('📍 Đang mở bản đồ...');
+    };
+  }
+
+  // Booking button
+  const bookingBtn = document.getElementById('booking-btn');
+  if (bookingBtn) {
+    bookingBtn.onclick = () => {
+      openBookingModal(item);
+    };
   }
 
   // Thumbnails
-  modalThumbnails.innerHTML = "";
-  images.forEach((src, idx) => {
-    const thumb = document.createElement("img");
-    thumb.src = src;
-    thumb.className = idx === 0 ? "active" : "";
-    thumb.onclick = () => {
-      modalImg.src = src;
-      modalThumbnails.querySelectorAll("img").forEach(i => i.classList.remove("active"));
-      thumb.classList.add("active");
-    };
-    modalThumbnails.appendChild(thumb);
+  modalThumbnails.innerHTML = images.map((src, i) => `<img src="${src}" data-index="${i}" class="${i===0? 'active':''}">`).join('');
+  modalThumbnails.querySelectorAll('img').forEach((imgEl, index) => {
+    imgEl.addEventListener('click', () => {
+      stopAutoSlide();
+      const direction = index > currentImageIndex ? 'next' : 'prev';
+      updateImage(index, direction);
+      startAutoSlide();
+    });
   });
 
-  // Load ratings and comments from backend
-  await loadRatingsAndComments(item.id);
-  
-  modal.style.display = "block";
-  document.body.style.overflow = "hidden";
-}
-
-function closeModal() {
-  const modal = document.getElementById("propertyModal");
-  modal.style.display = "none";
-  document.body.style.overflow = "";
-  
-  // Remove query parameter and return to clean URL
-  const baseUrl = window.location.origin + window.location.pathname;
-  window.history.pushState({}, '', baseUrl);
-}
-
-// --- Ratings & Comments Integration ---
-async function loadRatingsAndComments(propertyId) {
-  const starsEl = document.querySelector('.modal-rating-stars');
-  const textEl = document.querySelector('.modal-rating-text');
-  const commentSubmit = document.getElementById('modal-comment-submit');
-  const commentInput = document.getElementById('modal-comment-input');
-  const commentList = document.getElementById('modal-comment-list');
-
-  const texts = ["Rất tệ", "Tệ", "Bình thường", "Tốt", "Xuất sắc"];
+  // Rating stars setup
+  const starsEl = modal.querySelector('.modal-rating-stars');
+  const textEl = modal.querySelector('.modal-rating-text');
+  const texts = ['Rất tệ','Tệ','Bình thường','Tốt','Tuyệt vời'];
   let selectedStar = 0;
   let hoverStar = 0;
 
-  // Render stars
-  starsEl.innerHTML = '';
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement('span');
-    star.className = 'star';
-    star.innerHTML = '&#9733;';
-    star.dataset.value = i;
-
-    star.onmouseenter = () => {
-      hoverStar = i;
-      renderStars();
-    };
-    star.onmouseleave = () => {
-      hoverStar = 0;
-      renderStars();
-    };
-    star.onclick = async () => {
-      if (!authToken) {
-        alert('Vui lòng đăng nhập để đánh giá');
-        return;
-      }
-      selectedStar = i;
-      await saveRating(propertyId, i);
-      renderStars();
-    };
-
-    starsEl.appendChild(star);
+  if (starsEl) {
+    starsEl.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const s = document.createElement('span');
+      s.className = 'star';
+      s.textContent = '★';
+      s.dataset.value = i;
+      s.addEventListener('click', async () => {
+        selectedStar = i;
+        renderStars();
+        // Save rating if user logged in
+        if (!authToken) {
+          // show login required notification
+          showLoginRequired('Đăng nhập để đánh giá phòng trọ');
+          return;
+        }
+        await saveRating(propertyId, selectedStar);
+        showNotification('Cảm ơn bạn đã đánh giá!');
+      });
+      s.addEventListener('mouseover', () => { hoverStar = i; renderStars(); });
+      s.addEventListener('mouseout', () => { hoverStar = 0; renderStars(); });
+      starsEl.appendChild(s);
+    }
   }
 
   function renderStars() {
-    for (let i = 0; i < 5; i++) {
+    if (!starsEl) return;
+    for (let i = 0; i < starsEl.children.length; i++) {
       const star = starsEl.children[i];
-      star.classList.remove('active', 'selected', 'hovered');
-      if (hoverStar) {
-        if (i < hoverStar) star.classList.add('hovered');
-      } else if (selectedStar) {
-        if (i < selectedStar) star.classList.add('selected');
-      }
+      star.classList.toggle('selected', i < selectedStar);
+      star.classList.toggle('hovered', hoverStar && i < hoverStar);
     }
-    let idx = (hoverStar || selectedStar) - 1;
-    textEl.textContent = idx >= 0 ? texts[idx] : "";
+    const idx = (hoverStar || selectedStar) - 1;
+    if (textEl) textEl.textContent = idx >= 0 ? texts[idx] : '';
   }
 
   renderStars();
 
+  // Comments wiring
+  const commentInput = document.getElementById('modal-comment-input');
+  const commentSubmit = document.getElementById('modal-comment-submit');
+  const commentList = document.getElementById('modal-comment-list');
+
   // Load comments
-  try {
-    const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`);
-    if (response.ok) {
-      const comments = await response.json();
-      renderComments(comments);
+  async function loadComments() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`);
+      if (response.ok) {
+        const comments = await response.json();
+        renderComments(comments);
+      } else {
+        commentList.innerHTML = '<div style="color:#999">Không có bình luận</div>';
+      }
+    } catch (err) {
+      console.error('Error loading comments:', err);
     }
-  } catch (error) {
-    console.error('Error loading comments:', error);
   }
 
-  // Comment submit
-  commentSubmit.onclick = async () => {
-    if (!authToken) {
-      alert('Vui lòng đăng nhập để bình luận');
-      return;
-    }
-
-    const txt = commentInput.value.trim();
-    if (!txt) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        },
-        body: JSON.stringify({ text: txt, rating: selectedStar })
-      });
-
-      if (response.ok) {
-        commentInput.value = '';
-        const commentsResponse = await fetch(`${API_BASE_URL}/comments/${propertyId}`);
-        const comments = await commentsResponse.json();
-        renderComments(comments);
+  // Submit comment (requires login)
+  if (commentSubmit) {
+    commentSubmit.onclick = async () => {
+      if (!authToken) {
+        // Show login required notification
+        showLoginRequired('Đăng nhập để bình luận về phòng trọ');
+        return;
       }
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-      alert('Có lỗi xảy ra khi gửi bình luận');
-    }
-  };
+      const txt = commentInput ? commentInput.value.trim() : '';
+      if (!txt) return;
+      try {
+        const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ text: txt, rating: selectedStar })
+        });
+        if (response.ok) {
+          if (commentInput) commentInput.value = '';
+          await loadComments();
+          showNotification('Gửi bình luận thành công');
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Không thể gửi bình luận');
+        }
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        alert('Có lỗi xảy ra khi gửi bình luận');
+      }
+    };
+  }
 
   function renderComments(comments) {
+    if (!commentList) return;
+    if (!comments || comments.length === 0) {
+      commentList.innerHTML = '<div style="color:#999">Chưa có bình luận nào</div>';
+      return;
+    }
     commentList.innerHTML = comments.map(com => `
       <div class="comment-item">
         <strong>${com.username}</strong>
@@ -494,6 +949,322 @@ async function loadRatingsAndComments(propertyId) {
       </div>
     `).join('');
   }
+
+  // Initial load
+  await loadComments();
+
+  // Show modal
+  modal.style.display = 'flex';
+  
+  // Lock body scroll
+  document.body.classList.add('modal-open');
+  document.documentElement.classList.add('modal-open');
+  
+  // Scroll modal to top
+  setTimeout(() => {
+    modal.scrollTop = 0;
+  }, 10);
+}
+
+// Close modal helper
+function closeModal() {
+  const modal = document.getElementById('propertyModal');
+  if (modal) modal.style.display = 'none';
+  
+  // Stop auto-slide
+  if (autoSlideInterval) {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = null;
+  }
+  
+  // Unlock body scroll
+  document.body.classList.remove('modal-open');
+  document.documentElement.classList.remove('modal-open');
+  
+  // remove query param if any
+  try { window.history.replaceState({}, '', window.location.pathname); } catch(e){}
+}
+
+// Info Modal Functions (Search History & Contact)
+function openSearchHistoryModal() {
+  const modal = document.getElementById('search-history-modal');
+  const historyList = document.getElementById('search-history-list');
+  
+  if (!modal || !historyList) return;
+  
+  // Get view history from localStorage
+  const history = getViewHistory();
+  
+  if (history.length === 0) {
+    historyList.innerHTML = `
+      <div class="search-history-empty">
+        <i class="fas fa-history"></i>
+        <p>Chưa có phòng đã xem</p>
+      </div>
+    `;
+  } else {
+    historyList.innerHTML = history.map(item => {
+      const imgSrc = item.img || 'images/default.jpg';
+      return `
+        <li class="search-history-item view-history-card" data-id="${item.id}">
+          <div class="view-history-img">
+            <img src="${imgSrc}" alt="${item.title}">
+          </div>
+          <div class="view-history-content">
+            <div class="view-history-title">${item.title}</div>
+            <div class="view-history-address"><i class="fas fa-location-dot"></i> ${item.address}</div>
+            <div class="view-history-price">${item.price}</div>
+            <div class="view-history-time"><i class="fas fa-clock"></i> ${formatSearchTime(item.timestamp)}</div>
+          </div>
+        </li>
+      `;
+    }).join('');
+    
+    // Add click event listeners
+    historyList.querySelectorAll('.view-history-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const propertyId = card.dataset.id;
+        const property = propertyData.find(p => p.id === propertyId);
+        if (property) {
+          closeSearchHistoryModal();
+          openPropertyModal(property);
+        }
+      });
+    });
+  }
+  
+  // Save current scroll position
+  const scrollY = window.scrollY;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Restore scroll position
+  window.scrollTo(0, scrollY);
+}
+function closeSearchHistoryModal() {
+  const modal = document.getElementById('search-history-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function openContactModal() {
+  const modal = document.getElementById('contact-modal');
+  if (modal) {
+    // Save current scroll position
+    const scrollY = window.scrollY;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Restore scroll position
+    window.scrollTo(0, scrollY);
+  }
+}
+
+function closeContactModal() {
+  const modal = document.getElementById('contact-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Booking Modal Functions
+let currentBookingProperty = null;
+
+function openBookingModal(property) {
+  const modal = document.getElementById('booking-modal');
+  if (!modal) return;
+  
+  currentBookingProperty = property;
+  
+  // Fill property info
+  const img = document.getElementById('booking-property-img');
+  const title = document.getElementById('booking-property-title');
+  const price = document.getElementById('booking-property-price');
+  
+  if (img) img.src = Array.isArray(property.img) ? property.img[0] : property.img;
+  if (title) {
+    // Remove HTML tags from title
+    const cleanTitle = (property.title || '').replace(/<[^>]*>/g, '');
+    title.textContent = cleanTitle;
+  }
+  if (price) {
+    // Remove HTML tags from price
+    const cleanPrice = (property.price || '').replace(/<[^>]*>/g, '');
+    price.textContent = cleanPrice;
+  }
+  
+  // Fill user info if logged in
+  const userData = getUserData();
+  const nameInput = document.getElementById('booking-name');
+  const emailInput = document.getElementById('booking-email');
+  
+  if (userData) {
+    if (nameInput) nameInput.value = userData.username || '';
+    if (emailInput) emailInput.value = userData.email || '';
+  } else {
+    if (nameInput) nameInput.value = '';
+    if (emailInput) emailInput.value = '';
+  }
+  
+  // Set min date to today
+  const dateInput = document.getElementById('booking-date');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+  
+  // Reset form
+  const form = document.getElementById('booking-form');
+  if (form) {
+    const phoneInput = document.getElementById('booking-phone');
+    const timeInput = document.getElementById('booking-time');
+    const noteInput = document.getElementById('booking-note');
+    
+    if (phoneInput) phoneInput.value = '';
+    if (dateInput && !dateInput.value) dateInput.value = '';
+    if (timeInput) timeInput.value = '';
+    if (noteInput) noteInput.value = '';
+  }
+  
+  // Show modal
+  const scrollY = window.scrollY;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  window.scrollTo(0, scrollY);
+}
+
+function closeBookingModal() {
+  const modal = document.getElementById('booking-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    currentBookingProperty = null;
+  }
+}
+
+// Handle booking form submission
+const bookingForm = document.getElementById('booking-form');
+if (bookingForm) {
+  bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('booking-name').value;
+    const phone = document.getElementById('booking-phone').value;
+    const cccd = document.getElementById('booking-cccd').value;
+    const email = document.getElementById('booking-email').value;
+    const date = document.getElementById('booking-date').value;
+    const time = document.getElementById('booking-time').value;
+    const note = document.getElementById('booking-note').value;
+    
+    if (!currentBookingProperty) {
+      showNotification('❌ Lỗi: Không tìm thấy thông tin phòng');
+      return;
+    }
+    
+    // Validate
+    if (!name || !phone || !cccd || !date || !time) {
+      showNotification('❌ Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    
+    // Validate CCCD format (12 digits)
+    if (!/^\d{12}$/.test(cccd)) {
+      showNotification('❌ Số CCCD phải có đầy đủ 12 chữ số');
+      return;
+    }
+    
+    // Create booking data
+    const bookingData = {
+      propertyId: currentBookingProperty.id,
+      propertyTitle: currentBookingProperty.title,
+      propertyPrice: currentBookingProperty.price,
+      name: name,
+      phone: phone,
+      cccd: cccd,
+      email: email,
+      date: date,
+      time: time,
+      note: note,
+      timestamp: new Date().toISOString()
+    };
+    
+    try {
+      // Show loading
+      const submitBtn = bookingForm.querySelector('.booking-submit-btn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+      submitBtn.disabled = true;
+      
+      // Simulate API call (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Save to localStorage for now
+      const bookings = JSON.parse(localStorage.getItem('hola_bookings') || '[]');
+      bookings.push(bookingData);
+      localStorage.setItem('hola_bookings', JSON.stringify(bookings));
+      
+      // Success
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      closeBookingModal();
+      
+      showNotification('✅ Đã gửi yêu cầu đặt lịch hẹn! Chúng tôi sẽ liên hệ với bạn qua email/số điện thoại đã đăng ký.');
+      
+      // TODO: Send to backend API
+      // await fetch(`${API_BASE_URL}/booking`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(bookingData)
+      // });
+      
+    } catch (error) {
+      console.error('Booking error:', error);
+      showNotification('❌ Có lỗi xảy ra. Vui lòng thử lại sau.');
+      const submitBtn = bookingForm.querySelector('.booking-submit-btn');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu đặt lịch';
+    }
+  });
+}
+
+function getUserData() {
+  try {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+    
+    const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+    return userData;
+  } catch (e) {
+    return null;
+  }
+}
+
+function formatSearchTime(timestamp) {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diff = now - date;
+  
+  // Less than 1 hour
+  if (diff < 3600000) {
+    const minutes = Math.floor(diff / 60000);
+    return minutes < 1 ? 'Vừa xong' : `${minutes} phút trước`;
+  }
+  
+  // Less than 1 day
+  if (diff < 86400000) {
+    const hours = Math.floor(diff / 3600000);
+    return `${hours} giờ trước`;
+  }
+  
+  // Less than 7 days
+  if (diff < 604800000) {
+    const days = Math.floor(diff / 86400000);
+    return `${days} ngày trước`;
+  }
+  
+  // Format as date
+  return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
 }
 
 async function saveRating(propertyId, rating) {
@@ -522,15 +1293,30 @@ function toggleLoginPopup(e) {
   e.preventDefault();
   const loginPopup = document.getElementById('login-popup');
   const registerPopup = document.getElementById('register-popup');
+  const backdrop = document.getElementById('auth-backdrop');
+  
   if (registerPopup && registerPopup.style.display === 'flex') {
     registerPopup.style.display = 'none';
   }
-  loginPopup.style.display = (loginPopup.style.display === 'flex') ? 'none' : 'flex';
+  
+  const isVisible = loginPopup.style.display === 'flex';
+  loginPopup.style.display = isVisible ? 'none' : 'flex';
+  
+  // Show/hide backdrop
+  if (backdrop) {
+    if (isVisible) {
+      backdrop.classList.remove('show');
+    } else {
+      backdrop.classList.add('show');
+    }
+  }
 }
 
 document.querySelector('.login-close').onclick = closeLoginPopup;
 function closeLoginPopup() {
   document.getElementById('login-popup').style.display = 'none';
+  const backdrop = document.getElementById('auth-backdrop');
+  if (backdrop) backdrop.classList.remove('show');
 }
 
 // Register button in header opens popup
@@ -543,15 +1329,51 @@ function toggleRegisterPopup(e) {
   e.preventDefault();
   const registerPopup = document.getElementById('register-popup');
   const loginPopup = document.getElementById('login-popup');
+  const backdrop = document.getElementById('auth-backdrop');
+  
   if (loginPopup && loginPopup.style.display === 'flex') {
     loginPopup.style.display = 'none';
   }
-  registerPopup.style.display = (registerPopup.style.display === 'flex') ? 'none' : 'flex';
+  
+  const isVisible = registerPopup.style.display === 'flex';
+  registerPopup.style.display = isVisible ? 'none' : 'flex';
+  
+  // Show/hide backdrop
+  if (backdrop) {
+    if (isVisible) {
+      backdrop.classList.remove('show');
+    } else {
+      backdrop.classList.add('show');
+    }
+  }
 }
 
 document.getElementById('register-close').onclick = closeRegisterPopup;
 function closeRegisterPopup() {
   document.getElementById('register-popup').style.display = 'none';
+  const backdrop = document.getElementById('auth-backdrop');
+  if (backdrop) backdrop.classList.remove('show');
+}
+
+// Backdrop click handler - close popup when click outside
+const authBackdrop = document.getElementById('auth-backdrop');
+if (authBackdrop) {
+  authBackdrop.addEventListener('click', () => {
+    const loginPopup = document.getElementById('login-popup');
+    const registerPopup = document.getElementById('register-popup');
+    const partnerPopup = document.getElementById('partner-popup');
+    
+    if (loginPopup && loginPopup.style.display === 'flex') {
+      closeLoginPopup();
+    }
+    if (registerPopup && registerPopup.style.display === 'flex') {
+      closeRegisterPopup();
+    }
+    if (partnerPopup && partnerPopup.style.display === 'flex') {
+      partnerPopup.style.display = 'none';
+      authBackdrop.classList.remove('show');
+    }
+  });
 }
 
 // --- Scroll Effects ---
@@ -604,18 +1426,6 @@ document.querySelectorAll('.logo').forEach(logo => {
   });
 });
 
-// Scroll to bottom when clicking on Liên hệ in nav
-document.querySelectorAll('.nav-contact').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const bottom = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight
-    );
-    window.scrollTo({ top: bottom, behavior: 'smooth' });
-  });
-});
-
 // Scroll to top when clicking on Trang chủ in nav
 document.querySelectorAll('.nav-home').forEach(link => {
   link.addEventListener('click', (e) => {
@@ -647,6 +1457,44 @@ if (logoutBtn) {
   logoutBtn.addEventListener('click', (e) => {
     e.preventDefault();
     logout();
+  });
+}
+
+// --- Favorites Dropdown Controls ---
+const favoritesBtn = document.getElementById('favorites-btn');
+const favoritesDropdown = document.getElementById('favorites-dropdown');
+
+if (favoritesBtn && favoritesDropdown) {
+  favoritesBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Check if user is logged in
+    if (!authToken) {
+      showLoginRequired('Đăng nhập để xem danh sách yêu thích');
+      return;
+    }
+    
+    // Toggle dropdown with smooth animation
+    const isVisible = favoritesDropdown.classList.contains('show');
+    if (isVisible) {
+      favoritesDropdown.classList.remove('show');
+    } else {
+      favoritesDropdown.classList.add('show');
+    }
+    
+    // Close profile popup if open
+    const profilePopup = document.getElementById('profile-popup');
+    if (profilePopup) {
+      profilePopup.style.display = 'none';
+    }
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!favoritesDropdown.contains(e.target) && e.target !== favoritesBtn && !e.target.closest('.favorites-container')) {
+      favoritesDropdown.classList.remove('show');
+    }
   });
 }
 
@@ -687,6 +1535,66 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     }, 100);
   }
+  
+  // Setup nav menu items for info modals
+  const navHistory = document.querySelector('.nav-history');
+  const navContact = document.querySelector('.nav-contact');
+  
+  if (navHistory) {
+    navHistory.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSearchHistoryModal();
+    });
+  }
+  
+  if (navContact) {
+    navContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      openContactModal();
+    });
+  }
+  
+  // Close modals when clicking outside
+  const searchHistoryModal = document.getElementById('search-history-modal');
+  const contactModal = document.getElementById('contact-modal');
+  const bookingModal = document.getElementById('booking-modal');
+  
+  if (searchHistoryModal) {
+    searchHistoryModal.addEventListener('click', (e) => {
+      if (e.target === searchHistoryModal) {
+        closeSearchHistoryModal();
+      }
+    });
+  }
+  
+  if (contactModal) {
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) {
+        closeContactModal();
+      }
+    });
+  }
+  
+  if (bookingModal) {
+    bookingModal.addEventListener('click', (e) => {
+      if (e.target === bookingModal) {
+        closeBookingModal();
+      }
+    });
+  }
+  
+  // Handle footer links - also prevent default scrolling
+  document.querySelectorAll('.footer-link').forEach(link => {
+    const linkText = link.textContent.trim();
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (linkText === 'Liên hệ') {
+        openContactModal();
+      } else if (linkText === 'Trang chủ') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
 });
 
 const chatButton = document.getElementById('chatButton');
@@ -714,5 +1622,244 @@ document.addEventListener('click', (event) => {
   if (chatBox.style.display === 'flex' && !isClickInsideChat && !isClickChatButton) {
     chatBox.style.display = 'none';
     chatButton.style.display = 'flex';
+  }
+});
+
+// ==================== Visitor Counter (Realtime) ====================
+let visitorSessionId = null;
+
+// Generate unique session ID
+function generateSessionId() {
+  return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Get or create session ID
+function getSessionId() {
+  if (!visitorSessionId) {
+    visitorSessionId = sessionStorage.getItem('visitorSessionId');
+    if (!visitorSessionId) {
+      visitorSessionId = generateSessionId();
+      sessionStorage.setItem('visitorSessionId', visitorSessionId);
+    }
+  }
+  return visitorSessionId;
+}
+
+// Update visitor stats
+async function updateVisitorStats() {
+  try {
+    const sessionId = getSessionId();
+    const response = await fetch(`${API_BASE_URL}/visitor/ping`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId })
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      const onlineCount = document.getElementById('online-count');
+      const totalVisits = document.getElementById('total-visits');
+      
+      // Add 360,000 to both stats
+      const BONUS_COUNT = 360000;
+      
+      if (onlineCount) onlineCount.textContent = ((data.online || 0) + BONUS_COUNT).toLocaleString('vi-VN');
+      if (totalVisits) totalVisits.textContent = ((data.total || 0) + BONUS_COUNT).toLocaleString('vi-VN');
+    }
+  } catch (error) {
+    console.error('Error updating visitor stats:', error);
+    // Silently fail - không hiển thị lỗi cho user
+  }
+}
+
+// Load visitor stats on page load
+updateVisitorStats();
+
+// Update every 10 seconds
+setInterval(updateVisitorStats, 10000);
+
+// Send disconnect signal when page unloads
+window.addEventListener('beforeunload', () => {
+  if (visitorSessionId) {
+    navigator.sendBeacon(`${API_BASE_URL}/visitor/disconnect`, 
+      JSON.stringify({ sessionId: visitorSessionId }));
+  }
+});
+
+// ==================== View History (LocalStorage) - Lưu phòng đã xem ====================
+const VIEW_HISTORY_KEY = 'hola_view_history';
+const MAX_HISTORY_ITEMS = 10;
+
+// Get view history from localStorage
+function getViewHistory() {
+  try {
+    const history = localStorage.getItem(VIEW_HISTORY_KEY);
+    return history ? JSON.parse(history) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+// Save view history to localStorage
+function saveViewHistory(history) {
+  try {
+    localStorage.setItem(VIEW_HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.error('Failed to save view history:', e);
+  }
+}
+
+// Add property to view history
+function addToViewHistory(property) {
+  if (!property || !property.id) return;
+  
+  let history = getViewHistory();
+  
+  // Remove if already exists (check by id)
+  history = history.filter(item => item.id !== property.id);
+  
+  // Add to beginning with timestamp
+  history.unshift({
+    id: property.id,
+    title: property.title || 'Phòng trọ',
+    address: property.address ? property.address.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '',
+    price: property.price || '',
+    img: Array.isArray(property.img) ? property.img[0] : property.img,
+    timestamp: Date.now()
+  });
+  
+  // Keep only MAX_HISTORY_ITEMS
+  if (history.length > MAX_HISTORY_ITEMS) {
+    history = history.slice(0, MAX_HISTORY_ITEMS);
+  }
+  
+  saveViewHistory(history);
+}
+
+// Remove item from view history
+function removeFromViewHistory(propertyId) {
+  let history = getViewHistory();
+  history = history.filter(item => item.id !== propertyId);
+  saveViewHistory(history);
+  renderViewHistory();
+}
+
+// Clear all view history
+function clearViewHistory() {
+  saveViewHistory([]);
+  renderViewHistory();
+}
+
+// Render view history dropdown
+function renderViewHistory() {
+  const dropdown = document.getElementById('search-history-dropdown');
+  if (!dropdown) return;
+  
+  const history = getViewHistory();
+  
+  if (history.length === 0) {
+    dropdown.innerHTML = `
+      <div class="search-history-empty">
+        <i class="fas fa-history"></i>
+        <div>Chưa có phòng đã xem</div>
+      </div>
+    `;
+    return;
+  }
+  
+  const itemsHtml = history.map(item => {
+    const imgSrc = item.img || 'images/default.jpg';
+    return `
+      <div class="search-history-item" data-id="${item.id}">
+        <div class="search-history-item-img">
+          <img src="${imgSrc}" alt="${item.title}">
+        </div>
+        <div class="search-history-item-content">
+          <div class="search-history-item-title">${item.title}</div>
+          <div class="search-history-item-price">${item.price}</div>
+          <div class="search-history-item-time">${formatSearchTime(item.timestamp)}</div>
+        </div>
+        <button class="search-history-item-delete" data-id="${item.id}">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    `;
+  }).join('');
+  
+  dropdown.innerHTML = `
+    <div class="search-history-header">
+      <div class="search-history-title">
+        <i class="fas fa-clock-rotate-left"></i>
+        <span>Phòng đã xem</span>
+      </div>
+      <button class="search-history-clear">Xóa tất cả</button>
+    </div>
+    <div class="search-history-items">
+      ${itemsHtml}
+    </div>
+  `;
+  
+  // Add event listeners
+  dropdown.querySelector('.search-history-clear').addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearViewHistory();
+  });
+  
+  dropdown.querySelectorAll('.search-history-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.search-history-item-delete')) return;
+      const propertyId = item.dataset.id;
+      const property = propertyData.find(p => p.id === propertyId);
+      if (property) {
+        hideSearchHistory();
+        openPropertyModal(property);
+      }
+    });
+  });
+  
+  dropdown.querySelectorAll('.search-history-item-delete').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const propertyId = btn.dataset.id;
+      removeFromViewHistory(propertyId);
+    });
+  });
+}
+
+// Show view history dropdown
+function showSearchHistory() {
+  const dropdown = document.getElementById('search-history-dropdown');
+  if (dropdown) {
+    renderViewHistory();
+    dropdown.classList.add('show');
+  }
+}
+
+// Hide view history dropdown
+function hideSearchHistory() {
+  const dropdown = document.getElementById('search-history-dropdown');
+  if (dropdown) {
+    dropdown.classList.remove('show');
+  }
+}
+
+// Initialize view history - show recent viewed properties
+const searchInput = document.getElementById('search-input');
+if (searchInput) {
+  // Show history on focus
+  searchInput.addEventListener('focus', () => {
+    showSearchHistory();
+  });
+}
+
+// Hide dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const dropdown = document.getElementById('search-history-dropdown');
+  const searchInput = document.getElementById('search-input');
+  
+  if (dropdown && searchInput) {
+    if (!dropdown.contains(e.target) && e.target !== searchInput) {
+      hideSearchHistory();
+    }
   }
 });

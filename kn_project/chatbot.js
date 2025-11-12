@@ -5,7 +5,7 @@
 
 // Configuration
 const BACKEND_API_URL = 'http://localhost:5000/api/chat';  // Flask backend port 5000
-const USE_AI_CHATBOT = false; // Set false để dùng FAQ matching cũ
+const USE_AI_CHATBOT = true; // Set false để dùng FAQ matching cũ
 const ENABLE_ROOM_SUGGESTIONS = true; // Bật gợi ý trọ thông minh
 
 // FAQ Data - This will be populated from the Excel file
