@@ -793,9 +793,9 @@ nav a.active {
 /* Visitor Stats - Realtime */
 .visitor-stats {
   color: rgba(255,255,255,0.8);
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 500;
   background: rgba(255,255,255,0.1);
   padding: 8px 16px;
@@ -804,6 +804,7 @@ nav a.active {
   border: 1px solid rgba(255,255,255,0.2);
   transition: all 0.3s ease;
   white-space: nowrap;
+  line-height: 1.5;
 }
 
 .visitor-stats:hover {
@@ -814,16 +815,12 @@ nav a.active {
 .visitor-stats i {
   color: #667eea;
   animation: pulse 2s ease-in-out infinite;
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 4px;
+  flex-shrink: 0;
 }
 
 .visitor-stats span {
   font-weight: 700;
   color: #fff;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 @keyframes pulse {
