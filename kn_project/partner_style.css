@@ -611,13 +611,15 @@ body {
 .section-header h2 {
     font-size: 28px;
     font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #667eea;
+    text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    letter-spacing: 1.5px;
 }
 
 .section-header p {
-    color: rgba(255, 255, 255, 0.9);
+    color: #667eea;
     font-size: 15px;
+    font-weight: 500;
 }
 
 /* Cards */
