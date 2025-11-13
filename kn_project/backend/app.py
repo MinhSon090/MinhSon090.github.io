@@ -60,8 +60,8 @@ QUY TẮC TRẢ LỜI:
 2. Nhiệt tình, thân thiện, dùng emoji phù hợp 😊
 3. Nếu không biết thông tin, hãy khuyên khách liên hệ chủ trọ
 4. Luôn kết thúc bằng câu hỏi để tiếp tục hỗ trợ
-5. Không bịa đặt thông tin không có trong dữ liệu trên"""
-
+5. Không bịa đặt thông tin không có trong dữ liệu trên
+6. Tìm thông tin trong dữ liệu đã cho, không truy cập web ngoài nếu tìm thì tìm chính xác nguồn uy tín"""
 # Data storage files
 ACCOUNTS_FILE = 'accounts.json'  # Changed to accounts.json in account folder
 RATINGS_FILE = 'ratings.json'
@@ -877,6 +877,96 @@ def visitor_disconnect():
 
 # ============================================
 # STATIC FILES
+# ============================================
+# PARTNER-SPECIFIC ROUTES
+# ============================================
+
+@app.route('/api/partner/login', methods=['POST'])
+def partner_login():
+    """Đăng nhập cho đối tác - kiểm tra account_type = 'partner'"""
+    data = request.get_json()
+    email_or_username = data.get('email')
+    password = data.get('password')
+    
+    if not email_or_username or not password:
+        return jsonify({'error': 'Email/username và password là bắt buộc'}), 400
+    
+    accounts = load_json(ACCOUNTS_FILE, subfolder='account')
+    users = accounts.get('users', {})
+    
+    # Find partner account
+    partner = None
+    partner_id = None
+    for uid, user_data in users.items():
+        if user_data.get('account_type') == 'partner':
+            if (user_data.get('email') == email_or_username or 
+                user_data.get('username') == email_or_username or 
+                uid == email_or_username):
+                partner = user_data
+                partner_id = uid
+                break
+    
+    if not partner:
+        return jsonify({'error': 'Tài khoản đối tác không tồn tại'}), 401
+    
+    # Verify password
+    stored_pw = partner.get('password', '')
+    is_valid = False
+    try:
+        is_valid = check_password_hash(stored_pw, password)
+    except Exception:
+        is_valid = False
+
+    # Fallback for plaintext passwords
+    if not is_valid and stored_pw == password:
+        is_valid = True
+        # Auto-upgrade to hashed password
+        accounts = load_json(ACCOUNTS_FILE, subfolder='account')
+        if 'users' in accounts and partner_id in accounts['users']:
+            accounts['users'][partner_id]['password'] = generate_password_hash(password)
+            save_json(ACCOUNTS_FILE, accounts, subfolder='account')
+
+    if not is_valid:
+        return jsonify({'error': 'Mật khẩu không đúng'}), 401
+    
+    token = generate_token(partner_id)
+    return jsonify({
+        'message': 'Đăng nhập thành công',
+        'token': token,
+        'partner': {
+            'id': partner_id,
+            'email': partner.get('email'),
+            'username': partner.get('username'),
+            'business_name': partner.get('business_name', ''),
+            'verified': partner.get('verified', False)
+        }
+    }), 200
+
+@app.route('/api/partner/stats', methods=['GET'])
+def get_partner_stats():
+    """Lấy thống kê cho partner dashboard"""
+    # Get partner_id from authorization header or query param
+    auth_header = request.headers.get('Authorization')
+    partner_id = request.args.get('partner_id')
+    
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        partner_id = verify_token(token)
+    
+    if not partner_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    # Mock stats - replace with real data from database
+    stats = {
+        'total_properties': 5,
+        'total_views': 1234,
+        'total_bookings': 12,
+        'total_revenue': 15000000,  # VND
+        'pending_bookings': 3
+    }
+    
+    return jsonify(stats), 200
+
 # ============================================
 
 # Serve static files (for development)

@@ -174,32 +174,90 @@ function loadSampleFAQData() {
         {
             question: "An ninh khu trọ như thế nào?",
             answer: "An ninh tốt với camera 24/7, bảo vệ, cổng vân tay/thẻ từ. Khu vực yên tĩnh, an toàn cho sinh viên và nhân viên văn phòng."
+        },
+        {
+            question: "Có chỗ để xe không?",
+            answer: "Có bãi xe rộng rãi, có mái che. Miễn phí hoặc từ 50-100k/tháng tùy khu. An toàn với camera và bảo vệ."
+        },
+        {
+            question: "Phòng trống khi nào?",
+            answer: "Có phòng trống ngay. Bạn có thể xem phòng và dọn vào bất cứ lúc nào sau khi đặt cọc."
+        },
+        {
+            question: "Có wifi miễn phí không?",
+            answer: "Có wifi miễn phí tốc độ cao. Một số phòng có cáp mạng riêng. Đảm bảo xem phim, học tập tốt."
+        },
+        {
+            question: "Diện tích phòng bao nhiêu?",
+            answer: "Diện tích từ 15-30m². Phòng nhỏ 15-20m² (1.5-2tr), phòng lớn 25-30m² (2.5-3.5tr)."
+        },
+        {
+            question: "Có thể ở ghép không?",
+            answer: "Có phòng cho ở ghép 2-3 người. Giá ưu đãi hơn, phù hợp sinh viên. Phòng riêng biệt cho mỗi người."
+        },
+        {
+            question: "Hợp đồng thuê như thế nào?",
+            answer: "Hợp đồng tối thiểu 6 tháng hoặc 1 năm. Có thể thương lượng thuê ngắn hạn 3 tháng với giá cao hơn."
+        },
+        {
+            question: "Có siêu thị gần không?",
+            answer: "Có nhiều siêu thị, chợ, cửa hàng tiện lợi gần: Circle K, GS25, VinMart. Đi bộ 5-10 phút."
+        },
+        {
+            question: "Có cho phép khách qua đêm không?",
+            answer: "Được phép nhưng cần báo trước. Khách cùng giới có thể ở qua đêm. Khách khác giới cần hỏi chủ nhà."
+        },
+        {
+            question: "Phòng có nội thất gì?",
+            answer: "Tùy loại: cơ bản có giường, tủ, bàn. Full nội thất có thêm điều hòa, tủ lạnh, máy nóng lạnh, bếp."
+        },
+        {
+            question: "Làm sao để xem phòng?",
+            answer: "Bạn có thể liên hệ qua số điện thoại hoặc Zalo để hẹn xem phòng. Chủ nhà sẽ trực tiếp dẫn bạn đi xem."
         }
     ];
 }
 
 /**
- * Display 2 random FAQ suggestions
+ * Display all FAQ questions in the list
  */
 function displayRandomFAQs() {
-    if (faqData.length < 2) {
-        console.warn('Not enough FAQ data');
+    if (faqData.length === 0) {
+        console.warn('No FAQ data');
         return;
     }
     
-    // Get 2 random FAQs
-    const shuffled = [...faqData].sort(() => 0.5 - Math.random());
-    currentRandomFAQs = shuffled.slice(0, 2);
+    // Get the FAQ items container
+    const faqItemsContainer = document.getElementById('faqItems');
+    if (!faqItemsContainer) return;
     
-    // Display in UI
-    const faqItems = document.querySelectorAll('.faqItem');
-    currentRandomFAQs.forEach((faq, index) => {
-        if (faqItems[index]) {
-            const questionSpan = faqItems[index].querySelector('.faqQuestion');
-            questionSpan.textContent = faq.question;
-            faqItems[index].dataset.faqIndex = index;
-        }
+    // Clear existing items
+    faqItemsContainer.innerHTML = '';
+    
+    // Create and display all FAQ items
+    faqData.forEach((faq, index) => {
+        const faqItemDiv = document.createElement('div');
+        faqItemDiv.className = 'faqItem';
+        faqItemDiv.dataset.faqIndex = index;
+        
+        const questionSpan = document.createElement('span');
+        questionSpan.className = 'faqQuestion';
+        questionSpan.textContent = faq.question;
+        
+        faqItemDiv.appendChild(questionSpan);
+        faqItemsContainer.appendChild(faqItemDiv);
+        
+        // Add click handler
+        faqItemDiv.addEventListener('click', function() {
+            const faqIndex = parseInt(this.dataset.faqIndex);
+            if (faqData[faqIndex]) {
+                sendMessage(faqData[faqIndex].question);
+            }
+        });
     });
+    
+    // Store current FAQs for reference
+    currentRandomFAQs = faqData;
 }
 
 /**
@@ -208,25 +266,40 @@ function displayRandomFAQs() {
 function setupChatHandlers() {
     const chatInput = document.getElementById('chatInputField');
     const sendBtn = document.getElementById('chatSendBtn');
-    const faqItems = document.querySelectorAll('.faqItem');
     const faqToggleBtn = document.getElementById('faqToggleBtn');
     const faqItemsContainer = document.getElementById('faqItems');
+    const faqSuggestions = document.getElementById('faqSuggestions');
     
     // FAQ Toggle button
-    if (faqToggleBtn && faqItemsContainer) {
-        faqToggleBtn.addEventListener('click', function() {
-            const isCollapsed = faqItemsContainer.classList.toggle('collapsed');
-            faqToggleBtn.classList.toggle('collapsed');
-            
-            // Optional: Save state to localStorage
-            localStorage.setItem('faqCollapsed', isCollapsed);
+    if (faqToggleBtn && faqItemsContainer && faqSuggestions) {
+        faqToggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleFAQ();
         });
         
-        // Restore previous state (mặc định mở)
-        const savedState = localStorage.getItem('faqCollapsed');
+        // Click vào toàn bộ faqTitle cũng toggle
+        const faqTitle = faqSuggestions.querySelector('.faqTitle');
+        if (faqTitle) {
+            faqTitle.addEventListener('click', function() {
+                toggleFAQ();
+            });
+        }
+        
+        function toggleFAQ() {
+            const isExpanded = faqItemsContainer.classList.toggle('expanded');
+            faqToggleBtn.classList.toggle('expanded');
+            faqSuggestions.classList.toggle('expanded');
+            
+            // Save state to localStorage
+            localStorage.setItem('faqExpanded', isExpanded);
+        }
+        
+        // Restore previous state (mặc định đóng)
+        const savedState = localStorage.getItem('faqExpanded');
         if (savedState === 'true') {
-            faqItemsContainer.classList.add('collapsed');
-            faqToggleBtn.classList.add('collapsed');
+            faqItemsContainer.classList.add('expanded');
+            faqToggleBtn.classList.add('expanded');
+            faqSuggestions.classList.add('expanded');
         }
     }
     
@@ -253,17 +326,6 @@ function setupChatHandlers() {
             }
         });
     }
-    
-    // FAQ item click
-    faqItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const index = parseInt(this.dataset.faqIndex);
-            if (currentRandomFAQs[index]) {
-                const faq = currentRandomFAQs[index];
-                handleFAQClick(faq);
-            }
-        });
-    });
 }
 
 /**

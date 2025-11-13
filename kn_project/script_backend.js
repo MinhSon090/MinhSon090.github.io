@@ -267,6 +267,9 @@ function updateUIForLoggedInUser() {
         profileUsername.textContent = currentUser.username || currentUser.id;
       }
     }
+    
+    // Update mobile sidebar
+    updateMobileSidebarAuth();
   }
 }
 
@@ -291,6 +294,9 @@ function logout() {
   
   // Clear favorites dropdown
   updateFavoritesDropdown();
+  
+  // Update mobile sidebar
+  updateMobileSidebarAuth();
   
   alert('Đã đăng xuất thành công!');
   // Optionally redirect to home
@@ -428,28 +434,9 @@ vnuLoginBtns.forEach(btn => {
   });
 });
 
-  // Partner button opens disabled popup
-  const partnerBtn = document.getElementById('partner-btn');
-  const partnerPopup = document.getElementById('partner-popup');
-  const partnerClose = document.getElementById('partner-close');
-  if (partnerBtn && partnerPopup) {
-    partnerBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      partnerPopup.style.display = 'flex';
-      document.getElementById('register-popup').style.display = 'none';
-      document.getElementById('login-popup').style.display = 'none';
-      
-      const backdrop = document.getElementById('auth-backdrop');
-      if (backdrop) backdrop.classList.add('show');
-    });
-  }
-  if (partnerClose && partnerPopup) {
-    partnerClose.addEventListener('click', () => {
-      partnerPopup.style.display = 'none';
-      const backdrop = document.getElementById('auth-backdrop');
-      if (backdrop) backdrop.classList.remove('show');
-    });
-  }
+  // Partner button is now a direct link - no popup needed
+  // Old partner popup code removed completely
+
 // --- Search & Sort ---
 document.querySelector(".btn-search").addEventListener("click", async () => {
   const loaiHinh = document.getElementById("filter-type").value.trim();
@@ -629,6 +616,13 @@ function attachCardEvents() {
   closeBtn.onclick = () => closeModal();
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
+  });
+  
+  // ESC key để đóng modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
   });
 }
 
@@ -1033,12 +1027,16 @@ function openSearchHistoryModal() {
     });
   }
   
-  // Save current scroll position
-  const scrollY = window.scrollY;
+  // Save current scroll position BEFORE showing modal
+  const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
-  // Restore scroll position
-  window.scrollTo(0, scrollY);
+  
+  // Restore scroll position to prevent jump
+  requestAnimationFrame(() => {
+    window.scrollTo(0, currentScrollY);
+  });
 }
 function closeSearchHistoryModal() {
   const modal = document.getElementById('search-history-modal');
@@ -1051,17 +1049,46 @@ function closeSearchHistoryModal() {
 function openContactModal() {
   const modal = document.getElementById('contact-modal');
   if (modal) {
-    // Save current scroll position
-    const scrollY = window.scrollY;
+    // Save current scroll position BEFORE opening modal
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    // Restore scroll position
-    window.scrollTo(0, scrollY);
+    
+    // Restore scroll position to prevent jump
+    requestAnimationFrame(() => {
+      window.scrollTo(0, currentScrollY);
+    });
   }
 }
 
 function closeContactModal() {
   const modal = document.getElementById('contact-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// About Modal Functions
+function openAboutModal() {
+  const modal = document.getElementById('about-modal');
+  if (modal) {
+    // Save current scroll position BEFORE opening modal
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Restore scroll position to prevent jump
+    requestAnimationFrame(() => {
+      window.scrollTo(0, currentScrollY);
+    });
+  }
+}
+
+function closeAboutModal() {
+  const modal = document.getElementById('about-modal');
   if (modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
@@ -1128,10 +1155,15 @@ function openBookingModal(property) {
   }
   
   // Show modal
-  const scrollY = window.scrollY;
+  const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
-  window.scrollTo(0, scrollY);
+  
+  // Restore scroll position to prevent jump
+  requestAnimationFrame(() => {
+    window.scrollTo(0, currentScrollY);
+  });
 }
 
 function closeBookingModal() {
@@ -1142,6 +1174,27 @@ function closeBookingModal() {
     currentBookingProperty = null;
   }
 }
+
+// Đóng modal khi click outside hoặc ESC
+document.addEventListener('DOMContentLoaded', () => {
+  const bookingModal = document.getElementById('booking-modal');
+  
+  if (bookingModal) {
+    // Click outside để đóng
+    bookingModal.addEventListener('click', (e) => {
+      if (e.target === bookingModal) {
+        closeBookingModal();
+      }
+    });
+    
+    // ESC key để đóng
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && bookingModal.classList.contains('active')) {
+        closeBookingModal();
+      }
+    });
+  }
+});
 
 // Handle booking form submission
 const bookingForm = document.getElementById('booking-form');
@@ -1319,6 +1372,27 @@ function closeLoginPopup() {
   if (backdrop) backdrop.classList.remove('show');
 }
 
+// Password toggle functionality
+const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+togglePasswordIcons.forEach(icon => {
+  icon.addEventListener('click', function() {
+    const inputWrapper = this.closest('.input-wrapper');
+    const passwordInput = inputWrapper.querySelector('input[type="password"], input[type="text"]');
+    
+    if (passwordInput) {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.classList.remove('fa-eye');
+        this.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        this.classList.remove('fa-eye-slash');
+        this.classList.add('fa-eye');
+      }
+    }
+  });
+});
+
 // Register button in header opens popup
 const headerRegisterBtn = document.getElementById('register-btn-aa');
 if (headerRegisterBtn) {
@@ -1361,7 +1435,6 @@ if (authBackdrop) {
   authBackdrop.addEventListener('click', () => {
     const loginPopup = document.getElementById('login-popup');
     const registerPopup = document.getElementById('register-popup');
-    const partnerPopup = document.getElementById('partner-popup');
     
     if (loginPopup && loginPopup.style.display === 'flex') {
       closeLoginPopup();
@@ -1369,10 +1442,7 @@ if (authBackdrop) {
     if (registerPopup && registerPopup.style.display === 'flex') {
       closeRegisterPopup();
     }
-    if (partnerPopup && partnerPopup.style.display === 'flex') {
-      partnerPopup.style.display = 'none';
-      authBackdrop.classList.remove('show');
-    }
+    // Partner popup removed - now using direct link
   });
 }
 
@@ -1430,7 +1500,12 @@ document.querySelectorAll('.logo').forEach(logo => {
 document.querySelectorAll('.nav-home').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Chỉ scroll về đầu trang nếu không có modal nào đang mở
+    const hasOpenModal = document.querySelector('.modal[style*="display: flex"]') || 
+                        document.querySelector('.info-modal.active');
+    if (!hasOpenModal) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 });
 
@@ -1537,27 +1612,38 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   
   // Setup nav menu items for info modals
-  const navHistory = document.querySelector('.nav-history');
+  const navAbout = document.querySelector('.nav-about');
   const navContact = document.querySelector('.nav-contact');
   
-  if (navHistory) {
-    navHistory.addEventListener('click', (e) => {
+  if (navAbout) {
+    navAbout.addEventListener('click', (e) => {
       e.preventDefault();
-      openSearchHistoryModal();
+      e.stopPropagation();
+      openAboutModal();
     });
   }
   
   if (navContact) {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       openContactModal();
     });
   }
   
   // Close modals when clicking outside
+  const aboutModal = document.getElementById('about-modal');
   const searchHistoryModal = document.getElementById('search-history-modal');
   const contactModal = document.getElementById('contact-modal');
   const bookingModal = document.getElementById('booking-modal');
+  
+  if (aboutModal) {
+    aboutModal.addEventListener('click', (e) => {
+      if (e.target === aboutModal) {
+        closeAboutModal();
+      }
+    });
+  }
   
   if (searchHistoryModal) {
     searchHistoryModal.addEventListener('click', (e) => {
@@ -1647,6 +1733,9 @@ function getSessionId() {
 
 // Update visitor stats
 async function updateVisitorStats() {
+  const onlineCount = document.getElementById('online-count');
+  const totalVisits = document.getElementById('total-visits');
+  
   try {
     const sessionId = getSessionId();
     const response = await fetch(`${API_BASE_URL}/visitor/ping`, {
@@ -1657,19 +1746,48 @@ async function updateVisitorStats() {
     
     if (response.ok) {
       const data = await response.json();
-      const onlineCount = document.getElementById('online-count');
-      const totalVisits = document.getElementById('total-visits');
       
       // Add 360,000 to both stats
       const BONUS_COUNT = 360000;
       
       if (onlineCount) onlineCount.textContent = ((data.online || 0) + BONUS_COUNT).toLocaleString('vi-VN');
       if (totalVisits) totalVisits.textContent = ((data.total || 0) + BONUS_COUNT).toLocaleString('vi-VN');
+    } else {
+      // Fallback: Use simulated stats if API fails
+      useSimulatedStats(onlineCount, totalVisits);
     }
   } catch (error) {
     console.error('Error updating visitor stats:', error);
-    // Silently fail - không hiển thị lỗi cho user
+    // Fallback: Use simulated stats if API fails
+    useSimulatedStats(onlineCount, totalVisits);
   }
+}
+
+// Simulated stats for demo (when backend is not available)
+function useSimulatedStats(onlineCount, totalVisits) {
+  // Base numbers
+  const baseOnline = 360015;
+  const baseTotal = 360247;
+  
+  // Random variations
+  const onlineVariation = Math.floor(Math.random() * 20) - 5; // -5 to +15
+  const totalIncrement = Math.floor(Math.random() * 3); // 0 to 2
+  
+  // Get or initialize stats from localStorage
+  let currentOnline = parseInt(localStorage.getItem('demo_online') || baseOnline);
+  let currentTotal = parseInt(localStorage.getItem('demo_total') || baseTotal);
+  
+  // Update with variation
+  currentOnline = Math.max(baseOnline - 10, Math.min(baseOnline + 30, currentOnline + onlineVariation));
+  currentTotal += totalIncrement;
+  
+  // Save to localStorage
+  localStorage.setItem('demo_online', currentOnline);
+  localStorage.setItem('demo_total', currentTotal);
+  
+  // Update display
+  if (onlineCount) onlineCount.textContent = currentOnline.toLocaleString('vi-VN');
+  if (totalVisits) totalVisits.textContent = currentTotal.toLocaleString('vi-VN');
 }
 
 // Load visitor stats on page load
@@ -1863,3 +1981,153 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+// ===== Mobile Sidebar Menu =====
+function initMobileSidebar() {
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileSidebar = document.getElementById('mobile-sidebar');
+  const sidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+  const sidebarClose = document.getElementById('mobile-sidebar-close');
+
+  function openSidebar() {
+    mobileSidebar.classList.add('active');
+    sidebarOverlay.classList.add('active');
+    hamburgerBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    mobileSidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+    hamburgerBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Hamburger button click
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+      if (mobileSidebar.classList.contains('active')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+  }
+
+  // Close button click
+  if (sidebarClose) {
+    sidebarClose.addEventListener('click', closeSidebar);
+  }
+
+  // Overlay click
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeSidebar);
+  }
+
+  // Connect mobile menu items to existing functions
+  const mobileLoginBtn = document.getElementById('mobile-login-btn');
+  const mobileRegisterBtn = document.getElementById('mobile-register-btn');
+  const mobilePartnerBtn = document.getElementById('mobile-partner-btn');
+  const mobileFavoritesBtn = document.getElementById('mobile-favorites-btn');
+  const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+  const mobileSettingsBtn = document.getElementById('mobile-settings-btn');
+
+  if (mobileLoginBtn) {
+    mobileLoginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.getElementById('login-btn-aa')?.click(), 300);
+    });
+  }
+
+  if (mobileRegisterBtn) {
+    mobileRegisterBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.getElementById('register-btn-aa')?.click(), 300);
+    });
+  }
+
+  // Mobile partner button now opens direct link - no preventDefault needed
+
+  if (mobileFavoritesBtn) {
+    mobileFavoritesBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.getElementById('favorites-btn')?.click(), 300);
+    });
+  }
+
+  if (mobileLogoutBtn) {
+    mobileLogoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.getElementById('logout-btn')?.click(), 300);
+    });
+  }
+
+  if (mobileSettingsBtn) {
+    mobileSettingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.getElementById('settings-btn')?.click(), 300);
+    });
+  }
+
+  // Nav items
+  const navHomeLinks = document.querySelectorAll('.mobile-sidebar .nav-home');
+  const navAboutLinks = document.querySelectorAll('.mobile-sidebar .nav-about');
+  const navContactLinks = document.querySelectorAll('.mobile-sidebar .nav-contact');
+
+  navHomeLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.querySelector('.nav-home')?.click(), 300);
+    });
+  });
+
+  navAboutLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.querySelector('.nav-about')?.click(), 300);
+    });
+  });
+
+  navContactLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeSidebar();
+      setTimeout(() => document.querySelector('.nav-contact')?.click(), 300);
+    });
+  });
+
+  // Update mobile sidebar when user logs in/out
+  updateMobileSidebarAuth();
+}
+
+function updateMobileSidebarAuth() {
+  const mobileLoginBtn = document.getElementById('mobile-login-btn');
+  const mobileRegisterBtn = document.getElementById('mobile-register-btn');
+  const mobileProfileSection = document.querySelector('.mobile-profile-section');
+
+  if (currentUser) {
+    // User is logged in
+    if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+    if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+    if (mobileProfileSection) mobileProfileSection.style.display = 'block';
+  } else {
+    // User is logged out
+    if (mobileLoginBtn) mobileLoginBtn.style.display = 'flex';
+    if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'flex';
+    if (mobileProfileSection) mobileProfileSection.style.display = 'none';
+  }
+}
+
+// Initialize mobile sidebar when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMobileSidebar);
+} else {
+  initMobileSidebar();
+}

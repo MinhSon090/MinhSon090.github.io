@@ -4,18 +4,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HolaHome</title>
-  <link rel="icon" type="image/x-icon" href="logo/logo_v2.PNG">
+  
+  <!-- SEO Meta Tags -->
+  <title>Hola Home - Tìm Phòng Trọ Sinh Viên Hà Nội | Nhà Trọ Gần Trường ĐH</title>
+  <meta name="description" content="Hola Home - Nền tảng tìm kiếm nhà trọ, phòng trọ, ký túc xá gần trường đại học tại Hà Nội. Giá rẻ từ 500k/tháng, tiện nghi đầy đủ, an toàn, gần trường. Xem phòng miễn phí, hỗ trợ 24/7.">
+  <meta name="keywords" content="nhà trọ hà nội, phòng trọ sinh viên, ký túc xá, ktx, nhà trọ gần trường, thuê phòng trọ, tìm phòng trọ, phòng trọ giá rẻ, nhà trọ bách khoa, phòng trọ đại học quốc gia">
+  <meta name="author" content="Hola Home">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://holahome.com/">
+  
+  <!-- Open Graph (Facebook, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hola Home - Tìm Phòng Trọ Sinh Viên Hà Nội">
+  <meta property="og:description" content="Tìm nhà trọ, phòng trọ, ký túc xá gần trường đại học. Giá từ 500k/tháng, an toàn, tiện nghi đầy đủ. Hỗ trợ xem phòng miễn phí 24/7.">
+  <meta property="og:image" content="https://holahome.com/logo/white HH logo v3.PNG">
+  <meta property="og:url" content="https://holahome.com/">
+  <meta property="og:site_name" content="Hola Home">
+  <meta property="og:locale" content="vi_VN">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hola Home - Tìm Phòng Trọ Sinh Viên Hà Nội">
+  <meta name="twitter:description" content="Nền tảng tìm kiếm nhà trọ, phòng trọ uy tín tại Hà Nội. Giá rẻ, gần trường, an toàn.">
+  <meta name="twitter:image" content="https://holahome.com/logo/white HH logo v3.PNG">
+  
+  <!-- Mobile Optimization -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hola Home">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo/white HH logo v3.PNG">
+  <link rel="apple-touch-icon" href="logo/white HH logo v3.PNG">
+  
+  <!-- Preload Critical Assets -->
+  <link rel="preload" href="style.css" as="style">
+  <link rel="preload" href="images/4.jpg" as="image">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Hola Home",
+    "description": "Nền tảng tìm kiếm nhà trọ, phòng trọ, ký túc xá gần trường đại học tại Hà Nội",
+    "url": "https://holahome.com",
+    "logo": "https://holahome.com/logo/white HH logo v3.PNG",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hà Nội",
+      "addressCountry": "VN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+84-XXX-XXX-XXX",
+      "contactType": "Customer Service",
+      "email": "holahome@gmail.com",
+      "availableLanguage": "Vietnamese"
+    },
+    "sameAs": [
+      "https://facebook.com/holahome",
+      "https://zalo.me/holahome"
+    ]
+  }
+  </script>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-  <img src="images/4.jpg" class="bg-image" alt="Background Image">
+  <img src="images/4.jpg" class="bg-image" alt="Background Image" loading="lazy">
   <!-- Header -->
   <header>
     <div class="logo">
-      <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <button class="hamburger" aria-label="Menu" aria-expanded="false" id="hamburger-btn">
         <span></span>
         <span></span>
         <span></span>
@@ -25,8 +95,8 @@
     </div>
     <nav>
       <a href="#" class="nav-home">Trang chủ</a>
+      <a href="#" class="nav-about">Giới thiệu</a>
       <a href="#" class="nav-contact">Liên hệ</a>
-      <a href="#" class="nav-history">Lịch sử tìm kiếm</a>
     </nav>
     
     <div class="right-menu">
@@ -47,7 +117,7 @@
           </div>
         </div>
       </div>
-      <p><a href="#" id="partner-btn">Trở thành đối tác</a></p>
+      <p><a href="partner_dashboard.html" id="partner-btn" target="_blank">Trở thành đối tác</a></p>
       <span class="vertical-divider"></span>
       <p><a href="#" id="login-btn-aa">Đăng nhập</a></p>
       <p><a href="#" id="register-btn-aa">Đăng ký</a></p>
@@ -63,6 +133,65 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Sidebar Menu -->
+  <div class="mobile-sidebar-overlay" id="mobile-sidebar-overlay"></div>
+  <div class="mobile-sidebar" id="mobile-sidebar">
+    <div class="mobile-sidebar-header">
+      <img src="logo/balck_logo.PNG" alt="Logo">
+      <span>HOLA HOME</span>
+      <button class="mobile-sidebar-close" id="mobile-sidebar-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="mobile-sidebar-nav">
+      <a href="#" class="mobile-nav-item nav-home">
+        <i class="fas fa-home"></i>
+        <span>Trang chủ</span>
+      </a>
+      <a href="#" class="mobile-nav-item nav-about">
+        <i class="fas fa-info-circle"></i>
+        <span>Giới thiệu</span>
+      </a>
+      <a href="#" class="mobile-nav-item nav-contact">
+        <i class="fas fa-phone"></i>
+        <span>Liên hệ</span>
+      </a>
+      <a href="#" class="mobile-nav-item" id="mobile-favorites-btn">
+        <i class="fas fa-heart"></i>
+        <span>Mục yêu thích</span>
+      </a>
+      <a href="partner_dashboard.html" class="mobile-nav-item" id="mobile-partner-btn" target="_blank">
+        <i class="fas fa-handshake"></i>
+        <span>Trở thành đối tác</span>
+      </a>
+      <div class="mobile-nav-divider"></div>
+      <a href="#" class="mobile-nav-item mobile-login-btn" id="mobile-login-btn">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Đăng nhập</span>
+      </a>
+      <a href="#" class="mobile-nav-item mobile-register-btn" id="mobile-register-btn">
+        <i class="fas fa-user-plus"></i>
+        <span>Đăng ký</span>
+      </a>
+      <!-- Profile section (hidden by default) -->
+      <div class="mobile-profile-section" style="display:none;">
+        <div class="mobile-nav-divider"></div>
+        <a href="account/user_ui.html" class="mobile-nav-item">
+          <i class="fas fa-user"></i>
+          <span>Thông tin tài khoản</span>
+        </a>
+        <a href="#" class="mobile-nav-item" id="mobile-settings-btn">
+          <i class="fas fa-cog"></i>
+          <span>Cài đặt</span>
+        </a>
+        <a href="#" class="mobile-nav-item" id="mobile-logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Đăng xuất</span>
+        </a>
+      </div>
+    </nav>
+  </div>
 
   <!-- Backdrop for login/register popups -->
   <div id="auth-backdrop" class="auth-backdrop"></div>
@@ -96,98 +225,138 @@
 
   <!-- Popup đăng nhập -->
   <div id="login-popup" class="login-popup" style="display:none">
-    <span class="login-close">&times;</span>
+    <div class="login-popup-header">
+      <h2 class="login-popup-title">Đăng nhập</h2>
+      <span class="login-close">&times;</span>
+    </div>
     <form class="login-form" autocomplete="off">
-      <label>Email or Username <span>*</span></label>
-      <input type="text" id="login-username" placeholder=" " required>
-      <div class="login-msg" id="login-username-msg">Email is required</div>
-      <label>Password <span>*</span></label>
-      <input type="password" id="login-password" placeholder=" " required>
-      <div class="login-msg" id="login-password-msg">Password is required</div>
+      <div class="form-group-login">
+        <label>Email hoặc Username <span>*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="login-username" placeholder="Nhập email hoặc username" required>
+        </div>
+        <div class="login-msg" id="login-username-msg">Email is required</div>
+      </div>
+      
+      <div class="form-group-login">
+        <label>Mật khẩu <span>*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="login-password" placeholder="Nhập mật khẩu" required>
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+        <div class="login-msg" id="login-password-msg">Password is required</div>
+      </div>
+      
       <div class="login-row">
         <label class="remember-me">
           <input type="checkbox" id="login-remember">
-          <span class="checkmark"></span>
-          Remember me
+          Ghi nhớ đăng nhập
         </label>
-        <a href="#" class="login-forgot">Forgot password?</a>
+        <a href="#" class="login-forgot">Quên mật khẩu?</a>
       </div>
-      <button type="submit" class="login-btn-main">Log in</button>
-      <div class="login-divider"></div>
+      
+      <button type="submit" class="login-btn-main">
+        <i class="fas fa-sign-in-alt"></i>
+        Đăng nhập
+      </button>
+      
+      <div class="login-divider">
+        <span>hoặc đăng nhập với</span>
+      </div>
+      
       <div class="login-socials">
-        <button type="button" class="login-btn-google"><img src="logo/google.png" alt="G"></button>
-        <button type="button" class="login-btn-vnu"><img src="logo/vnu.png" alt="A"></button>
-        <button type="button" class="login-btn-facebook"><img src="logo/facebook.png" alt="F"></button>
+        <button type="button" class="login-btn-google">
+          <img src="logo/google.png" alt="G">
+          <span>Google</span>
+        </button>
+        <button type="button" class="login-btn-facebook">
+          <img src="logo/facebook.png" alt="F">
+          <span>Facebook</span>
+        </button>
+        <button type="button" class="login-btn-vnu">
+          <img src="logo/vnu.png" alt="V">
+          <span>VNU</span>
+        </button>
       </div>
     </form>
   </div>
   <!-- Popup đăng ký user -->
   <div id="register-popup" class="login-popup" style="display:none">
-    <span class="login-close" id="register-close">&times;</span>
+    <div class="login-popup-header">
+      <h2 class="login-popup-title">Đăng ký tài khoản</h2>
+      <span class="login-close" id="register-close">&times;</span>
+    </div>
     <form class="login-form" autocomplete="off">
-      <label>Email <span>*</span></label>
-      <input type="email" id="register-email" placeholder=" " required>
+      <div class="form-group-login">
+        <label>Email <span>*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" id="register-email" placeholder="Nhập email của bạn" required>
+        </div>
+      </div>
+      
+      <div class="form-group-login">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="register-username" placeholder="Nhập tên người dùng">
+        </div>
+      </div>
+      
+      <div class="form-group-login">
+        <label>Mật khẩu <span>*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="register-password" placeholder="Nhập mật khẩu" required>
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+      </div>
+      
+      <div class="form-group-login">
+        <label>Nhập lại mật khẩu <span>*</span></label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="register-password2" placeholder="Nhập lại mật khẩu" required>
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+      </div>
 
-      <label>Username</label>
-      <input type="text" id="register-username" placeholder=" ">
-
-      <label>Password <span>*</span></label>
-      <input type="password" id="register-password" placeholder=" " required>
-
-      <label>Nhập lại Password <span>*</span></label>
-      <input type="password" id="register-password2" placeholder=" " required>
-
-      <div class="login-row">
-        <label class="remember-me">
+      <div class="login-row" style="margin-bottom: 12px;">
+        <label class="remember-me" style="font-size: 13px;">
           <input type="checkbox" id="register-accept">
-          <span class="checkmark"></span>
-          <p style="margin: 0;">Tôi đồng ý với <a href="#" style="text-decoration: none;">điều khoản</a></p>
+          Tôi đồng ý với <a href="#" style="color: #667eea; text-decoration: none; font-weight: 600;">điều khoản</a>
         </label>
       </div>
-      <button type="submit" class="login-btn-main">Đăng ký</button>
-      <div class="login-divider"></div>
+      
+      <button type="submit" class="login-btn-main">
+        <i class="fas fa-user-plus"></i>
+        Đăng ký
+      </button>
+      
+      <div class="login-divider">
+        <span>hoặc đăng ký với</span>
+      </div>
+      
       <div class="login-socials">
-        <button type="button" class="login-btn-google"><img src="logo/google.png" alt="G"></button>
-        <button type="button" class="login-btn-vnu"><img src="logo/vnu.png" alt="A"></button>
-        <button type="button" class="login-btn-facebook"><img src="logo/facebook.png" alt="F"></button>
+        <button type="button" class="login-btn-google">
+          <img src="logo/google.png" alt="G">
+          <span>Google</span>
+        </button>
+        <button type="button" class="login-btn-facebook">
+          <img src="logo/facebook.png" alt="F">
+          <span>Facebook</span>
+        </button>
+        <button type="button" class="login-btn-vnu">
+          <img src="logo/vnu.png" alt="V">
+          <span>VNU</span>
+        </button>
       </div>
     </form>
   </div>
 
-  <!-- Popup đăng ký partner (tạm thời không hoạt động) -->
-  <div id="partner-popup" class="login-popup" style="display:none">
-    <span class="login-close" id="partner-close">&times;</span>
-    <form class="login-form" autocomplete="off">
-      <label>Email <span>*</span></label>
-      <input type="email" id="partner-email" placeholder=" " required disabled>
-
-      <label>Username</label>
-      <input type="text" id="partner-username" placeholder=" " required disabled>
-
-      <label>Password <span>*</span></label>
-      <input type="password" id="partner-password" placeholder=" " required disabled>
-
-      <label>Nhập lại Password <span>*</span></label>
-      <input type="password" id="partner-password2" placeholder=" " required disabled>
-
-      <div class="login-row">
-        <label class="remember-me">
-          <input type="checkbox" id="partner-accept" disabled>
-          <span class="checkmark"></span>
-          <p style="margin: 0;">Tôi đồng ý với <a href="#" style="text-decoration: none;">điều khoản</a></p>
-        </label>
-      </div>
-      <button type="button" class="login-btn-main" disabled>Đăng ký đối tác (tạm thời chưa mở)</button>
-      <div class="login-divider"></div>
-      <div class="login-socials">
-        <button type="button" class="login-btn-google" disabled><img src="logo/google.png" alt="G"></button>
-        <button type="button" class="login-btn-vnu" disabled><img src="logo/vnu.png" alt="A"></button>
-        <button type="button" class="login-btn-facebook" disabled><img src="logo/facebook.png" alt="F"></button>
-      </div>
-    </form>
-    <div style="text-align:center;color:#d32f2f;margin-top:10px;">Chức năng đăng ký đối tác sẽ mở sau!</div>
-  </div>
-
+  <!-- Partner popup removed - now using direct link to partner_dashboard.html -->
 
   <!-- Nội dung chính -->
   <main>
@@ -385,8 +554,22 @@
     </div>
     <div class="chatBody">
       <div class="chatMessage botMessage">
-        Xin chào! 👋<br>
-        Mình là Haan36, bạn cần hỗ trợ gì?
+        <div style="margin-bottom: 8px;">
+          <strong>👋 Xin chào!</strong><br>
+          Mình là <strong>Haan36</strong>, trợ lý ảo của HolaHome.
+        </div>
+        <div style="margin-bottom: 8px;">
+          <strong>Tôi có thể giúp bạn:</strong>
+        </div>
+        <div style="line-height: 1.8;">
+          🏠 Tìm phòng trọ phù hợp<br>
+          💰 Tư vấn về giá cả<br>
+          📍 Thông tin vị trí, tiện ích<br>
+          ❓ Giải đáp các thắc mắc
+        </div>
+        <div style="margin-top: 8px; font-style: italic;">
+          Bạn cần hỗ trợ gì nhé? 😊
+        </div>
       </div>
     </div>
     
@@ -399,18 +582,71 @@
         </button>
       </div>
       <div class="faqItems" id="faqItems">
-        <div class="faqItem" data-faq-index="0">
-          <span class="faqQuestion">Đang tải câu hỏi...</span>
-        </div>
-        <div class="faqItem" data-faq-index="1">
-          <span class="faqQuestion">Đang tải câu hỏi...</span>
-        </div>
+        <!-- FAQ items will be loaded dynamically -->
       </div>
     </div>
     
     <div class="chatInput">
       <input type="text" id="chatInputField" placeholder="Nhập tin nhắn...">
       <button id="chatSendBtn">Gửi</button>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="info-modal">
+    <div class="info-modal-content">
+      <div class="info-modal-header">
+        <h3><i class="fas fa-info-circle"></i> Giới thiệu về HOLA HOME</h3>
+        <button class="info-modal-close" onclick="closeAboutModal()">&times;</button>
+      </div>
+      <div class="info-modal-body">
+        <div class="about-content">
+          <div class="about-section">
+            <h4><i class="fas fa-building"></i> Về chúng tôi</h4>
+            <p>HOLA HOME là nền tảng tìm kiếm và quản lý phòng trọ, ký túc xá hàng đầu tại Việt Nam. Chúng tôi kết nối người tìm nhà với các chủ nhà uy tín, mang đến trải nghiệm thuê trọ an toàn, tiện lợi và minh bạch.</p>
+          </div>
+          
+          <div class="about-section">
+            <h4><i class="fas fa-bullseye"></i> Sứ mệnh</h4>
+            <p>Giúp mọi người dễ dàng tìm được nơi ở phù hợp với nhu cầu và ngân sách, đồng thời hỗ trợ chủ nhà quản lý và cho thuê phòng trọ hiệu quả hơn.</p>
+          </div>
+          
+          <div class="about-section">
+            <h4><i class="fas fa-star"></i> Tính năng nổi bật</h4>
+            <ul class="about-features">
+              <li><i class="fas fa-check-circle"></i> Hàng ngàn phòng trọ, ký túc xá đa dạng</li>
+              <li><i class="fas fa-check-circle"></i> Tìm kiếm thông minh với bộ lọc chi tiết</li>
+              <li><i class="fas fa-check-circle"></i> Đánh giá và bình luận từ người dùng thực</li>
+              <li><i class="fas fa-check-circle"></i> Đặt lịch hẹn xem phòng trực tuyến</li>
+              <li><i class="fas fa-check-circle"></i> Lưu yêu thích và so sánh phòng trọ</li>
+              <li><i class="fas fa-check-circle"></i> Hỗ trợ chatbot AI 24/7</li>
+            </ul>
+          </div>
+          
+          <div class="about-section">
+            <h4><i class="fas fa-users"></i> Đội ngũ phát triển</h4>
+            <p>Được xây dựng bởi đội ngũ sinh viên đam mê công nghệ, cam kết mang đến giải pháp tối ưu cho cộng đồng sinh viên và người lao động.</p>
+          </div>
+          
+          <div class="about-stats">
+            <div class="stat-item">
+              <i class="fas fa-home"></i>
+              <div class="stat-number">1000+</div>
+              <div class="stat-label">Phòng trọ</div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-users"></i>
+              <div class="stat-number" id="about-users">360K+</div>
+              <div class="stat-label">Người dùng</div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-handshake"></i>
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Đối tác</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -572,7 +808,7 @@
                 <h2 class="brand-name">HOLA HOME</h2>
                 <p class="slogan">Hơn cả mái nhà - Đó là mái ấm</p>
                 <p class="brand-description">
-                    Khi nhà trọ cũng là nhà, HOLA HO tin rằng một không gian tiện nghi, lối sống hiện đại là nền móng để cư dân trẻ có thể tự do sống tích cực và thành công trong cuộc sống.
+                    Khi nhà trọ cũng là nhà, HOLA HOME tin rằng một không gian tiện nghi, lối sống hiện đại là nền móng để cư dân trẻ có thể tự do sống tích cực và thành công trong cuộc sống.
                 </p>
             </div>
 
@@ -630,7 +866,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <div class="copyright">
-                    © 2025 HOLA HOME. Designed by Minh Son.
+                    © 2025 HOLA HOME. Designed by Minh Son & Duy Phat.
                 </div>
                 <div class="bottom-links">
                     <a href="#" class="bottom-link">Chính sách bảo mật</a>
@@ -644,8 +880,57 @@
             </div>
         </div>
     </footer>
+  
   <script src="script_backend.js"></script>
   <script src="chatbot.js"></script>
+  
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('✅ Service Worker registered successfully:', registration.scope);
+            
+            // Check for updates periodically
+            setInterval(() => {
+              registration.update();
+            }, 60000); // Check every minute
+          })
+          .catch(error => {
+            console.log('❌ Service Worker registration failed:', error);
+          });
+      });
+    }
+    
+    // Install prompt for PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install button (you can add UI for this)
+      console.log('💡 PWA can be installed!');
+      
+      // Optional: Show install banner
+      setTimeout(() => {
+        if (deferredPrompt && !localStorage.getItem('pwa-dismissed')) {
+          const shouldInstall = confirm('Cài đặt Hola Home để truy cập nhanh hơn?');
+          if (shouldInstall) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                console.log('✅ User installed PWA');
+              }
+              deferredPrompt = null;
+            });
+          } else {
+            localStorage.setItem('pwa-dismissed', 'true');
+          }
+        }
+      }, 5000); // Show after 5 seconds
+    });
+  </script>
 </body>
 </html>
 

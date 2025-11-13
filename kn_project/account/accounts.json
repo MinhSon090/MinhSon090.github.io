@@ -39,8 +39,29 @@
       "password": "scrypt:32768:8:1$4qFxhXo0lDspNpLH$067a67ead19cff234f8297393db2100fd57b3513f2a9c5b06535a2b9dbafa3d4904666e29c380be1367eb872466a61ee05a7cdc00b67dd53442a01b1fcb1786e",
       "account_type": "user",
       "created_at": "2025-10-23T16:47:19.021798"
+    },
+    "user#00006": {
+      "id": "user#00006",
+      "email": "dp2623478@gmail.com",
+      "username": "MinhSu",
+      "password": "scrypt:32768:8:1$ZWYIT2gYvPteWFko$a05d299fa435d6ba77a8f999f6e89dd236fbdd4f627a43e308393c9558530913d5f0e73069ee29e76f840cbae5d3600e3f702251b31c8854ec770de3b3ce4b00",
+      "account_type": "user",
+      "created_at": "2025-11-13T10:26:15.167416"
+    },
+    "partner#00001": {
+      "id": "partner#00001",
+      "email": "partner@example.com",
+      "username": "example_partner",
+      "password": "scrypt:32768:8:1$nQPtTL28bqHyVTfm$0b80c4c729ef0da0a4e587a1910b5ebb0587cb935f997ad1401230e17f7e7bca351edab34693ecaf96b5b85d6c9eeab83391358c234f21706ac1f591d3dd2aa6",
+      "account_type": "partner",
+      "business_name": "Nhà Trọ Mẫu",
+      "phone": "0123456789",
+      "address": "123 Đường ABC, Hà Nội",
+      "verified": true,
+      "properties_count": 5,
+      "created_at": "2025-11-13T10:00:00.000000"
     }
   },
-  "next_user_id": 6,
-  "next_partner_id": 1
+  "next_user_id": 7,
+  "next_partner_id": 2
 }
