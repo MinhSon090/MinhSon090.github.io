@@ -161,6 +161,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize Dashboard Functions
 function initializeDashboard() {
+    // Notification bell toggle
+    const notificationBell = document.getElementById('notification-bell');
+    const notificationDropdown = document.getElementById('notification-dropdown');
+    
+    if (notificationBell && notificationDropdown) {
+        notificationBell.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('show');
+        });
+        
+        // Close notification dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!notificationBell.contains(e.target)) {
+                notificationDropdown.classList.remove('show');
+            }
+        });
+    }
+    
     // Add click event listeners to nav items
     const navItems = document.querySelectorAll('.nav-item[data-section]');
     navItems.forEach(item => {
@@ -402,14 +420,6 @@ function initializeDashboard() {
         userProfile.addEventListener('click', function() {
             // Placeholder for profile menu
             console.log('Profile menu clicked');
-        });
-    }
-
-    // Notification bell (placeholder)
-    const notificationBell = document.querySelector('.notification-bell');
-    if (notificationBell) {
-        notificationBell.addEventListener('click', function() {
-            alert('Bạn có 3 thông báo mới:\n\n1. Lịch hẹn mới từ Nguyễn Văn A\n2. Hợp đồng sắp hết hạn\n3. Tin đăng được 50 lượt xem');
         });
     }
 

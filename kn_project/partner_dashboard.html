@@ -59,12 +59,48 @@
                 <h1>HOLA HOME Partner</h1>
             </div>
             <div class="header-actions">
-                <div class="notification-bell">
+                <div class="notification-bell" id="notification-bell">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notification-dropdown">
+                        <div class="notification-header">
+                            Thông báo
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-item-title">Đặt lịch xem phòng mới</div>
+                                <div class="notification-item-text">Khách hàng Nguyễn Văn A đã đặt lịch xem phòng Nhà Trọ ABC</div>
+                                <div class="notification-item-time">5 phút trước</div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-item-title">Bình luận mới</div>
+                                <div class="notification-item-text">Trần Thị B đã để lại đánh giá 5 sao cho phòng trọ của bạn</div>
+                                <div class="notification-item-time">2 giờ trước</div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-item-title">Thanh toán thành công</div>
+                                <div class="notification-item-text">Phòng A01 đã được thanh toán tháng 11/2025</div>
+                                <div class="notification-item-time">1 ngày trước</div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-item-title">Cập nhật hệ thống</div>
+                                <div class="notification-item-text">Tính năng thống kê mới đã được thêm vào dashboard</div>
+                                <div class="notification-item-time">3 ngày trước</div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#">Xem tất cả thông báo</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="user-profile">
-                    <img src="logo/z7100575905764_23264d1dea2857f3fc8f96b898c3e1cb.jpg" alt="User" class="avatar">
+                    <div class="avatar">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
                     <div class="user-info">
                         <span class="user-name">buitruonglinh</span>
                         <span class="user-role">Đối tác</span>
@@ -453,7 +489,17 @@
                             <tr class="booking-row pending">
                                 <td>
                                     <div class="customer-info">
-                                        <img src="logo/logo.png" alt="Avatar">
+                                        <div class="customer-avatar">
+                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                                                <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <strong>Phạm Văn C</strong>
+                                            <span>Đã đăng ký 1 tháng</span>6-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
                                         <div>
                                             <strong>Nguyễn Văn A</strong>
                                             <span>Đã đăng ký 2 tháng</span>
@@ -496,9 +542,14 @@
                             <tr class="booking-row pending">
                                 <td>
                                     <div class="customer-info">
-                                        <img src="logo/logo.png" alt="Avatar">
+                                        <div class="customer-avatar">
+                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                                                <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
                                         <div>
-                                            <strong>Lê Văn C</strong>
+                                            <strong>Trần Thị B</strong>
                                             <span>Thành viên mới</span>
                                         </div>
                                     </div>
