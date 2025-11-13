@@ -440,6 +440,11 @@ body {
     justify-content: center;
 }
 
+/* Notification Container */
+.notification-container {
+    position: relative;
+}
+
 /* Notification Dropdown */
 .notification-dropdown {
     position: absolute;

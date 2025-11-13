@@ -164,6 +164,7 @@ function initializeDashboard() {
     // Notification bell toggle
     const notificationBell = document.getElementById('notification-bell');
     const notificationDropdown = document.getElementById('notification-dropdown');
+    const notificationContainer = document.querySelector('.notification-container');
     
     if (notificationBell && notificationDropdown) {
         notificationBell.addEventListener('click', function(e) {
@@ -173,7 +174,7 @@ function initializeDashboard() {
         
         // Close notification dropdown when clicking outside
         document.addEventListener('click', function(e) {
-            if (!notificationBell.contains(e.target)) {
+            if (notificationContainer && !notificationContainer.contains(e.target)) {
                 notificationDropdown.classList.remove('show');
             }
         });
