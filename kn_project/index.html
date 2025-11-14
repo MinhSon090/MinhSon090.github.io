@@ -42,7 +42,7 @@
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20251114">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   
   <!-- Structured Data (JSON-LD) -->
@@ -875,7 +875,19 @@
         </div>
     </footer>
   
-  <script src="script_backend.js"></script>
-  <script src="chatbot.js"></script>
+  <script src="script_backend.js?v=20251114"></script>
+  <script src="chatbot.js?v=20251114"></script>
+  
+  <!-- Unregister any existing Service Workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister();
+          console.log('🗑️ Service Worker unregistered');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
