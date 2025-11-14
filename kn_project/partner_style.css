@@ -33,14 +33,11 @@ body {
 /* Login Screen Styles */
 .login-screen {
     min-height: 100vh;
-    display: none !important; /* Force hide login screen */
+    display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     position: relative;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
 }
 
 .login-screen::before {
@@ -244,9 +241,8 @@ body {
 /* Dashboard Wrapper */
 .dashboard-wrapper {
     min-height: 100vh;
-    display: block !important; /* Force show dashboard */
-    visibility: visible !important;
-    opacity: 1 !important;
+    background: #f5f7fa;
+    display: none;
 }
 
 /* Success Modal */

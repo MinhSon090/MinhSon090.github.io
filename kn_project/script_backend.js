@@ -309,11 +309,14 @@ function logout() {
 
 // Login form submission
 const loginForm = document.querySelector('#login-popup form');
+console.log('🔍 Login form found:', loginForm ? 'YES' : 'NO');
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('📝 Login form submitted!');
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
+    console.log('👤 Username:', username);
 
     if (!username || !password) {
       showNotification('⚠️ Vui lòng nhập đầy đủ thông tin!');
@@ -329,10 +332,10 @@ if (loginForm) {
         body: JSON.stringify({ email: username, password })
       });
 
-      const data = await response.json();
-      console.log('Login response:', response.status, data);
-      
+      // Check if response is ok before parsing JSON
       if (response.ok) {
+        const data = await response.json();
+        console.log('Login response:', response.status, data);
         authToken = data.token;
         currentUser = data.user;
         localStorage.setItem('authToken', authToken);
@@ -342,11 +345,38 @@ if (loginForm) {
         closeLoginPopup();
         showNotification('Đăng nhập thành công! 🎉');
       } else {
-        showNotification('❌ ' + (data.error || 'Đăng nhập thất bại'));
+        // Server returned error, try to parse JSON error message
+        try {
+          const data = await response.json();
+          showNotification('❌ ' + (data.error || 'Đăng nhập thất bại'));
+        } catch {
+          // If JSON parsing fails, throw to trigger offline mode
+          throw new Error('Server error: ' + response.status);
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
-      showNotification('❌ Không thể kết nối đến server. Vui lòng kiểm tra backend!');
+      // FALLBACK: Offline login with demo accounts
+      console.log('🔄 Backend unavailable, trying offline login...');
+      
+      const offlineAccounts = {
+        'khach@example.com': { password: 'khach123', user: { id: 'user#00007', email: 'khach@example.com', username: 'khachhang', account_type: 'user' }},
+        'khachhang': { password: 'khach123', user: { id: 'user#00007', email: 'khach@example.com', username: 'khachhang', account_type: 'user' }}
+      };
+      
+      const account = offlineAccounts[username];
+      if (account && account.password === password) {
+        authToken = 'offline-token-' + Date.now();
+        currentUser = account.user;
+        localStorage.setItem('authToken', authToken);
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateUIForLoggedInUser();
+        await loadUserFavorites();
+        closeLoginPopup();
+        showNotification('✅ Đăng nhập thành công (Offline mode)! 🎉');
+      } else {
+        showNotification('❌ Không thể kết nối server. Vui lòng dùng tài khoản demo: khach@example.com / khach123');
+      }
     }
   });
 }

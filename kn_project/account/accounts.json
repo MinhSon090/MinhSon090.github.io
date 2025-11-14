@@ -52,7 +52,7 @@
       "id": "partner#00001",
       "email": "partner@example.com",
       "username": "example_partner",
-      "password": "scrypt:32768:8:1$nQPtTL28bqHyVTfm$0b80c4c729ef0da0a4e587a1910b5ebb0587cb935f997ad1401230e17f7e7bca351edab34693ecaf96b5b85d6c9eeab83391358c234f21706ac1f591d3dd2aa6",
+      "password": "partner123",
       "account_type": "partner",
       "business_name": "Nhà Trọ Mẫu",
       "phone": "0123456789",
@@ -60,8 +60,16 @@
       "verified": true,
       "properties_count": 5,
       "created_at": "2025-11-13T10:00:00.000000"
+    },
+    "user#00007": {
+      "id": "user#00007",
+      "email": "khach@example.com",
+      "username": "khachhang",
+      "password": "khach123",
+      "account_type": "user",
+      "created_at": "2025-11-14T10:00:00.000000"
     }
   },
-  "next_user_id": 7,
+  "next_user_id": 8,
   "next_partner_id": 2
 }

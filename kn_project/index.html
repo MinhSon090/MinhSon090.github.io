@@ -30,9 +30,6 @@
   
   <!-- Mobile Optimization -->
   <meta name="theme-color" content="#667eea">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Hola Home">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="logo/white HH logo v3.PNG">
@@ -75,9 +72,6 @@
     ]
   }
   </script>
-  
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -883,57 +877,5 @@
   
   <script src="script_backend.js"></script>
   <script src="chatbot.js"></script>
-  
-  <!-- PWA Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => {
-            console.log('✅ Service Worker registered successfully:', registration.scope);
-            
-            // Check for updates periodically
-            setInterval(() => {
-              registration.update();
-            }, 60000); // Check every minute
-          })
-          .catch(error => {
-            console.log('❌ Service Worker registration failed:', error);
-          });
-      });
-    }
-    
-    // Install prompt for PWA
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // Show install button (you can add UI for this)
-      console.log('💡 PWA can be installed!');
-      
-      // Optional: Show install banner
-      setTimeout(() => {
-        if (deferredPrompt && !localStorage.getItem('pwa-dismissed')) {
-          const shouldInstall = confirm('Cài đặt Hola Home để truy cập nhanh hơn?');
-          if (shouldInstall) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-              if (choiceResult.outcome === 'accepted') {
-                console.log('✅ User installed PWA');
-              }
-              deferredPrompt = null;
-            });
-          } else {
-            localStorage.setItem('pwa-dismissed', 'true');
-          }
-        }
-      }, 5000); // Show after 5 seconds
-    });
-  </script>
 </body>
 </html>
-
-
-
-<!-- Thêm mục yêu thích -->

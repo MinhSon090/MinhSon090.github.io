@@ -57,18 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if already logged in
     const isLoggedIn = localStorage.getItem('partnerLoggedIn') === 'true';
     
-    // ALWAYS SHOW DASHBOARD - Skip login for demo
-    showDashboard();
-    initializeDashboard();
-    
-    /*
     if (isLoggedIn) {
         showDashboard();
         initializeDashboard();
     } else {
         showLoginScreen();
     }
-    */
     
     // Handle login form submission
     if (loginForm) {
@@ -122,9 +116,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                alert('Không thể kết nối đến server. Vui lòng kiểm tra backend đang chạy.');
-                btnLogin.disabled = false;
-                btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i> Đăng nhập';
+                
+                // FALLBACK: Offline login for partner
+                console.log('🔄 Backend unavailable, trying offline partner login...');
+                
+                const offlinePartners = {
+                    'partner@example.com': { password: 'partner123', username: 'example_partner' },
+                    'example_partner': { password: 'partner123', username: 'example_partner' }
+                };
+                
+                const partner = offlinePartners[username];
+                if (partner && partner.password === password) {
+                    localStorage.setItem('partnerLoggedIn', 'true');
+                    localStorage.setItem('partnerUsername', partner.username);
+                    btnLogin.innerHTML = '<i class="fas fa-check"></i> Đăng nhập thành công!';
+                    btnLogin.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    
+                    setTimeout(() => {
+                        showDashboard();
+                        initializeDashboard();
+                    }, 800);
+                } else {
+                    alert('❌ Không thể kết nối server. Vui lòng dùng: partner@example.com / partner123');
+                    btnLogin.disabled = false;
+                    btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i> Đăng nhập';
+                }
             }
         });
     }
