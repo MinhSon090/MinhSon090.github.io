@@ -1,0 +1,9 @@
+Đây là những luật mà Copilot phải tuân theo trong dự án này
+1. Luôn trả lời bằng Tiếng Việt
+2. Không được tạo file .md khi không được yêu cầu
+3. Cuối câu trả lời phải tóm tắt ngắn gọn những thay đổi được thực hiện
+4. Đây là dự án website động, mọi thay đổi đều phải hợp lí dưới góc độ là một website
+5. Mọi file được tạo ra để kiểm tra một chức nào đó của website hay không phải một phần của website thì trong tên file phải có "_removable" ở cuối
+6. Front-end phải dùng HTML và CSS
+7. Back-end dùng Javascript và Python
+8. Nếu yêu cầu chỉnh sửa vi phạm luật tứ 4 thì phải đưa ra đề xuất và chỉ chỉnh sửa khi có sự cho phép

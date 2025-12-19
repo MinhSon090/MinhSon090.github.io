@@ -1,0 +1,3 @@
+Nút đăng ký ở trang chủ chỉ đăng ký được tài khoản bình thường
+Sau khi đăng ký hoặc đăng nhập tài khoản bình thường (được lưu ở accounts/user/accounts.json) sẽ chuyển về trang chủ mới nút đăng nhập và đăng ký chuyển thành profile của tài khoản đó
+Ở popup nổi lên khi nhấn vào profile ở trang chủ sẽ không có Bảng điều khiển bên dưới thông tin tài khoản

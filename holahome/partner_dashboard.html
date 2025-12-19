@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLA HOME - Đối Tác Quản Lý</title>
+    <link rel="stylesheet" href="partner_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Main Dashboard (shown when logged in) -->
+    <div id="partner-dashboard" class="dashboard-wrapper">
+        <!-- Header -->
+        <header class="partner-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <img src="logo/balck_logo.PNG" alt="HOLA HOME Logo" class="logo">
+                    <h1>HOLA HOME Partner</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="notification-container">
+                        <div class="notification-bell" id="notification-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge" id="notification-badge" style="display: none;">0</span>
+                        </div>
+                        <!-- Notification Dropdown -->
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                Thông báo
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+                            <div class="notification-footer">
+                                <a href="#" id="mark-all-read">Đánh dấu tất cả đã đọc</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                                <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">buitruonglinh</span>
+                            <span class="user-role">Đối tác</span>
+                        </div>
+                        <!-- <i class="fas fa-chevron-down"></i> -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#overview" class="nav-item active" data-section="overview">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tổng quan</span>
+                    </a>
+                    <a href="#properties" class="nav-item" data-section="properties">
+                        <i class="fas fa-building"></i>
+                        <span>Quản lý phòng trọ</span>
+                    </a>
+                    <a href="#my-posts" class="nav-item" data-section="my-posts">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Tin đăng của tôi</span>
+                        <span class="badge" id="myPostsBadge">0</span>
+                    </a>
+                    <a href="#create-post" class="nav-item" data-section="create-post">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Đăng tin mới</span>
+                    </a>
+                    <a href="#bookings" class="nav-item" data-section="bookings">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Lịch hẹn xem phòng</span>
+                        <span class="badge" id="bookingsBadge" style="display: none;">0</span>
+                    </a>
+                    <a href="#contracts" class="nav-item" data-section="contracts">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Hợp đồng điện tử</span>
+                    </a>
+                    <a href="#promotion" class="nav-item" data-section="promotion">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Quảng cáo & Đẩy tin</span>
+                    </a>
+                    <a href="#analytics" class="nav-item" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Thống kê & Báo cáo</span>
+                    </a>
+                    <a href="account_setting.html" class="nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Cài đặt</span>
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="index.html" class="nav-item logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Section: Tổng quan -->
+                <section id="overview-section" class="content-section active">
+                    <div class="section-header">
+                        <h2>TỔNG QUAN</h2>
+                        <p>Xin chào! Đây là bảng điều khiển của bạn</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>12</h3>
+                                <p>Phòng đang quản lý</p>
+                                <span class="stat-change positive">+2 tuần này</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>5</h3>
+                                <p>Lịch hẹn chờ xác nhận</p>
+                                <span class="stat-change">Hôm nay</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>1,234</h3>
+                                <p>Lượt xem tuần này</p>
+                                <span class="stat-change positive">+15%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>8</h3>
+                                <p>Hợp đồng đang hiệu lực</p>
+                                <span class="stat-change">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-grid">
+                        <div class="recent-bookings card">
+                            <h3>Lịch hẹn gần đây</h3>
+                            <div class="booking-list">
+                                <div class="booking-item pending">
+                                    <div class="booking-info">
+                                        <h4>Nguyễn Văn A</h4>
+                                        <p>Phòng trọ Minh Anh - 15/11/2025 10:00</p>
+                                    </div>
+                                    <div class="booking-actions">
+                                        <button class="btn-approve"><i class="fas fa-check"></i></button>
+                                        <button class="btn-reject"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="booking-item confirmed">
+                                    <div class="booking-info">
+                                        <h4>Trần Thị B</h4>
+                                        <p>Nhà trọ 8 - 16/11/2025 14:00</p>
+                                    </div>
+                                    <span class="status-badge confirmed">Đã xác nhận</span>
+                                </div>
+                                <div class="booking-item pending">
+                                    <div class="booking-info">
+                                        <h4>Lê Văn C</h4>
+                                        <p>KTXBC - 17/11/2025 09:00</p>
+                                    </div>
+                                    <div class="booking-actions">
+                                        <button class="btn-approve"><i class="fas fa-check"></i></button>
+                                        <button class="btn-reject"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quick-actions card">
+                            <h3>Thao tác nhanh</h3>
+                            <div class="action-buttons">
+                                <button class="action-btn" onclick="switchSection('create-post')">
+                                    <i class="fas fa-plus-circle"></i>
+                                    Đăng tin mới
+                                </button>
+                                <button class="action-btn" onclick="switchSection('promotion')">
+                                    <i class="fas fa-rocket"></i>
+                                    Đẩy tin quảng cáo
+                                </button>
+                                <button class="action-btn" onclick="switchSection('contracts')">
+                                    <i class="fas fa-file-signature"></i>
+                                    Tạo hợp đồng
+                                </button>
+                                <button class="action-btn" onclick="switchSection('analytics')">
+                                    <i class="fas fa-chart-line"></i>
+                                    Xem báo cáo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Quản lý phòng trọ -->
+                <section id="properties-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quản lý phòng trọ</h2>
+                        <button class="btn-primary" onclick="switchSection('create-post')">
+                            <i class="fas fa-plus"></i> Thêm phòng mới
+                        </button>
+                    </div>
+
+                    <div class="properties-grid">
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="images/minh_anh/1.jpg" alt="Phòng trọ">
+                                <div class="property-status active">Đang hoạt động</div>
+                            </div>
+                            <div class="property-content">
+                                <h3>Phòng trọ Minh Anh</h3>
+                                <p class="property-address"><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1
+                                </p>
+                                <div class="property-stats">
+                                    <span><i class="fas fa-eye"></i> 234 lượt xem</span>
+                                    <span><i class="fas fa-heart"></i> 45 lưu</span>
+                                </div>
+                                <div class="property-price">2,5 triệu/tháng</div>
+                                <div class="property-actions">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Sửa</button>
+                                    <button class="btn-stats"><i class="fas fa-chart-bar"></i> Thống kê</button>
+                                    <button class="btn-promote"><i class="fas fa-rocket"></i> Đẩy tin</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img src="images/nha_tro_8/1.jpg" alt="Phòng trọ">
+                                <div class="property-status active">Đang hoạt động</div>
+                            </div>
+                            <div class="property-content">
+                                <h3>Nhà trọ 8</h3>
+                                <p class="property-address"><i class="fas fa-map-marker-alt"></i> 456 Đường XYZ, Quận 2
+                                </p>
+                                <div class="property-stats">
+                                    <span><i class="fas fa-eye"></i> 189 lượt xem</span>
+                                    <span><i class="fas fa-heart"></i> 32 lưu</span>
+                                </div>
+                                <div class="property-price">3,0 triệu/tháng</div>
+                                <div class="property-actions">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i> Sửa</button>
+                                    <button class="btn-stats"><i class="fas fa-chart-bar"></i> Thống kê</button>
+                                    <button class="btn-promote"><i class="fas fa-rocket"></i> Đẩy tin</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Quản lý tin đăng -->
+                <section id="my-posts-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Tin đăng của tôi</h2>
+                        <p>Quản lý và theo dõi trạng thái tin đăng</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid" style="margin-bottom: 30px;">
+                        <div class="stat-card">
+                            <div class="stat-icon draft">
+                                <i class="fas fa-save"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="myDraftsCount">0</div>
+                                <div class="stat-label">Bản nháp</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="myPendingCount">0</div>
+                                <div class="stat-label">Chờ duyệt</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon approved">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="myApprovedCount">0</div>
+                                <div class="stat-label">Đã duyệt</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon rejected">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="myRejectedCount">0</div>
+                                <div class="stat-label">Bị từ chối</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Posts List -->
+                    <div class="card">
+                        <div class="filter-tabs"
+                            style="margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
+                            <button class="filter-tab active" onclick="filterMyPosts('all')">
+                                <i class="fas fa-list"></i> Tất cả
+                            </button>
+                            <button class="filter-tab" onclick="filterMyPosts('draft')">
+                                <i class="fas fa-save"></i> Bản nháp
+                            </button>
+                            <button class="filter-tab" onclick="filterMyPosts('pending')">
+                                <i class="fas fa-clock"></i> Chờ duyệt
+                            </button>
+                            <button class="filter-tab" onclick="filterMyPosts('approved')">
+                                <i class="fas fa-check"></i> Đã duyệt
+                            </button>
+                            <button class="filter-tab" onclick="filterMyPosts('rejected')">
+                                <i class="fas fa-times"></i> Từ chối
+                            </button>
+                        </div>
+                        <div id="myPostsContainer">
+                            <!-- Posts will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Đăng tin mới -->
+                <section id="create-post-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Đăng tin cho thuê phòng trọ</h2>
+                        <p>Điền thông tin chi tiết để thu hút khách hàng</p>
+                    </div>
+
+                    <div class="create-post-form card">
+                        <form id="createPropertyForm">
+                            <div class="form-section">
+                                <h3><i class="fas fa-info-circle"></i> Thông tin cơ bản</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Tiêu đề tin đăng <span class="required">*</span></label>
+                                        <input type="text" id="postTitle" name="title"
+                                            placeholder="VD: Phòng trọ cao cấp giá rẻ gần trường ĐH" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row two-cols">
+                                    <div class="form-group">
+                                        <label>Loại hình <span class="required">*</span></label>
+                                        <select id="postType" name="type" required>
+                                            <option value="">Chọn loại hình</option>
+                                            <option>Phòng trọ</option>
+                                            <option>Chung cư mini</option>
+                                            <option>Nhà nguyên căn</option>
+                                            <option>Ký túc xá</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Giá thuê/tháng <span class="required">*</span></label>
+                                        <input type="number" id="postPrice" name="price" placeholder="VD: 2500000"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row two-cols">
+                                    <div class="form-group">
+                                        <label>Diện tích (m²) <span class="required">*</span></label>
+                                        <input type="number" id="postArea" name="area" placeholder="VD: 25" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số người ở tối đa</label>
+                                        <input type="number" id="postMaxPeople" name="maxPeople" placeholder="VD: 2"
+                                            value="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3><i class="fas fa-map-marker-alt"></i> Địa chỉ</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Địa chỉ đầy đủ <span class="required">*</span></label>
+                                        <input type="text" id="postAddress" name="address"
+                                            placeholder="Số nhà, tên đường, phường/xã" required>
+                                    </div>
+                                </div>
+                                <div class="form-row three-cols">
+                                    <div class="form-group">
+                                        <label>Quận/Huyện <span class="required">*</span></label>
+                                        <input type="text" id="postDistrict" name="district" placeholder="VD: Quận 1"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Thành phố <span class="required">*</span></label>
+                                        <input type="text" id="postCity" name="city" placeholder="VD: TP.HCM" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Khoảng cách đến trường (km)</label>
+                                        <input type="number" id="postDistance" name="distance" step="0.1"
+                                            placeholder="VD: 1.5">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3><i class="fas fa-image"></i> Hình ảnh <span style="color: #e74c3c;">*</span></h3>
+                                <p class="upload-note" style="margin-bottom: 10px; color: #e74c3c;">
+                                    <i class="fas fa-info-circle"></i> Bắt buộc phải có ít nhất 3 hình ảnh
+                                </p>
+                                <div class="upload-area" id="uploadArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Kéo thả hoặc click để tải ảnh lên</p>
+                                    <p class="upload-note">Tối đa 10 ảnh, mỗi ảnh không quá 5MB</p>
+                                    <input type="file" multiple accept="image/*" id="imageUpload" required>
+                                </div>
+                                <div class="image-preview" id="imagePreview"></div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3><i class="fas fa-list-check"></i> Tiện nghi</h3>
+                                <div class="amenities-grid">
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="wifi">
+                                        <span><i class="fas fa-wifi"></i> WiFi miễn phí</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="ac">
+                                        <span><i class="fas fa-snowflake"></i> Máy lạnh</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="parking">
+                                        <span><i class="fas fa-square-parking"></i> Chỗ để xe</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="wm">
+                                        <span><i class="fas fa-sink"></i> Máy giặt</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="kitchen">
+                                        <span><i class="fas fa-kitchen-set"></i> Bếp nấu</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="fridge">
+                                        <span><i class="fas fa-temperature-low"></i> Tủ lạnh</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="heater">
+                                        <span><i class="fas fa-temperature-arrow-up"></i> Nóng lạnh</span>
+                                    </label>
+                                    <label class="amenity-item">
+                                        <input type="checkbox" name="amenities" value="security">
+                                        <span><i class="fas fa-shield-halved"></i> An ninh 24/7</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3><i class="fas fa-align-left"></i> Mô tả chi tiết</h3>
+                                <div class="form-group">
+                                    <textarea id="postDescription" name="description" rows="6"
+                                        placeholder="Mô tả chi tiết về phòng trọ, vị trí, tiện ích xung quanh..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary" onclick="saveDraft()">
+                                    <i class="fas fa-save"></i> Lưu nháp
+                                </button>
+                                <button type="button" class="btn-preview" onclick="previewPostModal()">
+                                    <i class="fas fa-eye"></i> Xem trước
+                                </button>
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Đăng tin
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Section: Lịch hẹn xem phòng -->
+                <section id="bookings-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quản lý lịch hẹn xem phòng</h2>
+                    </div>
+                    <div class="stats-grid" style="margin-top: 20px;">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Đã xác nhận</div>
+                                <div class="stat-value" id="confirmedBookingsCount">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Sắp tới</div>
+                                <div class="stat-value" id="upcomingBookingsCount">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Đã hoàn thành</div>
+                                <div class="stat-value" id="completedBookingsCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bookings-grid" id="bookingsContainer">
+                        <div style="text-align: center; padding: 60px; color: #64748b;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 48px; margin-bottom: 20px;"></i>
+                            <p>Đang tải...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Hợp đồng điện tử -->
+                <section id="contracts-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quản lý hợp đồng điện tử</h2>
+                        <button class="btn-primary" onclick="alert('Chức năng đang phát triển')">
+                            <i class="fas fa-plus"></i> Tạo hợp đồng mới
+                        </button>
+                    </div>
+
+                    <div class="contracts-grid">
+                        <div class="contract-card active">
+                            <div class="contract-header">
+                                <div class="contract-status">
+                                    <i class="fas fa-file-signature"></i>
+                                    <span class="status-badge active">Đang hiệu lực</span>
+                                </div>
+                                <div class="contract-id">HĐ-FOUNDER-2024-001</div>
+                            </div>
+                            <h3>Hợp đồng hợp tác - Partner Example & HOLA HOME Founders</h3>
+                            <div class="contract-info">
+                                <div class="info-row">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Bên A: HOLA HOME Founders</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Bên B: Partner Example</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Ngày ký: 01/01/2024</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Thời hạn: 12 tháng (đến 01/01/2025)</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Loại: Hợp đồng hợp tác kinh doanh</span>
+                                </div>
+                            </div>
+                            <div class="contract-actions">
+                                <button class="btn-view" onclick="openContractPDF()">
+                                    <i class="fas fa-eye"></i> Xem hợp đồng
+                                </button>
+                                <button class="btn-download" onclick="downloadContractPDF()">
+                                    <i class="fas fa-download"></i> Tải xuống
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contract PDF Modal -->
+                <div id="contract-pdf-modal" class="modal-overlay" onclick="closeContractPDFOutside(event)">
+                    <div class="modal-content contract-modal-content" onclick="event.stopPropagation()">
+                        <button class="modal-close-mobile" onclick="closeContractPDF()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="modal-body contract-pdf-body">
+                            <iframe id="contract-pdf-frame" src="" width="100%" height="100%" frameborder="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <h3><i class="fas fa-file-contract"></i> Hợp đồng hợp tác - Partner Example & HOLA HOME Founders</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Quảng cáo & Đẩy tin -->
+                <section id="promotion-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quảng cáo & Đẩy tin</h2>
+                        <p>Tăng độ phủ sóng và thu hút khách hàng tiềm năng</p>
+                    </div>
+
+                    <div class="promotion-packages">
+                        <div class="package-card recommended">
+                            <div class="package-badge">Phổ biến nhất</div>
+                            <div class="package-icon vip">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>Gói VIP 1</h3>
+                            <div class="package-price">
+                                <span class="price">150.000đ</span>
+                                <span class="period">/tuần</span>
+                            </div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Tin đăng luôn ở vị trí TOP</li>
+                                <li><i class="fas fa-check"></i> Hiển thị nhãn VIP</li>
+                                <li><i class="fas fa-check"></i> Tăng 300% lượt xem</li>
+                                <li><i class="fas fa-check"></i> Ưu tiên trong kết quả tìm kiếm</li>
+                            </ul>
+                            <button class="btn-package">Chọn gói này</button>
+                        </div>
+
+                        <div class="package-card">
+                            <div class="package-icon boost">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h3>Đẩy tin nhanh</h3>
+                            <div class="package-price">
+                                <span class="price">30.000đ</span>
+                                <span class="period">/lần</span>
+                            </div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Đẩy tin lên đầu danh sách</li>
+                                <li><i class="fas fa-check"></i> Hiệu lực 3 ngày</li>
+                                <li><i class="fas fa-check"></i> Tăng 150% lượt xem</li>
+                                <li><i class="fas fa-times"></i> Không có nhãn VIP</li>
+                            </ul>
+                            <button class="btn-package">Chọn gói này</button>
+                        </div>
+
+                        <div class="package-card">
+                            <div class="package-icon premium">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3>Gói Premium</h3>
+                            <div class="package-price">
+                                <span class="price">500.000đ</span>
+                                <span class="period">/tháng</span>
+                            </div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Tất cả tính năng VIP 1</li>
+                                <li><i class="fas fa-check"></i> Banner quảng cáo trang chủ</li>
+                                <li><i class="fas fa-check"></i> Email marketing đến 1000+ KH</li>
+                                <li><i class="fas fa-check"></i> Hỗ trợ tư vấn 1-1</li>
+                            </ul>
+                            <button class="btn-package">Chọn gói này</button>
+                        </div>
+                    </div>
+
+                    <div class="active-promotions card">
+                        <h3>Chiến dịch quảng cáo đang chạy</h3>
+                        <div class="promotion-list">
+                            <div class="promotion-item">
+                                <div class="promotion-info">
+                                    <h4>Phòng trọ Minh Anh - Gói VIP 1</h4>
+                                    <p>Còn lại: 3 ngày | 156 lượt xem hôm nay</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                                <button class="btn-extend">Gia hạn</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Thống kê & Báo cáo -->
+                <section id="analytics-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Thống kê & Báo cáo</h2>
+                        <div class="date-range-picker">
+                            <button class="date-btn active">7 ngày</button>
+                            <button class="date-btn">30 ngày</button>
+                            <button class="date-btn">90 ngày</button>
+                        </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <h3>Tổng lượt xem</h3>
+                            <div class="analytics-chart">
+                                <canvas id="viewsChart"></canvas>
+                            </div>
+                            <div class="analytics-summary">
+                                <div class="summary-item">
+                                    <span>Tuần này</span>
+                                    <strong>1,234</strong>
+                                </div>
+                                <div class="summary-item positive">
+                                    <span>So với tuần trước</span>
+                                    <strong>+15%</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <h3>Lượt lưu yêu thích</h3>
+                            <div class="analytics-chart">
+                                <canvas id="favoritesChart"></canvas>
+                            </div>
+                            <div class="analytics-summary">
+                                <div class="summary-item">
+                                    <span>Tổng số</span>
+                                    <strong>234</strong>
+                                </div>
+                                <div class="summary-item positive">
+                                    <span>Tuần này</span>
+                                    <strong>+12</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <h3>Tỷ lệ chuyển đổi</h3>
+                            <div class="conversion-funnel">
+                                <div class="funnel-step">
+                                    <div class="funnel-bar" style="width: 100%">
+                                        <span>Lượt xem: 1,234</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar" style="width: 70%">
+                                        <span>Xem chi tiết: 864</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar" style="width: 40%">
+                                        <span>Liên hệ: 493</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar" style="width: 15%">
+                                        <span>Đặt lịch: 185</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <h3>Top phòng trọ hiệu quả nhất</h3>
+                            <div class="top-properties">
+                                <div class="top-property-item">
+                                    <span class="rank">1</span>
+                                    <div class="property-name">
+                                        <strong>Phòng trọ Minh Anh</strong>
+                                        <span>456 lượt xem</span>
+                                    </div>
+                                </div>
+                                <div class="top-property-item">
+                                    <span class="rank">2</span>
+                                    <div class="property-name">
+                                        <strong>Nhà trọ 8</strong>
+                                        <span>389 lượt xem</span>
+                                    </div>
+                                </div>
+                                <div class="top-property-item">
+                                    <span class="rank">3</span>
+                                    <div class="property-name">
+                                        <strong>KTXBC</strong>
+                                        <span>234 lượt xem</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Success Modal for Property Upload -->
+        <div id="success-modal" class="modal-overlay">
+            <div class="modal-content-partner">
+                <div class="modal-header-section">
+                    <div class="modal-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Đăng tin thành công!</h2>
+                </div>
+                <div class="modal-body-section">
+                    <p>Tin đăng của bạn đã được gửi và đang chờ duyệt.</p>
+                    <p class="modal-detail">Chúng tôi sẽ xem xét trong vòng <strong>24 giờ</strong>.</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="closeSuccessModal()">
+                        <i class="fas fa-check"></i> Đã hiểu
+                    </button>
+                    <button class="btn-secondary" onclick="closeSuccessModal(); switchSection('properties')">
+                        <i class="fas fa-list"></i> Xem danh sách phòng
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Details Modal -->
+        <div id="booking-details-modal" class="modal-overlay">
+            <div class="modal-content-partner">
+                <button class="modal-close" onclick="closeBookingDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-header-section">
+                    <div class="modal-icon info">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h2>Chi tiết lịch hẹn</h2>
+                </div>
+                <div class="modal-body-section">
+                    <div id="booking-details-content" class="booking-details-content"></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="closeBookingDetailsModal()">
+                        <i class="fas fa-check"></i> Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Booking Modal -->
+        <div id="confirm-booking-modal" class="modal-overlay">
+            <div class="modal-content-partner">
+                <div class="modal-header-section">
+                    <div class="modal-icon warning">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h2>Xác nhận lịch hẹn</h2>
+                </div>
+                <div class="modal-body-section">
+                    <p id="confirm-booking-text"></p>
+                    <div class="booking-fee-info">
+                        <div class="fee-notice">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Khi xác nhận lịch hẹn, bạn cần thanh toán phí dịch vụ <strong>36.000đ</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="closeConfirmBookingModal()">
+                        <i class="fas fa-times"></i> Hủy
+                    </button>
+                    <button class="btn-primary" onclick="showPaymentQR()">
+                        <i class="fas fa-credit-card"></i> Thanh toán
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment QR Modal -->
+        <div id="payment-qr-modal" class="modal-overlay">
+            <div class="modal-content-partner payment-modal">
+                <button class="modal-close" onclick="closePaymentQRModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-header-section">
+                    <div class="modal-icon info">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h2>Thanh toán phí xác nhận</h2>
+                </div>
+                
+                <p class="payment-amount">Số tiền: <strong>36.000đ</strong></p>
+                
+                <div class="modal-body-section">
+                    <div class="qr-code-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=HOLAHOME-BOOKING-FEE-50000VND" alt="QR Code">
+                        <p class="qr-note">Quét mã QR để thanh toán</p>
+                    </div>
+                    
+                    <div class="payment-info">
+                        <div class="payment-detail">
+                            <span>Ngân hàng:</span>
+                            <strong>MB Bank</strong>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Số tài khoản:</span>
+                            <strong>9704229208640018499</strong>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Chủ tài khoản:</span>
+                            <strong>HOLA HOME</strong>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Nội dung:</span>
+                            <strong id="payment-content">HOLAHOME XN [ID]</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-instructions">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>Vui lòng chuyển khoản đúng nội dung để xác nhận tự động</p>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="closePaymentQRModal()">
+                        <i class="fas fa-times"></i> Hủy
+                    </button>
+                    <button class="btn-primary" onclick="confirmPaymentCompleted()">
+                        <i class="fas fa-check"></i> Đã thanh toán
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cancel Booking Modal -->
+        <div id="cancel-booking-modal" class="modal-overlay">
+            <div class="modal-content-partner">
+                <div class="modal-header-section">
+                    <div class="modal-icon warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h2>Hủy lịch hẹn</h2>
+                </div>
+                <div class="modal-body-section">
+                    <p id="cancel-booking-text"></p>
+                    <div class="form-group" style="margin-top: 20px; text-align: left;">
+                        <label>Lý do hủy <span class="required">*</span></label>
+                        <textarea id="cancel-reason" rows="4" placeholder="Nhập lý do hủy lịch hẹn..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="closeCancelBookingModal()">
+                        <i class="fas fa-times"></i> Đóng
+                    </button>
+                    <button class="btn-primary" onclick="cancelBookingAction()">
+                        <i class="fas fa-check"></i> Xác nhận hủy
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="partner_script.js"></script>
+        <script>
+            // Check if user is partner when accessing dashboard
+            document.addEventListener('DOMContentLoaded', function () {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+                const authToken = localStorage.getItem('authToken');
+
+                // If not logged in or not a partner, redirect to partner login
+                if (!authToken || !currentUser || currentUser.account_type !== 'partner') {
+                    alert('Vui lòng đăng nhập với tài khoản đối tác để truy cập trang này.');
+                    window.location.href = 'partner_login.html';
+                }
+
+                // Setup mobile menu
+                setupMobileMenu();
+            });
+
+            // Mobile menu functions
+            function setupMobileMenu() {
+                const menuToggle = document.getElementById('mobileMenuToggle');
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                const navItems = document.querySelectorAll('.nav-item[data-section]');
+
+                if (menuToggle) {
+                    menuToggle.addEventListener('click', toggleMobileMenu);
+                }
+
+                if (overlay) {
+                    overlay.addEventListener('click', closeMobileMenu);
+                }
+
+                // Close menu when clicking nav items
+                navItems.forEach(item => {
+                    item.addEventListener('click', closeMobileMenu);
+                });
+            }
+
+            function toggleMobileMenu() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+            }
+
+            function closeMobileMenu() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('active');
+            }
+
+            // Contract PDF functions
+            function openContractPDF() {
+                const modal = document.getElementById('contract-pdf-modal');
+                const iframe = document.getElementById('contract-pdf-frame');
+
+                // Set PDF source
+                iframe.src = 'accounts/partner/partner_contract/partner_examaple_hd_demo/hopdongdemo.pdf';
+
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeContractPDF() {
+                const modal = document.getElementById('contract-pdf-modal');
+                const iframe = document.getElementById('contract-pdf-frame');
+
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+
+                // Clear iframe source when closing
+                iframe.src = '';
+            }
+
+            function closeContractPDFOutside(event) {
+                if (event.target.id === 'contract-pdf-modal') {
+                    closeContractPDF();
+                }
+            }
+
+            function downloadContractPDF() {
+                const pdfUrl = 'accounts/partner/partner_contract/partner_examaple_hd_demo/hopdongdemo.pdf';
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = 'HopDong_PartnerExample_Founders.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        </script>
+
+        <!-- Footer Section -->
+        <footer class="younghouse-footer">
+            <div class="footer-container">
+                <!-- Logo và Slogan -->
+                <div class="footer-brand">
+                    <h2 class="brand-name">HOLA HOME</h2>
+                    <p class="slogan">Hơn cả mái nhà - Đó là mái ấm</p>
+                    <p class="brand-description">
+                        Khi nhà trọ cũng là nhà, HOLA HOME tin rằng một không gian tiện nghi, lối sống hiện đại là nền
+                        móng để cư dân trẻ có thể tự do sống tích cực và thành công trong cuộc sống.
+                    </p>
+                </div>
+
+                <!-- Liên kết nhanh -->
+                <div class="footer-links">
+                    <div class="links-column">
+                        <h3>Liên kết nhanh</h3>
+                        <div class="links-grid">
+                            <div class="link-group">
+                                <a href="index.html" class="footer-link">Trang chủ</a>
+                                <a href="#" class="footer-link">Hệ thống nhà trọ</a>
+                                <a href="#" class="footer-link">Về HOLA HOME</a>
+                                <a href="#" class="footer-link">Liên hệ</a>
+                            </div>
+                            <div class="link-group">
+                                <a href="#" class="footer-link">Cho thuê phòng trọ</a>
+                                <a href="#" class="footer-link">Tìm kiếm phòng trọ</a>
+                                <div class="contact-info">
+                                    <p>Hỗ trợ kỹ thuật: <strong>XXXXXXXXX</strong></p>
+                                    <p>Tư vấn hợp đồng: <strong>XXXXXXXXX</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin liên hệ -->
+                <div class="footer-contact">
+                    <h3>Thông tin liên hệ</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Số đường - - - Thạch Thất - Hà Nội</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>XXXXXXX</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>holahome@gmail.com</span>
+                    </div>
+                </div>
+
+                <!-- Đăng ký nhận tin -->
+                <div class="footer-newsletter">
+                    <h3>Đăng ký nhận tin</h3>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Email của bạn" class="email-input">
+                        <button class="subscribe-btn">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        © 2025 HOLA HOME. Designed by Minh Son & Duy Phat.
+                    </div>
+                    <div class="bottom-links">
+                        <a href="#" class="bottom-link">Chính sách bảo mật</a>
+                        <a href="#" class="bottom-link">Điều khoản sử dụng</a>
+                        <a href="#" class="bottom-link">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Modal Xem Trước Tin Đăng -->
+        <div id="previewPostModal" class="preview-post-modal">
+            <div class="preview-post-modal-content">
+                <button class="preview-post-close" onclick="closePreviewModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="preview-badge">
+                    <i class="fas fa-star"></i>
+                    <span>XEM TRƯỚC</span>
+                </div>
+                <div class="preview-post-image">
+                    <img id="previewPostImage" src="" alt="Ảnh phòng trọ">
+                </div>
+                <div class="preview-post-info">
+                    <h3 id="previewPostTitle">Tên phòng trọ</h3>
+                    <div class="preview-post-price" id="previewPostPrice">0đ</div>
+                    <div class="preview-post-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="previewPostAddress">Địa chỉ</span>
+                    </div>
+                    <button class="preview-post-view-btn" onclick="closePreviewModal()">
+                        <i class="fas fa-check"></i>
+                        Đóng xem trước
+                    </button>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

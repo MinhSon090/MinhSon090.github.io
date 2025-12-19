@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLA HOME - Tài Khoản Của Tôi</title>
+    <link rel="stylesheet" href="user_style.css">
+    <link rel="stylesheet" href="user_modal_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="user-dashboard" class="dashboard-wrapper">
+        <!-- Header -->
+        <header class="user-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <img src="logo/balck_logo.PNG" alt="HOLA HOME Logo" class="logo">
+                    <h1>HOLA HOME User</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="header-username">Người dùng</span>
+                            <span class="user-role">Thành viên</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#profile" class="nav-item active" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Thông tin cá nhân</span>
+                    </a>
+                    <a href="#favorites" class="nav-item" data-section="favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>Phòng yêu thích</span>
+                    </a>
+                    <a href="#history" class="nav-item" data-section="history">
+                        <i class="fas fa-history"></i>
+                        <span>Lịch sử xem</span>
+                    </a>
+                    <a href="#bookings" class="nav-item" data-section="bookings">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Lịch hẹn của tôi</span>
+                    </a>
+                    <a href="#notifications" class="nav-item" data-section="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Thông báo</span>
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="account_setting.html" class="nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Cài đặt</span>
+                    </a>
+                </nav>
+                
+                <div class="sidebar-footer">
+                    <a href="index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="#" class="nav-item logout" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Section: Thông tin cá nhân -->
+                <section id="profile-section" class="content-section active">
+                    <div class="section-header">
+                        <h2>THÔNG TIN CÁ NHÂN</h2>
+                        <p>Quản lý thông tin tài khoản của bạn</p>
+                    </div>
+
+                    <div class="profile-container">
+                        <div class="profile-card">
+                            <div class="profile-avatar-section">
+                                <div class="profile-avatar-large">
+                                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <button class="btn-change-avatar">
+                                    <i class="fas fa-camera"></i> Đổi ảnh đại diện
+                                </button>
+                            </div>
+
+                            <div class="profile-info-section">
+                                <div class="activity-stats">
+                                    <h3><i class="fas fa-chart-line"></i> Thống kê hoạt động</h3>
+                                    <div class="stats-grid detailed">
+                                        <div class="stat-card">
+                                            <div class="stat-icon purple">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="total-views">0</h3>
+                                                <p>Tổng phòng đã xem</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon orange">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="total-ratings">0</h3>
+                                                <p>Đánh giá đã thực hiện</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon teal">
+                                                <i class="fas fa-comment"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="total-comments">0</h3>
+                                                <p>Bình luận đã viết</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon indigo">
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="total-searches">0</h3>
+                                                <p>Lần tìm kiếm</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon green">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="member-days">0</h3>
+                                                <p>Ngày tham gia</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon pink">
+                                                <i class="fas fa-heart"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="favorites-count">0</h3>
+                                                <p>Phòng yêu thích</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon blue">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="history-count">0</h3>
+                                                <p>Lịch sử xem</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="stat-card">
+                                            <div class="stat-icon green">
+                                                <i class="fas fa-calendar-check"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <h3 id="bookings-count">0</h3>
+                                                <p>Lịch hẹn</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="activity-summary">
+                                        <div class="summary-item">
+                                            <span class="summary-label">Trạng thái tài khoản:</span>
+                                            <span class="summary-value active">Hoạt động</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Loại tài khoản:</span>
+                                            <span class="summary-value" id="account-type" ></span>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Phòng yêu thích -->
+                <section id="favorites-section" class="content-section">
+                    <div class="section-header">
+                        <h2>PHÒNG YÊU THÍCH</h2>
+                        <p>Các phòng trọ bạn đã lưu</p>
+                    </div>
+
+                    <div id="favorites-list" class="properties-grid">
+                        <!-- Favorites will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-heart-broken"></i>
+                            <p>Chưa có phòng yêu thích nào</p>
+                            <a href="index.html" class="btn-primary">Khám phá ngay</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Lịch sử xem -->
+                <section id="history-section" class="content-section">
+                    <div class="section-header">
+                        <h2>LỊCH SỬ XEM</h2>
+                        <p>Các phòng trọ bạn đã xem gần đây</p>
+                    </div>
+
+                    <div id="history-list" class="properties-grid">
+                        <div class="empty-state">
+                            <i class="fas fa-history"></i>
+                            <p>Chưa có lịch sử xem nào</p>
+                            <a href="index.html" class="btn-primary">Tìm phòng ngay</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Lịch hẹn -->
+                <section id="bookings-section" class="content-section">
+                    <div class="section-header">
+                        <h2>LỊCH HẸN CỦA TÔI</h2>
+                        <p>Quản lý các lịch hẹn xem phòng</p>
+                    </div>
+
+                    <div id="bookings-list" class="bookings-container">
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>Chưa có lịch hẹn nào</p>
+                            <a href="index.html" class="btn-primary">Đặt lịch xem phòng</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Thông báo -->
+                <section id="notifications-section" class="content-section">
+                    <div class="section-header">
+                        <h2>THÔNG BÁO</h2>
+                        <button class="btn-secondary" onclick="markAllAsRead()">
+                            <i class="fas fa-check-double"></i> Đánh dấu tất cả đã đọc
+                        </button>
+                    </div>
+
+                    <div class="notifications-list">
+                        <div class="notification-item unread">
+                            <div class="notification-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Phòng yêu thích có cập nhật giá</h4>
+                                <p>Phòng trọ Minh Anh đã giảm giá còn 2.3 triệu/tháng</p>
+                                <span class="notification-time">2 giờ trước</span>
+                            </div>
+                        </div>
+
+                        <div class="notification-item unread">
+                            <div class="notification-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Lịch hẹn được xác nhận</h4>
+                                <p>Chủ trọ đã xác nhận lịch hẹn xem phòng của bạn vào 15/11/2025 lúc 10:00</p>
+                                <span class="notification-time">1 ngày trước</span>
+                            </div>
+                        </div>
+
+                        <div class="notification-item unread">
+                            <div class="notification-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Phòng mới phù hợp với bạn</h4>
+                                <p>Có 3 phòng mới trong khu vực bạn quan tâm</p>
+                                <span class="notification-time">2 ngày trước</span>
+                            </div>
+                        </div>
+
+                        <div class="notification-item">
+                            <div class="notification-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Chào mừng đến với HOLA HOME</h4>
+                                <p>Cảm ơn bạn đã đăng ký tài khoản. Hãy khám phá hàng ngàn phòng trọ!</p>
+                                <span class="notification-time">1 tuần trước</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> Đổi mật khẩu</h3>
+                <button class="modal-close" onclick="closePasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="password-form">
+                <div class="form-group">
+                    <label>Mật khẩu hiện tại</label>
+                    <input type="password" id="current-password" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu mới</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label>Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closePasswordModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i> Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Field Modal -->
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="edit-modal-title">Chỉnh sửa thông tin</h3>
+                <button class="modal-close" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="edit-form">
+                <div class="form-group">
+                    <label id="edit-label">Giá trị mới</label>
+                    <input type="text" id="edit-input" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i> Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Avatar Selection Modal -->
+    <div id="avatar-modal" class="modal-overlay">
+        <div class="modal-content avatar-modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-images"></i> Đổi Hình Đại Diện</h3>
+                <button class="modal-close" onclick="closeAvatarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="avatar-selection-body">
+                <div class="avatar-tabs">
+                    <button class="avatar-tab active" data-category="all">Toàn Bộ</button>
+                    <button class="avatar-tab" data-category="Pengiun">Chim Cánh Cụt</button>
+                    <button class="avatar-tab" data-category="Bee">Ong</button>
+                    <button class="avatar-tab" data-category="Hamster">Chuột Hamster</button>
+                    <button class="avatar-tab" data-category="Birt">Chim</button>
+                </div>
+                <div class="avatar-grid" id="avatar-grid">
+                    <!-- Avatars will be loaded dynamically -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeAvatarModal()">Hủy</button>
+                <button type="button" class="btn-primary" onclick="confirmAvatarSelection()">
+                    <i class="fas fa-check"></i> Xác Nhận
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Property Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modal-img" src="" alt="">
+                    <button class="image-nav-btn prev-btn" id="prev-image-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="image-nav-btn next-btn" id="next-image-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="image-counter" id="image-counter">1 / 1</div>
+                </div>
+                <div class="modal-thumbnails" id="modal-thumbnails"></div>
+                <div class="modal-title-row">
+                    <h3 id="modal-title"></h3>
+                    <button class="booking-btn" id="booking-btn" title="Đặt lịch hẹn xem phòng">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Đặt lịch hẹn</span>
+                    </button>
+                    <button class="map-location-btn" id="map-location-btn" title="Xem trên bản đồ">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bản đồ</span>
+                    </button>
+                    <!-- <button class="favorite-heart-btn" title="Lưu yêu thích">
+                        <i class="fas fa-heart favorite-heart"></i>
+                    </button> -->
+                </div>
+                <p id="modal-address"></p>
+                <p id="modal-price"></p>
+                <div id="modal-description"></div>
+
+                <hr style="margin: 16px 0;">
+                <div class="modal-rating-comment">
+                    <div class="modal-rating">
+                        <span class="stars"></span>
+                    </div>
+                    <div class="modal-comment">
+                        <textarea id="modal-comment-input"
+                            placeholder="Đánh giá của bạn về phòng trọ/ký túc xá (Chỉ áp dụng cho người đã ở)" rows="2"></textarea>
+                        <button id="modal-comment-submit" class="button-trapezoid">Gửi</button>
+                        <div class="modal-rating-label">
+                            <span class="modal-rating-stars"></span>
+                            <span class="modal-rating-text"></span>
+                        </div>
+                    </div>
+                    <div id="modal-comment-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = `${window.location.origin}/api`;
+        let currentUser = null;
+        let authToken = localStorage.getItem('authToken');
+        
+        // Avatar collections by category
+        const avatarCollections = {
+            'Pengiun': ['0001.jpg', '0002.jpg', '0003.jpg', '0004.jpg', '0005.jpg'],
+            'Bee': ['0006.jpg', '0007.jpg', '0008.jpg', '0009.jpg', '0010.jpg', '0011.jpg'],
+            'Hamster': ['0012.jpg', '0013.jpg', '0014.jpg', '0015.jpg', '0016.jpg', '0017.jpg'],
+            'Birt': ['0018.jpg', '0019.jpg', '0020.jpg', '0021.jpg', '0022.jpg', '0023.jpg']
+        };
+        
+        // Build complete avatar list
+        let availableAvatars = [];
+        Object.keys(avatarCollections).forEach(folder => {
+            avatarCollections[folder].forEach(file => {
+                availableAvatars.push(`avatar_imgs/${folder}/${file}`);
+            });
+        });
+
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `favorite-notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadUserData();
+            setupNavigation();
+            setupLogout();
+            setupAvatarButton();
+            setupMobileMenu();
+        });
+
+        function checkAuth() {
+            currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            authToken = localStorage.getItem('authToken');
+            
+            if (!authToken || !currentUser) {
+                showNotification('⚠️ Vui lòng đăng nhập để truy cập trang này.', 'error');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        function loadUserData() {
+            if (!currentUser) return;
+
+            // Update header
+            document.getElementById('header-username').textContent = currentUser.username || currentUser.id;
+
+            // Update last activity
+            updateLastActivity();
+
+            // Load user stats
+            loadUserStats();
+
+            // Load favorites
+            loadFavorites();
+            
+            // Load search history and update count
+            const history = getViewHistory();
+            document.getElementById('history-count').textContent = history.length;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        async function loadUserStats() {
+            try {
+                console.log('loadUserStats called');
+                console.log('currentUser:', currentUser);
+                // Load view history count
+                const viewHistory = getViewHistory();
+                document.getElementById('total-views').textContent = viewHistory.length;
+
+                // Calculate member days
+                if (currentUser.created_at) {
+                    const createdDate = new Date(currentUser.created_at);
+                    const today = new Date();
+                    const diffTime = Math.abs(today - createdDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    document.getElementById('member-days').textContent = diffDays;
+                }
+
+                // Load search count from localStorage
+                const searchCount = localStorage.getItem('hola_search_count') || '0';
+                document.getElementById('total-searches').textContent = searchCount;
+
+                // Load last activity
+                const lastActivity = localStorage.getItem('hola_last_activity');
+                if (lastActivity) {
+                    const lastDate = new Date(lastActivity);
+                    const now = new Date();
+                    const diffMs = now - lastDate;
+                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                    
+                    let lastActivityText = 'Vừa xong';
+                    if (diffHours < 1) {
+                        lastActivityText = 'Vừa xong';
+                    } else if (diffHours < 24) {
+                        lastActivityText = `${diffHours} giờ trước`;
+                    } else {
+                        const diffDays = Math.floor(diffHours / 24);
+                        lastActivityText = `${diffDays} ngày trước`;
+                    }
+                    document.getElementById('last-activity').textContent = lastActivityText;
+                }
+
+                // Load ratings and comments count from API
+                // TODO: Implement API endpoints for user activity stats
+                // await loadUserActivityStats();
+                
+                // Set default values for now
+                document.getElementById('total-ratings').textContent = '0';
+                document.getElementById('total-comments').textContent = '0';
+
+                // Calculate loyalty points (based on activities)
+                const loyaltyPoints = calculateLoyaltyPoints();
+                document.getElementById('loyalty-points').textContent = loyaltyPoints;
+
+                console.log('About to set account type, currentUser:', currentUser);
+                // Update account type (use account_type when available — same approach as account_setting.html)
+                try {
+                    let accountType = 'Người dùng';
+                    if (currentUser && currentUser.account_type) {
+                        accountType = currentUser.account_type === 'partner' ? 'Đối tác' : 'Người dùng';
+                    } else if (currentUser && typeof currentUser.id === 'string' && currentUser.id.startsWith('partner#')) {
+                        accountType = 'Đối tác';
+                    }
+
+                    const acctEl = document.getElementById('account-type');
+                    if (acctEl) {
+                        acctEl.textContent = accountType;
+                    } else {
+                        console.warn('#account-type element not found in DOM');
+                    }
+                    console.log('accountType set to:', accountType);
+                } catch (err) {
+                    console.error('Failed to set account-type:', err);
+                }
+
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
+        async function loadUserActivityStats() {
+            try {
+                // Load user ratings count
+                const ratingsResponse = await fetch(`${API_BASE_URL}/user/${currentUser.id}/ratings`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (ratingsResponse.ok) {
+                    const ratings = await ratingsResponse.json();
+                    document.getElementById('total-ratings').textContent = ratings.length || 0;
+                }
+
+                // Load user comments count
+                const commentsResponse = await fetch(`${API_BASE_URL}/user/${currentUser.id}/comments`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (commentsResponse.ok) {
+                    const comments = await commentsResponse.json();
+                    document.getElementById('total-comments').textContent = comments.length || 0;
+                }
+            } catch (error) {
+                console.error('Error loading activity stats:', error);
+                // Set defaults if API fails
+                document.getElementById('total-ratings').textContent = '0';
+                document.getElementById('total-comments').textContent = '0';
+            }
+        }
+
+        function calculateLoyaltyPoints() {
+            let points = 0;
+            
+            // Points for views (1 point per view)
+            const viewHistory = getViewHistory();
+            points += viewHistory.length;
+            
+            // Points for favorites (5 points per favorite)
+            const favoritesCount = parseInt(document.getElementById('favorites-count').textContent) || 0;
+            points += favoritesCount * 5;
+            
+            // Points for ratings (3 points per rating) - TODO: implement when API ready
+            // const ratingsCount = parseInt(document.getElementById('total-ratings').textContent) || 0;
+            // points += ratingsCount * 3;
+            
+            // Points for comments (2 points per comment) - TODO: implement when API ready
+            // const commentsCount = parseInt(document.getElementById('total-comments').textContent) || 0;
+            // points += commentsCount * 2;
+            
+            // Points for bookings (10 points per booking)
+            const bookingsCount = parseInt(document.getElementById('bookings-count').textContent) || 0;
+            points += bookingsCount * 10;
+            
+            // Points for member days (1 point per 10 days)
+            const memberDays = parseInt(document.getElementById('member-days').textContent) || 0;
+            points += Math.floor(memberDays / 10);
+            
+            return points;
+        }
+
+        function updateLastActivity() {
+            localStorage.setItem('hola_last_activity', new Date().toISOString());
+        }
+
+        function updateSearchCount() {
+            const currentCount = parseInt(localStorage.getItem('hola_search_count') || '0');
+            localStorage.setItem('hola_search_count', (currentCount + 1).toString());
+        }
+
+        async function loadFavorites() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/favorites`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (response.ok) {
+                    const favorites = await response.json();
+                    const favoriteCount = favorites.length || 0;
+                    document.getElementById('favorites-count').textContent = favoriteCount;
+                    
+                    if (favoriteCount > 0) {
+                        await displayFavorites(favorites);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+            }
+        }
+
+        async function displayFavorites(favoriteIds) {
+            const favoritesList = document.getElementById('favorites-list');
+            
+            if (!favoriteIds || favoriteIds.length === 0) {
+                favoritesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-heart-broken"></i>
+                        <p>Chưa có phòng yêu thích nào</p>
+                        <a href="index.html" class="btn-primary">Khám phá ngay</a>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                // Fetch all properties
+                const response = await fetch(`${API_BASE_URL}/properties`);
+                if (!response.ok) throw new Error('Failed to fetch properties');
+                
+                const allProperties = await response.json();
+                
+                // Filter favorites
+                const favoriteProperties = allProperties.filter(p => favoriteIds.includes(p.id));
+                
+                if (favoriteProperties.length === 0) {
+                    favoritesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-heart-broken"></i>
+                            <p>Chưa có phòng yêu thích nào</p>
+                            <a href="index.html" class="btn-primary">Khám phá ngay</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Render favorites
+                favoritesList.innerHTML = favoriteProperties.map(property => {
+                    const mainImg = Array.isArray(property.img) ? property.img[0] : property.img;
+                    return `
+                        <div class="property-card" data-property-id="${property.id}">
+                            <div class="property-image">
+                                <img src="${mainImg}" alt="${property.title}">
+                            </div>
+                            <div class="property-content">
+                                <h3>${property.title}</h3>
+                                <p class="property-address"><i class="fas fa-map-marker-alt"></i> ${property.address}</p>
+                                <div class="property-price">${property.price || 'Liên hệ'}</div>
+                                <div class="property-actions">
+                                    <button class="btn-primary" onclick="viewPropertyDetails('${property.id}')">
+                                        <i class="fas fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="btn-secondary" onclick="removeFavorite('${property.id}')">
+                                        <i class="fas fa-heart-broken"></i> Bỏ thích
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error displaying favorites:', error);
+                favoritesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Có lỗi khi tải danh sách yêu thích</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function removeFavorite(propertyId) {
+            if (!confirm('Bạn có chắc muốn bỏ phòng này khỏi yêu thích?')) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/favorites/${propertyId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('✅ Đã xóa khỏi danh sách yêu thích!');
+                    loadFavorites(); // Reload favorites
+                } else {
+                    showNotification('❌ Không thể xóa khỏi yêu thích!', 'error');
+                }
+            } catch (error) {
+                console.error('Error removing favorite:', error);
+                showNotification('❌ Có lỗi xảy ra!', 'error');
+            }
+        }
+
+        function viewPropertyDetails(propertyId) {
+            window.location.href = `index.html?room=${propertyId}`;
+        }
+
+        async function loadSearchHistory() {
+            console.log('loadSearchHistory called');
+            // Load from localStorage instead of API
+            const history = getViewHistory();
+            console.log('History from localStorage:', history.length, 'items');
+            const historyList = document.getElementById('history-list');
+            
+            if (!historyList) {
+                console.error('history-list element not found!');
+                return;
+            }
+            
+            if (history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>Chưa có phòng đã xem</p>
+                        <a href="index.html" class="btn-primary">Khám phá ngay</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Update history count
+            document.getElementById('history-count').textContent = history.length;
+            
+            // Display history items
+            historyList.innerHTML = history.map(item => {
+                const viewDate = new Date(item.timestamp).toLocaleDateString('vi-VN');
+                const imgSrc = item.img || 'images/default.jpg';
+                
+                return `
+                    <div class="property-card" data-property-id="${item.id}">
+                        <div class="property-image">
+                            <img src="${imgSrc}" alt="${item.title}">
+                            <div class="property-date">Xem: ${viewDate}</div>
+                        </div>
+                        <div class="property-content">
+                            <h3>${item.title}</h3>
+                            <p class="property-address"><i class="fas fa-map-marker-alt"></i> ${item.address}</p>
+                            <div class="property-price">${item.price || 'Liên hệ'}</div>
+                            <div class="property-actions">
+                                <button class="btn-primary" onclick="viewPropertyDetails('${item.id}')">
+                                    <i class="fas fa-eye"></i> Xem lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item[data-section]');
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    switchSection(section);
+                    
+                    // Close mobile menu after navigation
+                    closeMobileMenu();
+                });
+            });
+        }
+        
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', toggleMobileMenu);
+            }
+            
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        function switchSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(`${sectionName}-section`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Add active to selected nav item
+            const targetNav = document.querySelector(`.nav-item[data-section="${sectionName}"]`);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+            
+            // Load data for specific sections
+            if (sectionName === 'history') {
+                loadSearchHistory();
+            } else if (sectionName === 'favorites') {
+                loadFavorites();
+            }
+        }
+
+        function setupLogout() {
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        // Change Password
+        function changePassword() {
+            document.getElementById('password-modal').style.display = 'flex';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            document.getElementById('password-form').reset();
+        }
+
+        document.getElementById('password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                showNotification('❌ Mật khẩu mới không khớp!', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showNotification('❌ Mật khẩu phải có ít nhất 6 ký tự!', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/${currentUser.id}/update-password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        current_password: currentPassword,
+                        new_password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('✅ Đổi mật khẩu thành công!');
+                    closePasswordModal();
+                } else {
+                    showNotification('❌ ' + (data.message || 'Đổi mật khẩu thất bại!'), 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('❌ Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            }
+        });
+
+        // Edit Field
+        let currentEditField = null;
+
+        function editField(field) {
+            currentEditField = field;
+            const modal = document.getElementById('edit-modal');
+            const title = document.getElementById('edit-modal-title');
+            const label = document.getElementById('edit-label');
+            const input = document.getElementById('edit-input');
+
+            if (field === 'username') {
+                title.textContent = 'Chỉnh sửa tên đăng nhập';
+                label.textContent = 'Tên đăng nhập mới';
+                input.value = currentUser.username || '';
+                input.type = 'text';
+            } else if (field === 'email') {
+                title.textContent = 'Chỉnh sửa email';
+                label.textContent = 'Email mới';
+                input.value = currentUser.email || '';
+                input.type = 'email';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+            document.getElementById('edit-form').reset();
+            currentEditField = null;
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newValue = document.getElementById('edit-input').value.trim();
+
+            if (!newValue) {
+                showNotification('⚠️ Giá trị không được để trống!', 'error');
+                return;
+            }
+
+            const endpoint = currentEditField === 'username' 
+                ? `/user/${currentUser.id}/update-username`
+                : `/user/${currentUser.id}/update-email`;
+
+            const body = currentEditField === 'username'
+                ? { username: newValue }
+                : { email: newValue };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('✅ Cập nhật thành công!');
+                    
+                    // Update local storage
+                    currentUser[currentEditField] = newValue;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update UI
+                    loadUserData();
+                    closeEditModal();
+                } else {
+                    showNotification('❌ ' + (data.message || 'Cập nhật thất bại!'), 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('❌ Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            }
+        });
+
+        // Mark all notifications as read
+        function markAllAsRead() {
+            document.querySelectorAll('.notification-item.unread').forEach(item => {
+                item.classList.remove('unread');
+            });
+            document.querySelector('.sidebar .badge').style.display = 'none';
+        }
+
+        // Property modal functions
+        let propertyData = [];
+        let autoSlideInterval = null;
+        let userFavorites = new Set();
+        
+        // View history constants
+        const VIEW_HISTORY_KEY = 'hola_view_history';
+        const MAX_HISTORY_ITEMS = 20;
+        
+        // Get view history from localStorage
+        function getViewHistory() {
+            try {
+                const history = localStorage.getItem(VIEW_HISTORY_KEY);
+                console.log('getViewHistory - raw data:', history);
+                const parsed = history ? JSON.parse(history) : [];
+                console.log('getViewHistory - parsed:', parsed.length, 'items');
+                return parsed;
+            } catch (e) {
+                console.error('getViewHistory error:', e);
+                return [];
+            }
+        }
+        
+        // Save view history to localStorage
+        function saveViewHistory(history) {
+            try {
+                const str = JSON.stringify(history);
+                localStorage.setItem(VIEW_HISTORY_KEY, str);
+                console.log('saveViewHistory - saved:', history.length, 'items');
+            } catch (e) {
+                console.error('Failed to save view history:', e);
+            }
+        }
+        
+        // Add property to view history
+        function addToViewHistory(property) {
+            if (!property || !property.id) {
+                console.warn('addToViewHistory: property is invalid', property);
+                return;
+            }
+            
+            console.log('Adding to view history:', property.title);
+            
+            let history = getViewHistory();
+            console.log('Current history length:', history.length);
+            
+            // Remove if already exists (check by id)
+            history = history.filter(item => item.id !== property.id);
+            
+            // Add to beginning with timestamp
+            history.unshift({
+                id: property.id,
+                title: property.title || 'Phòng trọ',
+                address: property.address ? property.address.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '',
+                price: property.price || '',
+                img: Array.isArray(property.img) ? property.img[0] : property.img,
+                timestamp: Date.now()
+            });
+            
+            // Keep only MAX_HISTORY_ITEMS
+            if (history.length > MAX_HISTORY_ITEMS) {
+                history = history.slice(0, MAX_HISTORY_ITEMS);
+            }
+            
+            saveViewHistory(history);
+            console.log('Saved to history. New length:', history.length);
+            
+            // Update count badge immediately
+            const countEl = document.getElementById('history-count');
+            if (countEl) {
+                countEl.textContent = history.length;
+            }
+        }
+        
+        async function viewPropertyDetails(propertyId) {
+            try {
+                // Fetch all properties if not loaded
+                if (propertyData.length === 0) {
+                    const response = await fetch(`${API_BASE_URL}/properties`);
+                    if (!response.ok) throw new Error('Failed to fetch properties');
+                    propertyData = await response.json();
+                }
+                
+                // Find the property
+                const property = propertyData.find(p => p.id === propertyId);
+                if (property) {
+                    // Increment view count
+                    try {
+                        await fetch(`${API_BASE_URL}/properties/${property.id}/view`, {
+                            method: 'POST'
+                        });
+                    } catch (error) {
+                        console.error('Error incrementing view:', error);
+                    }
+                    
+                    openPropertyModal(property);
+                }
+            } catch (error) {
+                console.error('Error loading property details:', error);
+                showNotification('❌ Không thể tải chi tiết phòng!', 'error');
+            }
+        }
+
+        async function openPropertyModal(item) {
+            const modal = document.getElementById("propertyModal");
+            if (!modal) return;
+            
+            // Add to view history
+            addToViewHistory(item);
+            
+            let modalImg = document.getElementById("modal-img");
+            const modalThumbnails = document.getElementById("modal-thumbnails");
+            const modalTitle = document.getElementById("modal-title");
+            const modalAddress = document.getElementById("modal-address");
+            const modalPrice = document.getElementById("modal-price");
+            const modalDesc = document.getElementById("modal-description");
+            const heartBtn = modal.querySelector('.favorite-heart-btn');
+            const prevBtn = document.getElementById("prev-image-btn");
+            const nextBtn = document.getElementById("next-image-btn");
+            const imageCounter = document.getElementById("image-counter");
+            const imageContainer = document.querySelector('.modal-image-container');
+
+            // Basic data
+            const propertyId = item.id;
+            let images = [];
+            if (Array.isArray(item.img)) images = item.img;
+            else if (item.img) images = [item.img];
+            else images = [];
+
+            // Image slideshow management
+            let currentImageIndex = 0;
+            let isAnimating = false;
+
+            function updateImage(index, direction = 'next') {
+                if (images.length === 0 || isAnimating) return;
+                
+                isAnimating = true;
+                currentImageIndex = (index + images.length) % images.length;
+                
+                const currentImg = document.getElementById('modal-img');
+                if (!currentImg) {
+                    isAnimating = false;
+                    return;
+                }
+                
+                const newImg = document.createElement('img');
+                newImg.src = images[currentImageIndex];
+                newImg.alt = item.title || '';
+                newImg.style.width = '100%';
+                newImg.style.height = '100%';
+                newImg.style.objectFit = 'contain';
+                newImg.style.position = 'absolute';
+                newImg.style.top = '0';
+                newImg.style.left = '0';
+                
+                if (direction === 'next') {
+                    currentImg.classList.add('slide-out-left');
+                    newImg.classList.add('slide-in-right');
+                } else {
+                    currentImg.classList.add('slide-out-right');
+                    newImg.classList.add('slide-in-left');
+                }
+                
+                imageContainer.appendChild(newImg);
+                
+                setTimeout(() => {
+                    if (currentImg.parentElement) {
+                        currentImg.remove();
+                    }
+                    newImg.id = 'modal-img';
+                    isAnimating = false;
+                }, 500);
+                
+                imageCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                
+                modalThumbnails.querySelectorAll('img').forEach((img, i) => {
+                    img.classList.toggle('active', i === currentImageIndex);
+                });
+            }
+
+            function startAutoSlide() {
+                if (images.length <= 1) return;
+                stopAutoSlide();
+                autoSlideInterval = setInterval(() => {
+                    updateImage(currentImageIndex + 1, 'next');
+                }, 3000);
+            }
+
+            function stopAutoSlide() {
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = null;
+                }
+            }
+
+            // Navigation button handlers
+            if (prevBtn) {
+                prevBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    stopAutoSlide();
+                    updateImage(currentImageIndex - 1, 'prev');
+                    setTimeout(() => startAutoSlide(), 100);
+                };
+            }
+
+            if (nextBtn) {
+                nextBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    stopAutoSlide();
+                    updateImage(currentImageIndex + 1, 'next');
+                    setTimeout(() => startAutoSlide(), 100);
+                };
+            }
+
+            // Initialize first image
+            const initialImg = document.getElementById('modal-img');
+            if (initialImg && images.length > 0) {
+                initialImg.src = images[0];
+                initialImg.alt = item.title || '';
+            }
+            if (imageCounter) {
+                imageCounter.textContent = `1 / ${images.length}`;
+            }
+            
+            modalTitle.innerHTML = item.title || '';
+            modalAddress.innerHTML = item.address || '';
+            modalPrice.innerHTML = item.price || '';
+
+            // Load description from file
+            if (item.description) {
+                try {
+                    const response = await fetch(item.description);
+                    if (response.ok) {
+                        const content = await response.text();
+                        modalDesc.innerHTML = content;
+                    } else {
+                        modalDesc.innerHTML = '<p>Không có mô tả chi tiết</p>';
+                    }
+                } catch (error) {
+                    console.error('Error loading description:', error);
+                    modalDesc.innerHTML = '<p>Không thể tải mô tả</p>';
+                }
+            } else {
+                modalDesc.innerHTML = '<p>Không có mô tả chi tiết</p>';
+            }
+
+            // Start auto-slide
+            setTimeout(() => startAutoSlide(), 500);
+
+            // Update heart button state
+            if (heartBtn) {
+                if (userFavorites.has(propertyId)) {
+                    heartBtn.classList.add('favorited');
+                } else {
+                    heartBtn.classList.remove('favorited');
+                }
+                heartBtn.onclick = () => toggleFavorite(propertyId, heartBtn);
+            }
+
+            // Map location button
+            const mapBtn = document.getElementById('map-location-btn');
+            if (mapBtn) {
+                mapBtn.onclick = () => {
+                    const address = item.address || '';
+                    let cleanAddress = address.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+                    cleanAddress = cleanAddress.replace(/^Địa chỉ:\s*/i, '').trim();
+                    
+                    let mapsUrl;
+                    if (item.lat && item.lng) {
+                        mapsUrl = `https://www.google.com/maps?q=${item.lat},${item.lng}&t=m&z=16`;
+                    } else {
+                        const searchQuery = encodeURIComponent(cleanAddress + ', Hòa Lạc, Hà Nội');
+                        mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+                    }
+                    window.open(mapsUrl, '_blank');
+                };
+            }
+
+            // Booking button
+            const bookingBtn = document.getElementById('booking-btn');
+            if (bookingBtn) {
+                bookingBtn.onclick = () => {
+                    showNotification('ℹ️ Chức năng đặt lịch hẹn đang được phát triển');
+                };
+            }
+
+            // Thumbnails
+            modalThumbnails.innerHTML = images.map((src, i) => `<img src="${src}" data-index="${i}" class="${i===0? 'active':''}">`).join('');
+            modalThumbnails.querySelectorAll('img').forEach((imgEl, index) => {
+                imgEl.addEventListener('click', () => {
+                    stopAutoSlide();
+                    const direction = index > currentImageIndex ? 'next' : 'prev';
+                    updateImage(index, direction);
+                    startAutoSlide();
+                });
+            });
+
+            // Rating stars setup
+            const starsEl = modal.querySelector('.modal-rating-stars');
+            const textEl = modal.querySelector('.modal-rating-text');
+            const texts = ['Rất tệ','Tệ','Bình thường','Tốt','Tuyệt vời'];
+            let selectedStar = 0;
+            let hoverStar = 0;
+
+            if (starsEl) {
+                starsEl.innerHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    const s = document.createElement('span');
+                    s.className = 'star';
+                    s.textContent = '★';
+                    s.dataset.value = i;
+                    s.addEventListener('click', async () => {
+                        selectedStar = i;
+                        renderStars();
+                        if (!authToken) {
+                            showNotification('⚠️ Vui lòng đăng nhập để đánh giá!', 'error');
+                            return;
+                        }
+                        await saveRating(propertyId, selectedStar);
+                        showNotification('✅ Cảm ơn bạn đã đánh giá!');
+                    });
+                    s.addEventListener('mouseover', () => { hoverStar = i; renderStars(); });
+                    s.addEventListener('mouseout', () => { hoverStar = 0; renderStars(); });
+                    starsEl.appendChild(s);
+                }
+            }
+
+            function renderStars() {
+                if (!starsEl) return;
+                for (let i = 0; i < starsEl.children.length; i++) {
+                    const star = starsEl.children[i];
+                    star.classList.toggle('selected', i < selectedStar);
+                    star.classList.toggle('hovered', hoverStar && i < hoverStar);
+                }
+                const idx = (hoverStar || selectedStar) - 1;
+                if (textEl) textEl.textContent = idx >= 0 ? texts[idx] : '';
+            }
+
+            renderStars();
+
+            // Comments
+            const commentInput = document.getElementById('modal-comment-input');
+            const commentSubmit = document.getElementById('modal-comment-submit');
+            const commentList = document.getElementById('modal-comment-list');
+
+            async function loadComments() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`);
+                    if (response.ok) {
+                        const comments = await response.json();
+                        renderComments(comments);
+                    } else {
+                        commentList.innerHTML = '<div style="color:#999">Không có bình luận</div>';
+                    }
+                } catch (err) {
+                    console.error('Error loading comments:', err);
+                }
+            }
+
+            if (commentSubmit) {
+                commentSubmit.onclick = async () => {
+                    if (!authToken) {
+                        showNotification('⚠️ Vui lòng đăng nhập để bình luận!', 'error');
+                        return;
+                    }
+                    const txt = commentInput ? commentInput.value.trim() : '';
+                    if (!txt) return;
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/comments/${propertyId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${authToken}`
+                            },
+                            body: JSON.stringify({ text: txt, rating: selectedStar })
+                        });
+                        if (response.ok) {
+                            if (commentInput) commentInput.value = '';
+                            await loadComments();
+                            showNotification('✅ Gửi bình luận thành công!');
+                        } else {
+                            const data = await response.json();
+                            showNotification('❌ ' + (data.error || 'Không thể gửi bình luận!'), 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error submitting comment:', error);
+                        showNotification('❌ Có lỗi xảy ra khi gửi bình luận!', 'error');
+                    }
+                };
+            }
+
+            function renderComments(comments) {
+                if (!commentList) return;
+                if (!comments || comments.length === 0) {
+                    commentList.innerHTML = '<div style="color:#999">Chưa có bình luận nào</div>';
+                    return;
+                }
+                commentList.innerHTML = comments.map(com => `
+                    <div class="comment-item">
+                        <strong>${com.username}</strong>
+                        ${com.rating > 0 ? `<span class="comment-stars">${'★'.repeat(com.rating)}${'☆'.repeat(5 - com.rating)}</span>` : ''}
+                        <p>${com.text}</p>
+                        <span style="color:#aaa; font-size:0.85em;">${new Date(com.created_at).toLocaleString('vi')}</span>
+                    </div>
+                `).join('');
+            }
+
+            await loadComments();
+
+            // Show modal
+            modal.style.display = 'flex';
+            
+            // Setup close handlers
+            const closeBtn = modal.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.onclick = () => closePropertyModal();
+            }
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closePropertyModal();
+            });
+        }
+
+        function closePropertyModal() {
+            const modal = document.getElementById("propertyModal");
+            if (modal) {
+                modal.style.display = 'none';
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = null;
+                }
+            }
+        }
+
+        async function toggleFavorite(propertyId, heartBtn) {
+            if (!authToken) {
+                showNotification('⚠️ Vui lòng đăng nhập để lưu yêu thích!', 'error');
+                return;
+            }
+
+            try {
+                if (userFavorites.has(propertyId)) {
+                    const response = await fetch(`${API_BASE_URL}/favorites/${propertyId}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    if (response.ok) {
+                        userFavorites.delete(propertyId);
+                        heartBtn.classList.remove('favorited');
+                        loadFavorites(); // Refresh favorites list
+                    }
+                } else {
+                    const response = await fetch(`${API_BASE_URL}/favorites/${propertyId}`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    if (response.ok) {
+                        userFavorites.add(propertyId);
+                        heartBtn.classList.add('favorited');
+                    }
+                }
+            } catch (error) {
+                console.error('Error toggling favorite:', error);
+            }
+        }
+
+        async function saveRating(propertyId, rating) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/ratings/${propertyId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ rating })
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('Error saving rating:', error);
+                return false;
+            }
+        }
+
+        // ESC key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePropertyModal();
+                closeAvatarModal();
+            }
+        });
+
+        // Avatar Selection
+        let selectedAvatar = null;
+
+        // Setup avatar change button after DOM is ready
+        function setupAvatarButton() {
+            const avatarBtn = document.querySelector('.btn-change-avatar');
+            console.log('Setup avatar button:', avatarBtn);
+            if (avatarBtn) {
+                avatarBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Avatar button clicked!');
+                    openAvatarModal();
+                });
+                console.log('Avatar button listener attached');
+            } else {
+                console.error('Avatar button not found!');
+            }
+        }
+
+        function openAvatarModal() {
+            console.log('Opening avatar modal...');
+            const modal = document.getElementById('avatar-modal');
+            const grid = document.getElementById('avatar-grid');
+            
+            console.log('Modal element:', modal);
+            console.log('Grid element:', grid);
+            
+            if (!modal || !grid) {
+                console.error('Modal or grid not found!');
+                return;
+            }
+            
+            // Setup tab switching
+            const tabs = modal.querySelectorAll('.avatar-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Filter avatars
+                    const category = tab.dataset.category;
+                    filterAvatars(category);
+                });
+            });
+            
+            // Load all avatars initially
+            filterAvatars('all');
+            
+            // Pre-select current avatar
+            const currentAvatar = currentUser.avatar || 'default';
+            setTimeout(() => {
+                const currentItem = grid.querySelector(`[data-avatar="${currentAvatar}"]`);
+                if (currentItem) {
+                    currentItem.classList.add('selected');
+                    selectedAvatar = currentAvatar;
+                }
+            }, 100);
+            
+            modal.classList.add('active');
+        }
+        
+        function filterAvatars(category) {
+            const grid = document.getElementById('avatar-grid');
+            grid.innerHTML = '';
+            
+            // Add default avatar option
+            const defaultItem = document.createElement('div');
+            defaultItem.className = 'avatar-item default';
+            defaultItem.dataset.avatar = 'default';
+            defaultItem.innerHTML = `
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                    <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <div class="selected-badge">
+                    <i class="fas fa-check"></i>
+                </div>
+            `;
+            defaultItem.addEventListener('click', () => selectAvatar(defaultItem));
+            grid.appendChild(defaultItem);
+            
+            // Filter and add avatar images
+            let avatarsToShow = [];
+            if (category === 'all') {
+                avatarsToShow = availableAvatars;
+            } else {
+                // Filter by category
+                avatarsToShow = availableAvatars.filter(path => path.includes(`avatar_imgs/${category}/`));
+            }
+            
+            avatarsToShow.forEach(avatarPath => {
+                const item = document.createElement('div');
+                item.className = 'avatar-item';
+                item.dataset.avatar = avatarPath;
+                item.innerHTML = `
+                    <img src="${avatarPath}" alt="Avatar">
+                    <div class="selected-badge">
+                        <i class="fas fa-check"></i>
+                    </div>
+                `;
+                item.addEventListener('click', () => selectAvatar(item));
+                grid.appendChild(item);
+            });
+        }
+
+        function closeAvatarModal() {
+            const modal = document.getElementById('avatar-modal');
+            modal.classList.remove('active');
+            selectedAvatar = null;
+        }
+
+        function selectAvatar(item) {
+            // Remove previous selection
+            document.querySelectorAll('.avatar-item').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selection to clicked item
+            item.classList.add('selected');
+            selectedAvatar = item.dataset.avatar;
+        }
+
+        async function confirmAvatarSelection() {
+            if (!selectedAvatar) {
+                showNotification('Vui lòng chọn một avatar!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/avatar`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ avatar: selectedAvatar })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser.avatar = selectedAvatar;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update avatar display
+                    updateAvatarDisplay(selectedAvatar);
+                    
+                    closeAvatarModal();
+                    showNotification('✅ Đã cập nhật avatar thành công!');
+                } else {
+                    throw new Error('Failed to update avatar');
+                }
+            } catch (error) {
+                console.error('Error updating avatar:', error);
+                showNotification('❌ Có lỗi xảy ra khi cập nhật avatar. Vui lòng thử lại!', 'error');
+            }
+        }
+
+        function updateAvatarDisplay(avatarPath) {
+            const avatarLarge = document.querySelector('.profile-avatar-large');
+            
+            if (avatarPath === 'default') {
+                avatarLarge.innerHTML = `
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                        <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                `;
+            } else {
+                avatarLarge.innerHTML = `<img src="${avatarPath}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            }
+        }
+
+        // Load avatar on page load
+        function loadUserAvatar() {
+            if (currentUser && currentUser.avatar) {
+                updateAvatarDisplay(currentUser.avatar);
+            }
+        }
+
+        // Call loadUserAvatar after loading user data
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (currentUser) {
+                    loadUserAvatar();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

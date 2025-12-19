@@ -1,0 +1,6 @@
+Trở thành đối tác
+Dẫn đến trang login cho đối tác
+Tài khoản partner (được lưu ở accounts/partner/partner_accounts.json)
+Đăng nhập thành công sẽ chuyển về trang chủ mới nút đăng nhập và đăng ký chuyển thành profile của tài khoản đó
+Nút đăng nhập ở trang chủ có thể đăng nhập được tài khoản partner và tài khoản bình thường
+Ở popup nổi lên khi nhấn vào profile ở trang chủ sẽ có thêm Bảng điều khiển bên dưới thông tin tài khoản sẽ dấn đến dashboard của partner

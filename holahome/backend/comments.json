@@ -1,0 +1,52 @@
+{
+  "ntro3": [
+    {
+      "user_id": "partner#00001",
+      "username": "example_partner",
+      "text": "ưqf",
+      "rating": 4,
+      "created_at": "2025-11-14T07:35:23.763312"
+    },
+    {
+      "user_id": "user#00002",
+      "username": "user#00002",
+      "text": "Phòng đẹp lắm, thoáng mát :>>",
+      "rating": 5,
+      "created_at": "2025-11-14T07:50:46.673472"
+    },
+    {
+      "user_id": "user#00002",
+      "username": "SSS",
+      "text": "ngon",
+      "rating": 5,
+      "created_at": "2025-11-27T03:15:15.918172"
+    }
+  ],
+  "ntro7": [
+    {
+      "user_id": "partner#00001",
+      "username": "example_partner",
+      "text": "1 tỉ sao",
+      "rating": 5,
+      "created_at": "2025-11-14T07:37:18.615818"
+    }
+  ],
+  "ntro6": [
+    {
+      "user_id": "partner#00001",
+      "username": "example_partner",
+      "text": "gg",
+      "rating": 5,
+      "created_at": "2025-11-14T15:42:54.092590"
+    }
+  ],
+  "ntro1": [
+    {
+      "user_id": "user#00002",
+      "username": "SSS",
+      "text": "Phòng trọ rất đẹp, sạch sẽ và có đầy đủ nội thất. Trọ cũng nằm gần Đại học Quốc Gia Hà Nội, rất thuận tiện cho việc đi lại.",
+      "rating": 5,
+      "created_at": "2025-11-26T06:43:24.019405"
+    }
+  ]
+}

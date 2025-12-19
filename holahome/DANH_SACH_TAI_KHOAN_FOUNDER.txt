@@ -1,0 +1,66 @@
+
+Quyền hạn: Quản lý đối tác và Hợp đồng điện tử
+1. NGUYỄN HÀ AN
+   - Email: nguyenhaan@holahome.com
+   - Username: ha_an
+   - Password: HaAn@2025
+   - ID: F001
+   - Role: Founder
+   - Trạng thái: Active
+
+2. NGUYỄN THỊ THU HẰNG
+   - Email: nguyenthuhang@holahome.com
+   - Username: thu_hang
+   - Password: ThuHang@2025
+   - ID: F002
+   - Role: Founder
+   - Trạng thái: Active
+
+3. PHẠM THỊ MINH THƯ
+   - Email: phamminhthu@holahome.com
+   - Username: minh_thu
+   - Password: MinhThu@2025
+   - ID: F003
+   - Role: Founder
+   - Trạng thái: Active
+
+4. NGUYỄN GIA THANH
+   - Email: nguyengiathanh@holahome.com
+   - Username: gia_thanh
+   - Password: GiaThanh@2025
+   - ID: F004
+   - Role: Founder
+   - Trạng thái: Active
+
+5. LÊ ANH TÚ
+   - Email: leanhtu@holahome.com
+   - Username: anh_tu
+   - Password: AnhTu@2025
+   - ID: F005
+   - Role: Founder
+   - Trạng thái: Active
+
+
+
+Quyền hạn: Full quyền quản trị hệ thống + Developer Tools
+
+1. NGUYỄN MINH SƠN
+   - Email: nguyenminhson@holahome.com
+   - Username: minh_son
+   - Password: DevSon@2025
+   - ID: D001
+   - Role: Fouder, Developer
+   - Chuyên môn: Full Stack Developer
+   - Trạng thái: Active
+   - Quyền đặc biệt: Database, API, Security, Logs, Backup
+
+
+2. ĐÀO DUY PHÁT
+   - Email: daoduyphat@holahome.com
+   - Username: duy_phat
+   - Password: DevPhat@2025
+   - ID: D002
+   - Role: Fouder, Developer
+   - Chuyên môn: Full Stack Developer
+   - Trạng thái: Active
+   - Quyền đặc biệt: Database, API, Security, Logs, Backup

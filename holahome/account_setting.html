@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLA HOME - Cài đặt tài khoản</title>
+    <link rel="stylesheet" href="account_setting_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="account-settings" class="dashboard-wrapper">
+        <!-- Header -->
+        <header class="user-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <img src="logo/balck_logo.PNG" alt="HOLA HOME Logo" class="logo">
+                    <h1>HOLA HOME</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 21c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="header-username">Người dùng</span>
+                            <span class="user-role" id="header-role">Thành viên</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item back-link" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Quay lại</span>
+                    </a>
+                    <a href="#general" class="nav-item active" data-section="general">
+                        <i class="fas fa-cogs"></i>
+                        <span>Cài đặt chung</span>
+                    </a>
+                    <a href="#account" class="nav-item" data-section="account">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Thông tin tài khoản</span>
+                    </a>
+                    <a href="#notifications" class="nav-item" data-section="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Cài đặt thông báo</span>
+                    </a>
+                    <a href="#security" class="nav-item" data-section="security" id="security-nav" style="display: none;">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Bảo mật</span>
+                    </a>
+                </nav>
+                
+                <div class="sidebar-footer">
+                    <a href="index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="#" class="nav-item logout" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Section: Cài đặt chung -->
+                <section id="general-section" class="content-section active">
+                    <div class="section-header">
+                        <h2>CÀI ĐẶT CHUNG</h2>
+                        <p>Tùy chỉnh các cài đặt chung của tài khoản</p>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-cogs"></i> Cài đặt chung</h3>
+                            <div class="settings-content">
+                                <div class="form-group">
+                                    <label>Ngôn ngữ hiển thị</label>
+                                    <select id="language-select">
+                                        <option value="vi" selected>Tiếng Việt</option>
+                                        <option value="en">English</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Đơn vị tiền tệ</label>
+                                    <select id="currency-select">
+                                        <option value="vnd" selected>VND (₫)</option>
+                                        <option value="usd">USD ($)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chế độ hiển thị</label>
+                                    <select id="theme-select">
+                                        <option value="light" selected>Sáng</option>
+                                        <option value="dark">Tối</option>
+                                        <option value="auto">Tự động</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Thông tin tài khoản -->
+                <section id="account-section" class="content-section">
+                    <div class="section-header">
+                        <h2>THÔNG TIN TÀI KHOẢN</h2>
+                        <p>Quản lý thông tin cá nhân và tài khoản</p>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-user-edit"></i> Thông tin tài khoản</h3>
+                            <div class="settings-content">
+                                <form id="account-info-form">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-user"></i> Tên đăng nhập</label>
+                                        <input type="text" id="account-username" readonly>
+                                        <button type="button" class="btn-edit" onclick="editField('username')">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><i class="fas fa-envelope"></i> Email</label>
+                                        <input type="email" id="account-email" readonly>
+                                        <button type="button" class="btn-edit" onclick="editField('email')">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><i class="fas fa-id-card"></i> ID Tài khoản</label>
+                                        <input type="text" id="account-id" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><i class="fas fa-calendar"></i> Ngày đăng ký</label>
+                                        <input type="text" id="account-created" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><i class="fas fa-shield-alt"></i> Loại tài khoản</label>
+                                        <input type="text" id="account-type" readonly>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">
+                                            <i class="fas fa-save"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Cài đặt thông báo -->
+                <section id="notifications-section" class="content-section">
+                    <div class="section-header">
+                        <h2>CÀI ĐẶT THÔNG BÁO</h2>
+                        <p>Tùy chỉnh các thông báo bạn muốn nhận</p>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-bell"></i> Cài đặt thông báo</h3>
+                            <div class="notification-settings">
+                                <label class="setting-item">
+                                    <div>
+                                        <strong>Thông báo giá mới</strong>
+                                        <p>Nhận thông báo khi phòng yêu thích có thay đổi giá</p>
+                                    </div>
+                                    <input type="checkbox" id="price-notification" checked>
+                                </label>
+                                <label class="setting-item">
+                                    <div>
+                                        <strong>Phòng mới phù hợp</strong>
+                                        <p>Nhận thông báo về phòng mới trong khu vực bạn quan tâm</p>
+                                    </div>
+                                    <input type="checkbox" id="new-room-notification" checked>
+                                </label>
+                                <label class="setting-item">
+                                    <div>
+                                        <strong>Thông báo lịch hẹn</strong>
+                                        <p>Nhận thông báo về trạng thái lịch hẹn xem phòng</p>
+                                    </div>
+                                    <input type="checkbox" id="booking-notification" checked>
+                                </label>
+                                <label class="setting-item">
+                                    <div>
+                                        <strong>Email marketing</strong>
+                                        <p>Nhận email về ưu đãi và tin tức từ HOLA HOME</p>
+                                    </div>
+                                    <input type="checkbox" id="marketing-email">
+                                </label>
+                                <label class="setting-item">
+                                    <div>
+                                        <strong>Báo cáo hoạt động</strong>
+                                        <p>Nhận báo cáo thống kê hàng tuần về tài khoản</p>
+                                    </div>
+                                    <input type="checkbox" id="activity-report">
+                                </label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-primary" onclick="saveNotificationSettings()">
+                                    <i class="fas fa-save"></i> Lưu cài đặt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Bảo mật -->
+                <section id="security-section" class="content-section">
+                    <div class="section-header">
+                        <h2>BẢO MẬT</h2>
+                        <p>Quản lý bảo mật tài khoản của bạn</p>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-shield-alt"></i> Bảo mật</h3>
+                            <div class="security-settings">
+                                <button class="security-btn" onclick="changePassword()">
+                                    <i class="fas fa-key"></i>
+                                    <div>
+                                        <strong>Đổi mật khẩu</strong>
+                                        <p>Thay đổi mật khẩu đăng nhập</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                                <button class="security-btn" onclick="deleteAccount()">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <div>
+                                        <strong>Xóa tài khoản</strong>
+                                        <p>Xóa vĩnh viễn tài khoản của bạn</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> Đổi mật khẩu</h3>
+                <button class="modal-close" onclick="closePasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="password-form">
+                <div class="form-group">
+                    <label>Mật khẩu hiện tại</label>
+                    <input type="password" id="current-password" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu mới</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label>Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closePasswordModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i> Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Field Modal -->
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="edit-modal-title">Chỉnh sửa thông tin</h3>
+                <button class="modal-close" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="edit-form">
+                <div class="form-group">
+                    <label id="edit-label">Giá trị mới</label>
+                    <input type="text" id="edit-input" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i> Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = `${window.location.origin}/api`;
+        let currentUser = null;
+        let authToken = localStorage.getItem('authToken');
+
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `favorite-notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadUserData();
+            setupNavigation();
+            setupLogout();
+            setupMobileMenu();
+            loadNotificationSettings();
+        });
+
+        function checkAuth() {
+            currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            authToken = localStorage.getItem('authToken');
+            
+            if (!authToken || !currentUser) {
+                showNotification('⚠️ Vui lòng đăng nhập để truy cập trang này.', 'error');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        function loadUserData() {
+            if (!currentUser) return;
+
+            // Update header
+            document.getElementById('header-username').textContent = currentUser.username || currentUser.id;
+            document.getElementById('header-role').textContent = currentUser.account_type === 'partner' ? 'Đối tác' : 'Thành viên';
+
+            // Update account info section
+            document.getElementById('account-username').value = currentUser.username || '';
+            document.getElementById('account-email').value = currentUser.email || '';
+            document.getElementById('account-id').value = currentUser.id || '';
+            document.getElementById('account-created').value = formatDate(currentUser.created_at);
+            document.getElementById('account-type').value = currentUser.account_type === 'partner' ? 'Đối tác' : 'Người dùng';
+
+            // Show security nav for partners
+            if (currentUser.account_type === 'partner') {
+                document.getElementById('security-nav').style.display = 'flex';
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN');
+        }
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item[data-section]');
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    switchSection(section);
+                    
+                    // Close mobile menu after navigation
+                    closeMobileMenu();
+                });
+            });
+        }
+        
+        function switchSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(`${sectionName}-section`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Add active to selected nav item
+            const targetNav = document.querySelector(`.nav-item[data-section="${sectionName}"]`);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+        }
+        
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', toggleMobileMenu);
+            }
+            
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        function setupLogout() {
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        function goBack() {
+            // Go back to previous page or dashboard
+            if (document.referrer && document.referrer.includes('user.html')) {
+                window.location.href = 'user.html';
+            } else if (document.referrer && document.referrer.includes('partner_dashboard.html')) {
+                window.location.href = 'partner_dashboard.html';
+            } else {
+                // Default fallback
+                window.location.href = currentUser && currentUser.account_type === 'partner' ? 'partner_dashboard.html' : 'user.html';
+            }
+        }
+
+        // Change Password
+        function changePassword() {
+            document.getElementById('password-modal').style.display = 'flex';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            document.getElementById('password-form').reset();
+        }
+
+        document.getElementById('password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                showNotification('❌ Mật khẩu mới không khớp!', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showNotification('❌ Mật khẩu phải có ít nhất 6 ký tự!', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/${currentUser.id}/update-password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        current_password: currentPassword,
+                        new_password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('✅ Đổi mật khẩu thành công!');
+                    closePasswordModal();
+                } else {
+                    showNotification('❌ ' + (data.message || 'Đổi mật khẩu thất bại!'), 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('❌ Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            }
+        });
+
+        // Edit Field
+        let currentEditField = null;
+
+        function editField(field) {
+            currentEditField = field;
+            const modal = document.getElementById('edit-modal');
+            const title = document.getElementById('edit-modal-title');
+            const label = document.getElementById('edit-label');
+            const input = document.getElementById('edit-input');
+
+            if (field === 'username') {
+                title.textContent = 'Chỉnh sửa tên đăng nhập';
+                label.textContent = 'Tên đăng nhập mới';
+                input.value = currentUser.username || '';
+                input.type = 'text';
+            } else if (field === 'email') {
+                title.textContent = 'Chỉnh sửa email';
+                label.textContent = 'Email mới';
+                input.value = currentUser.email || '';
+                input.type = 'email';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+            document.getElementById('edit-form').reset();
+            currentEditField = null;
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newValue = document.getElementById('edit-input').value.trim();
+
+            if (!newValue) {
+                showNotification('⚠️ Giá trị không được để trống!', 'error');
+                return;
+            }
+
+            const endpoint = currentEditField === 'username' 
+                ? `/user/${currentUser.id}/update-username`
+                : `/user/${currentUser.id}/update-email`;
+
+            const body = currentEditField === 'username'
+                ? { username: newValue }
+                : { email: newValue };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('✅ Cập nhật thành công!');
+                    
+                    // Update local storage
+                    currentUser[currentEditField] = newValue;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update UI
+                    loadUserData();
+                    closeEditModal();
+                } else {
+                    showNotification('❌ ' + (data.message || 'Cập nhật thất bại!'), 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('❌ Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            }
+        });
+
+        // Load notification settings
+        function loadNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings') || '{}');
+            
+            document.getElementById('price-notification').checked = settings.price !== false;
+            document.getElementById('new-room-notification').checked = settings.newRoom !== false;
+            document.getElementById('booking-notification').checked = settings.booking !== false;
+            document.getElementById('marketing-email').checked = settings.marketing || false;
+            document.getElementById('activity-report').checked = settings.activity || false;
+        }
+
+        // Save notification settings
+        function saveNotificationSettings() {
+            const settings = {
+                price: document.getElementById('price-notification').checked,
+                newRoom: document.getElementById('new-room-notification').checked,
+                booking: document.getElementById('booking-notification').checked,
+                marketing: document.getElementById('marketing-email').checked,
+                activity: document.getElementById('activity-report').checked
+            };
+
+            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            showNotification('✅ Đã lưu cài đặt thông báo!');
+        }
+
+        // Delete account (for partners)
+        function deleteAccount() {
+            if (confirm('⚠️ Bạn có chắc muốn xóa tài khoản? Hành động này không thể hoàn tác!')) {
+                // Implement account deletion logic
+                showNotification('Tính năng xóa tài khoản đang được phát triển.', 'error');
+            }
+        }
+
+        // ESC key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePasswordModal();
+                closeEditModal();
+            }
+        });
+    </script>
+</body>
+</html>

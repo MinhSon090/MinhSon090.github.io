@@ -1,0 +1,115 @@
+{
+  "founders": [
+    {
+      "id": "F001",
+      "name": "Nguyễn Hà An",
+      "email": "nguyen.ha.an@holahome.com",
+      "username": "ha_an",
+      "password": "HaAn@2025",
+      "role": "founder",
+      "permissions": ["all"],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active"
+    },
+    {
+      "id": "F002",
+      "name": "Nguyễn Thị Thu Hằng",
+      "email": "nguyen.thu.hang@holahome.com",
+      "username": "thu_hang",
+      "password": "ThuHang@2025",
+      "role": "founder",
+      "permissions": ["all"],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active"
+    },
+    {
+      "id": "F003",
+      "name": "Phạm Thị Minh Thư",
+      "email": "pham.minh.thu@holahome.com",
+      "username": "minh_thu",
+      "password": "MinhThu@2025",
+      "role": "founder",
+      "permissions": ["all"],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active"
+    },
+    {
+      "id": "F004",
+      "name": "Nguyễn Gia Thanh",
+      "email": "nguyen.gia.thanh@holahome.com",
+      "username": "gia_thanh",
+      "password": "GiaThanh@2025",
+      "role": "founder",
+      "permissions": ["all"],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active"
+    },
+    {
+      "id": "F005",
+      "name": "Lê Anh Tú",
+      "email": "le.anh.tu@holahome.com",
+      "username": "anh_tu",
+      "password": "AnhTu@2025",
+      "role": "founder",
+      "permissions": ["all"],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active"
+    }
+  ],
+  "developers": [
+    {
+      "id": "D001",
+      "name": "Nguyễn Minh Sơn",
+      "email": "nguyen.minh.son@holahome.com",
+      "username": "minh_son",
+      "password": "DevSon@2025",
+      "role": "developer",
+      "permissions": [
+        "all",
+        "system_settings",
+        "database_access",
+        "api_management",
+        "user_management",
+        "partner_management",
+        "contract_management",
+        "backup_restore",
+        "logs_access",
+        "security_settings"
+      ],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active",
+      "specialization": "Backend Developer"
+    },
+    {
+      "id": "D002",
+      "name": "Đào Duy Phát",
+      "email": "dao.duy.phat@holahome.com",
+      "username": "duy_phat",
+      "password": "DevPhat@2025",
+      "role": "developer",
+      "permissions": [
+        "all",
+        "system_settings",
+        "database_access",
+        "api_management",
+        "user_management",
+        "partner_management",
+        "contract_management",
+        "backup_restore",
+        "logs_access",
+        "security_settings"
+      ],
+      "phone": "",
+      "joinDate": "2025-01-01",
+      "status": "active",
+      "specialization": "Full Stack Developer",
+      "avatar": "avatar_imgs/Hamster/0017.jpg"
+    }
+  ]
+}

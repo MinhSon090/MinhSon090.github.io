@@ -1,0 +1,19 @@
+{
+  "partners": {
+    "partner#00001": {
+      "id": "partner#00001",
+      "email": "partner@example.com",
+      "username": "example_partner",
+      "password": "scrypt:32768:8:1$QRmOkpraZmsMm7LD$d674d91f6d756c838f7b3ec26062bbee0f61ef5fee0a1cbe7b2b2041add81c69c1b9ff3de0d643a7142ebfe61ee6dbd6cbd97c928bd2367f01a0eca68a174e73",
+      "account_type": "partner",
+      "business_name": "Nhà Trọ Mẫu",
+      "phone": "0123456789",
+      "address": "123 Đường ABC, Hà Nội",
+      "verified": true,
+      "properties_count": 5,
+      "created_at": "2025-11-13T10:00:00.000000",
+      "avatar": "avatar_imgs/Birt/0019.jpg"
+    }
+  },
+  "next_partner_id": 2
+}

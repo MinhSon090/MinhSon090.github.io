@@ -1,0 +1,36 @@
+{
+  "ntro3": [
+    {
+      "user_id": "partner#00001",
+      "rating": 4,
+      "created_at": "2025-11-14T07:35:21.935734"
+    },
+    {
+      "user_id": "user#00002",
+      "rating": 5,
+      "created_at": "2025-11-14T07:50:33.258358",
+      "updated_at": "2025-11-27T03:15:14.872009"
+    }
+  ],
+  "ntro7": [
+    {
+      "user_id": "partner#00001",
+      "rating": 5,
+      "created_at": "2025-11-14T07:37:11.608928"
+    }
+  ],
+  "ntro6": [
+    {
+      "user_id": "partner#00001",
+      "rating": 5,
+      "created_at": "2025-11-14T15:42:47.452027"
+    }
+  ],
+  "ntro1": [
+    {
+      "user_id": "user#00002",
+      "rating": 5,
+      "created_at": "2025-11-26T06:43:14.266184"
+    }
+  ]
+}
