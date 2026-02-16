@@ -1,0 +1,41 @@
+{
+  "name": "3d-web-display",
+  "version": "1.0.0",
+  "description": "Interactive 3D Model Viewer Portfolio powered by Three.js and WebGL",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000 -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/3DWebDisplay.git"
+  },
+  "keywords": [
+    "threejs",
+    "webgl",
+    "3d",
+    "portfolio",
+    "model-viewer",
+    "gltf",
+    "interactive",
+    "web3d"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://yourwebsite.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/3DWebDisplay/issues"
+  },
+  "homepage": "https://github.com/yourusername/3DWebDisplay#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

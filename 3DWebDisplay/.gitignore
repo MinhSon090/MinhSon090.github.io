@@ -1,0 +1,77 @@
+# ===================================
+# OS Files
+# ===================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ===================================
+# Editor Files
+# ===================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ===================================
+# Node.js (nếu dùng build tools)
+# ===================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ===================================
+# Build outputs (nếu có)
+# ===================================
+dist/
+build/
+*.min.js
+*.min.css
+
+# ===================================
+# Temporary files
+# ===================================
+*.tmp
+*.temp
+*.log
+.cache/
+
+# ===================================
+# Large model files (tùy chọn)
+# ===================================
+# Nếu models quá lớn, có thể ignore và dùng Git LFS
+# *.glb
+# *.gltf
+
+# ===================================
+# Test files
+# ===================================
+test/
+tests/
+*.test.js
+*.spec.js
+
+# ===================================
+# Documentation (nếu build docs)
+# ===================================
+docs/build/
+
+# ===================================
+# Environment files
+# ===================================
+.env
+.env.local
+.env.*.local
