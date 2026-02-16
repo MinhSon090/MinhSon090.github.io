@@ -78,6 +78,14 @@ const models = [
         thumbnail: 'assets/thumbnails/t90m.jpg',
         scale: 1.0
     },
+    {
+        id: 'phaelynx',
+        name: 'Phaelynx',
+        description: 'Single-seat main battle robot. A fictional design by me, inspired by Titanfall.',
+        path: 'models/phaelynx.glb',
+        thumbnail: 'assets/thumbnails/phaelynx.jpg',
+        scale: 1.0
+    },
     
     // ============================================
     // THÊM MODEL MỚI VÀO ĐÂY
