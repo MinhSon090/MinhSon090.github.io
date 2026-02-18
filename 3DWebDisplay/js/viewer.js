@@ -31,7 +31,7 @@ class ModelViewer {
         // Camera
         this.camera = new THREE.PerspectiveCamera(
             50,
-            window.innerWidth / window.innerHeight,
+            this.canvas.clientWidth / this.canvas.clientHeight,
             0.1,
             1000
         );
@@ -43,7 +43,7 @@ class ModelViewer {
             antialias: true,
             alpha: true
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight, false);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.0;
@@ -53,10 +53,14 @@ class ModelViewer {
         this.controls = new OrbitControls(this.camera, this.canvas);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
-        this.controls.screenSpacePanning = false;
+        this.controls.screenSpacePanning = true; // needed for touch two-finger pan
         this.controls.minDistance = 1;
         this.controls.maxDistance = 20;
         this.controls.maxPolarAngle = Math.PI; // Cho phép xoay 360 độ
+        this.controls.touches = {
+            ONE: THREE.TOUCH.ROTATE,
+            TWO: THREE.TOUCH.DOLLY_PAN
+        };
         
         // Lighting
         this.setupLighting();
@@ -277,12 +281,15 @@ class ModelViewer {
      * Xử lý khi resize window
      */
     onWindowResize() {
+        const w = this.canvas.clientWidth;
+        const h = this.canvas.clientHeight;
+
         // Update camera
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.aspect = w / h;
         this.camera.updateProjectionMatrix();
-        
-        // Update renderer
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Update renderer – false = don't override CSS-set canvas size
+        this.renderer.setSize(w, h, false);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
 

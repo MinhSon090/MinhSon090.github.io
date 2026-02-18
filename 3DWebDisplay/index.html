@@ -135,17 +135,22 @@
     <!-- Model Info Panel (hiện thông tin model đang xem) -->
     <div id="model-info" class="model-info">
         <h3 class="info-title" id="model-name">Model Name</h3>
-        <p class="info-description" id="model-description">Model description</p>
-        
-        <!-- Controls Help -->
-        <div class="controls-help">
-            <h4 class="controls-title">Controls</h4>
-            <ul class="controls-list">
-                <li><strong>R: </strong>Reset view</li>
-                <li><strong>Left Mouse:</strong> Rotate camera</li>
-                <li><strong>Mouse Wheel:</strong> Zoom in/out</li>
-                <li><strong>Right Mouse:</strong> Pan camera</li>
-            </ul>
+        <div class="info-body">
+            <p class="info-description" id="model-description">Model description</p>
+            
+            <!-- Controls Help -->
+            <div class="controls-help">
+                <h4 class="controls-title">Controls</h4>
+                <ul class="controls-list">
+                    <li class="mouse-only"><strong>R: </strong>Reset view</li>
+                    <li class="mouse-only"><strong>Left Mouse:</strong> Rotate</li>
+                    <li class="mouse-only"><strong>Scroll:</strong> Zoom</li>
+                    <li class="mouse-only"><strong>Right Mouse:</strong> Pan</li>
+                    <li class="touch-only"><strong>1 Finger:</strong> Rotate</li>
+                    <li class="touch-only"><strong>2 Fingers:</strong> Zoom / Pan</li>
+                    <li class="touch-only"><strong>Double tap:</strong> Reset view</li>
+                </ul>
+            </div>
         </div>
     </div>
 

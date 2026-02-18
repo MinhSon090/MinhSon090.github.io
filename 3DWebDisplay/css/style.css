@@ -115,9 +115,12 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
     z-index: var(--z-canvas);
+    transition: bottom 0.3s ease;
 }
 
 #three-canvas {
@@ -571,7 +574,7 @@ html, body {
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: all var(--transition-normal);
+    transition: all var(--transition-normal), bottom var(--transition-normal);
     pointer-events: none;
 }
 
@@ -633,63 +636,414 @@ html, body {
    RESPONSIVE DESIGN
    =================================== */
 
+/* --- Tablet (768px) --- */
 @media (max-width: 768px) {
+    /* Home section */
     .home-section {
-        max-width: 90%;
+        max-width: 92%;
+        top: 50%;
     }
-    
+
+    .home-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
     .title-main {
-        font-size: 2rem;
+        font-size: 1.9rem;
     }
-    
+
+    .title-sub {
+        font-size: 0.9rem;
+    }
+
     .home-description {
         font-size: 1rem;
     }
-    
+
     .social-links {
-        flex-direction: column;
         gap: var(--spacing-sm);
     }
-    
-    .model-selector {
-        width: 240px;
-        right: var(--spacing-sm);
+
+    .social-link {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
     }
-    
-    .toggle-selector {
-        right: calc(240px + var(--spacing-sm) + var(--spacing-xs));
-    }
-    
-    .model-selector.collapsed ~ .toggle-selector {
-        right: var(--spacing-sm);
-    }
-    
+
+    /* Compact info – tighter */
     .compact-info {
         top: var(--spacing-sm);
         left: var(--spacing-sm);
     }
-    
+
+    .compact-content {
+        padding: 0.5rem var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .compact-title {
+        font-size: 1rem;
+    }
+
+    /* Model selector – narrower on tablet */
+    .model-selector {
+        width: 240px;
+        right: var(--spacing-sm);
+    }
+
+    .model-selector.collapsed {
+        transform: translateY(-50%) translateX(calc(100% + var(--spacing-sm)));
+    }
+
+    .toggle-selector {
+        right: calc(240px + var(--spacing-sm) + var(--spacing-xs));
+    }
+
+    .model-selector.collapsed ~ .toggle-selector {
+        right: var(--spacing-sm);
+    }
+
+    /* Model info panel */
     .model-info {
         bottom: var(--spacing-sm);
         left: var(--spacing-sm);
-        max-width: calc(100% - 2 * var(--spacing-sm));
+        max-width: calc(55% - var(--spacing-sm));
     }
 }
 
-@media (max-width: 480px) {
-    .model-selector {
-        width: calc(100% - 2 * var(--spacing-sm));
-        right: var(--spacing-sm);
+/* --- Mobile (600px) – Horizontal selector + bottom info strip --- */
+
+/*
+ * Heights (as CSS vars scoped to this block):
+ *   --m-info-h  : height of the model-info strip at the very bottom
+ *   --m-sel-h   : height of the horizontal model selector strip above it
+ */
+
+@media (max-width: 600px) {
+
+    /* ---- Home Section ---- */
+    .home-section {
+        top: 50%;
+        max-width: 96%;
+        width: 96%;
     }
-    
-    .compact-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-xs);
-    }
-    
+
     .home-content {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md) var(--spacing-sm);
+        border-radius: 12px;
+    }
+
+    .home-content::before,
+    .home-content::after {
+        width: 24px;
+        height: 24px;
+    }
+
+    .title-main  { font-size: 1.5rem; }
+    .title-sub   { font-size: 0.8rem; letter-spacing: 0.06em; }
+
+    .home-description {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .social-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .social-link {
+        padding: 0.45rem 0.5rem;
+        border-radius: 10px;
+        justify-content: center;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+    }
+
+    .social-icon { width: 16px; height: 16px; }
+    .home-cta    { margin-top: var(--spacing-md); }
+    .cta-text    { font-size: 0.85rem; }
+
+    /* ---- Compact info bar – full-width at top when viewing model ---- */
+    .compact-info {
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .compact-content {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        padding: 0.55rem var(--spacing-sm);
+        justify-content: space-between;
+    }
+
+    /* ================================================================
+     * MODEL INFO – 2-row grid pinned to very bottom
+     * Row 1 : model name (full width)
+     * Row 2 : [description | controls] – 2 columns
+     * ================================================================ */
+    .model-info {
+        /* position */
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 100%;
+        /* look */
+        border-radius: 12px 12px 0 0;
+        border-bottom: none;
+        padding: 0.6rem var(--spacing-sm) 0.5rem;
+        /* 2-row grid */
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 0.35rem;
+        /* fixed height */
+        height: 200px;
+        min-height: 148px;
+        max-height: 200px;
+        overflow: hidden;
+        transform: translateY(0);
+    }
+
+    .model-info.active {
+        transform: translateY(0);
+    }
+
+    /* Row 1 – name, full width */
+    .info-title {
+        grid-column: 1 / -1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.92rem;
+        margin-bottom: 0;
+        padding-bottom: 0.3rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Remove the inline pseudo-divider we added earlier */
+    .info-title::after { display: none; }
+
+    /* Row 2 – 2 columns: description left, controls right */
+    .info-description {
+        width: 61vw;
+        font-size: 0.72rem;
+        line-height: 1.4;
+        margin-bottom: 0;
+        overflow: scroll;
+        display: -webkit-box;
+        /* -webkit-line-clamp: 4; */
+        -webkit-box-orient: vertical;
+        padding-right: 0.4rem;
+        border-right: 1px solid var(--border-color);
+    }
+
+    /* Show controls-help in row 2, right column */
+    .controls-help {
+        min-width: 120px;
+        display: block;
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+        overflow: hidden;
+    }
+
+    .controls-title {
+        font-size: 0.65rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .controls-list {
+        font-size: 0.65rem;
+    }
+
+    .controls-list li {
+        margin-bottom: 0.1rem;
+    }
+
+    /* Wrap description + controls inside a 2-col sub-grid container.
+     * We inject a wrapper <div class="info-body"> in HTML. */
+    .info-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    /* ================================================================
+     * MODEL SELECTOR – horizontal scroll strip, sits above model-info
+     * ================================================================ */
+    .model-selector {
+        position: fixed;
+        top: auto;
+        right: 0;
+        left: 0;
+        /* default (no model loaded) – sits at very bottom */
+        bottom: 0;
+        width: 100%;
+        height: 150px;
+        max-height: 150px;
+        transform: none;
+        border-radius: 10px 10px 0 0;
+        border-bottom: none;
+        flex-direction: column;
+        transition: bottom var(--transition-normal);
+    }
+
+    /* When a model is loaded, body gets .model-active → push selector up
+     * and give canvas breathing room via padding-bottom */
+    body.model-active .model-selector {
+        bottom: 200px; /* = model-info height */
+    }
+
+    /* Shrink the fixed canvas container from the bottom */
+    body.model-active #canvas-container {
+        bottom: calc(200px + 150px); /* info + selector */
+    }
+
+    /* Collapsed state has no special meaning on mobile – always visible */
+    .model-selector.collapsed {
+        transform: none;
+    }
+
+    /* Compact header row */
+    .selector-header {
+        flex-shrink: 0;
+        padding: 0.4rem var(--spacing-sm) 0.3rem;
+        border-bottom: none;
+    }
+
+    .selector-title {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+    }
+
+    /* Horizontal scroll list */
+    .model-list {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 var(--spacing-xs) var(--spacing-xs);
+        gap: 0.5rem;
+        align-items: flex-start;
+        /* hide scrollbar but keep scrollable */
+        scrollbar-width: none;
+    }
+
+    .model-list::-webkit-scrollbar { display: none; }
+
+    /* Vertical card in horizontal row */
+    .model-item {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        width: auto;
+        /* height: 5em; */
+        margin-bottom: 0;
+        border-radius: 8px;
+    }
+
+    .model-item:hover  { transform: none; }
+    .model-item:active { opacity: 0.75; }
+
+    .model-thumbnail {
+        width: auto;
+        height: 5em;
+        border-radius: 6px 6px 0 0;
+        flex-shrink: 0;
+    }
+
+    .model-item-info {
+        padding: 3px 5px 4px;
+    }
+
+    .model-item-name {
+        font-size: 0.68rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.3;
+    }
+
+    /* Hide per-card description in horizontal mode */
+    .model-item-desc { display: none; }
+
+    /* Hide toggle button – selector is always visible on mobile */
+    .toggle-selector { display: none; }
+}
+
+/* --- Very small phones (360px) --- */
+@media (max-width: 360px) {
+    .title-main {
+        font-size: 1.3rem;
+    }
+
+    .social-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .social-name {
+        font-size: 0.72rem;
+    }
+
+    .home-content {
+        padding: var(--spacing-sm);
+    }
+}
+
+/* --- Landscape phone (short height) --- */
+@media (max-height: 500px) and (max-width: 900px) {
+    .home-section {
+        top: 50%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .home-content {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .title-main {
+        font-size: 1.4rem;
+    }
+
+    .home-description {
+        display: none; /* hide to save vertical space */
+    }
+
+    .home-cta {
+        margin-top: var(--spacing-sm);
+    }
+
+    /* Keep bottom strips compact in landscape */
+    .model-selector {
+        height: 90px;
+        max-height: 90px;
+    }
+
+    .model-info {
+        height: 110px;
+        min-height: 110px;
+        max-height: 110px;
+    }
+
+    body.model-active .model-selector {
+        bottom: 110px;
+    }
+
+    body.model-active #canvas-container {
+        bottom: calc(110px + 90px);
     }
 }
 
@@ -741,4 +1095,14 @@ html, body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+/* Touch vs Mouse hints – toggled via JS */
+.touch-only {
+    display: none;
+}
+
+@media (pointer: coarse) {
+    .mouse-only { display: none; }
+    .touch-only { display: list-item; }
 }

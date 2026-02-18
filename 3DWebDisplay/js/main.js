@@ -210,11 +210,16 @@ async function handleModelSelect(modelId) {
 function updateUIForModelView(model) {
     // Ẩn home section
     elements.homeSection.classList.remove('active');
-    
+
     // Hiện compact info và model info
     elements.compactInfo.classList.add('active');
     elements.modelInfo.classList.add('active');
-    
+
+    // Push model selector up above the info strip (mobile)
+    document.body.classList.add('model-active');
+    // Let CSS transition finish then sync renderer to new canvas size
+    setTimeout(() => viewer.onWindowResize(), 320);
+
     // Update model info content
     elements.modelName.textContent = model.name;
     elements.modelDescription.innerHTML = model.description;
@@ -242,25 +247,27 @@ function updateActiveModelItem(modelId) {
  */
 function goHome() {
     console.log('Going home...');
-    
+
     // Unload model
     if (viewer.hasModel()) {
         viewer.unloadModel();
     }
-    
+
     // Reset state
     state.currentModelId = null;
-    
+
     // Update UI
     elements.homeSection.classList.add('active');
     elements.compactInfo.classList.remove('active');
     elements.modelInfo.classList.remove('active');
-    
+    document.body.classList.remove('model-active');
+    setTimeout(() => viewer.onWindowResize(), 320);
+
     // Remove active từ tất cả model items
     document.querySelectorAll('.model-item').forEach(item => {
         item.classList.remove('active');
     });
-    
+
     // Reset camera
     viewer.resetCamera();
 }
@@ -270,7 +277,7 @@ function goHome() {
  */
 function toggleSelector() {
     state.isSelectorCollapsed = !state.isSelectorCollapsed;
-    
+
     if (state.isSelectorCollapsed) {
         elements.modelSelector.classList.add('collapsed');
     } else {
@@ -315,9 +322,32 @@ function updateLoadingProgress(progress) {
 function setupEventListeners() {
     // Back to home button
     elements.backHomeBtn.addEventListener('click', goHome);
-    
+
     // Toggle selector button
     elements.toggleSelector.addEventListener('click', toggleSelector);
+
+    // On mobile, tapping the selector header also toggles the drawer
+    const selectorHeader = elements.modelSelector.querySelector('.selector-header');
+    if (selectorHeader) {
+        selectorHeader.addEventListener('click', (e) => {
+            // Only fire on mobile (pointer: coarse) and only when target is the header itself / title
+            const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+            if (isTouchDevice && (e.target === selectorHeader || e.target.closest('.selector-title'))) {
+                toggleSelector();
+            }
+        });
+    }
+
+    // Double-tap on canvas to reset camera (mobile friendly)
+    let lastTap = 0;
+    elements.canvas.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTap < 300) {
+            e.preventDefault();
+            viewer.resetCamera();
+        }
+        lastTap = now;
+    }, { passive: false });
     
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
