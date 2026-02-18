@@ -339,15 +339,26 @@ function setupEventListeners() {
     }
 
     // Double-tap on canvas to reset camera (mobile friendly)
+    // Only fires when exactly 1 finger is used – avoids conflict with 2-finger pinch/zoom
     let lastTap = 0;
-    elements.canvas.addEventListener('touchend', (e) => {
-        const now = Date.now();
-        if (now - lastTap < 300) {
-            e.preventDefault();
-            viewer.resetCamera();
+    let lastTapWasSingleFinger = false;
+    elements.canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            const now = Date.now();
+            if (lastTapWasSingleFinger && now - lastTap < 300) {
+                e.preventDefault();
+                viewer.resetCamera();
+                lastTap = 0; // reset so triple-tap doesn't fire again
+                lastTapWasSingleFinger = false;
+            } else {
+                lastTap = now;
+                lastTapWasSingleFinger = true;
+            }
+        } else {
+            // Multi-finger touch – cancel any pending double-tap
+            lastTap = 0;
+            lastTapWasSingleFinger = false;
         }
-        lastTap = now;
-    }, { passive: false });
     
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {

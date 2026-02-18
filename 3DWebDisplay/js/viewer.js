@@ -57,6 +57,7 @@ class ModelViewer {
         this.controls.minDistance = 1;
         this.controls.maxDistance = 20;
         this.controls.maxPolarAngle = Math.PI; // Cho phép xoay 360 độ
+        this.controls.zoomSpeed = 1.0;    // ← độ nhạy zoom (mouse wheel & pinch), mặc định 1.0
         this.controls.touches = {
             ONE: THREE.TOUCH.ROTATE,
             TWO: THREE.TOUCH.DOLLY_PAN
