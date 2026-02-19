@@ -359,7 +359,8 @@ function setupEventListeners() {
             lastTap = 0;
             lastTapWasSingleFinger = false;
         }
-    
+    });
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         // ESC - Go home
