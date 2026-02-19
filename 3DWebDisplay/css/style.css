@@ -42,6 +42,10 @@
     --z-panels: 10;
     --z-modal: 100;
     --z-loading: 1000;
+
+    /* Panel size */
+    --model-info-height: 25vh;
+    --model-selector-height: 18vh;
 }
 
 * {
@@ -795,18 +799,17 @@ html, body {
         right: 0;
         max-width: 100%;
         /* look */
-        border-radius: 12px 12px 0 0;
-        border-bottom: none;
+        border-radius: 0 0 12px 12px;
         padding: 0.6rem var(--spacing-sm) 0.5rem;
         /* 2-row grid */
         display: grid;
         grid-template-rows: auto 1fr;
         gap: 0.35rem;
         /* fixed height */
-        height: 200px;
+        height: var(--model-info-height);
         min-height: 148px;
-        max-height: 200px;
-        overflow: hidden;
+        max-height: var(--model-info-height);
+        overflow: hidden; /*___________________________________________________________________________________________*/
         transform: translateY(0);
     }
 
@@ -887,8 +890,8 @@ html, body {
         /* default (no model loaded) – sits at very bottom */
         bottom: 0;
         width: 100%;
-        height: 150px;
-        max-height: 150px;
+        height: var(--model-selector-height);
+        max-height: var(--model-selector-height);
         transform: none;
         border-radius: 10px 10px 0 0;
         border-bottom: none;
@@ -899,12 +902,12 @@ html, body {
     /* When a model is loaded, body gets .model-active → push selector up
      * and give canvas breathing room via padding-bottom */
     body.model-active .model-selector {
-        bottom: 200px; /* = model-info height */
+        bottom: var(--model-info-height); /* = model-info height */
     }
 
     /* Shrink the fixed canvas container from the bottom */
     body.model-active #canvas-container {
-        bottom: calc(200px + 150px); /* info + selector */
+        bottom: calc(var(--model-info-height) + var(--model-selector-height)); /* info + selector */
     }
 
     /* Collapsed state has no special meaning on mobile – always visible */
@@ -959,7 +962,7 @@ html, body {
 
     .model-thumbnail {
         width: auto;
-        height: 5em;
+        height: calc(var(--model-selector-height) - 60px);
         border-radius: 6px 6px 0 0;
         flex-shrink: 0;
     }
