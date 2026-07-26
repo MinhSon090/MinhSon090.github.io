@@ -77,6 +77,16 @@ class ModelViewer {
         
         // Event listeners
         window.addEventListener('resize', () => this.onWindowResize());
+
+        // Grid floor helper
+        this.gridHelper = new THREE.GridHelper(20, 40, 0x00d4ff, 0x1e293b);
+        this.gridHelper.position.y = -1.5;
+        this.gridHelper.visible = false;
+        this.scene.add(this.gridHelper);
+
+        // State trackers
+        this.isWireframeEnabled = false;
+        this.activeLightingPreset = 'studio';
         
         // Bắt đầu render loop
         this.animate();
@@ -86,28 +96,164 @@ class ModelViewer {
      * Thiết lập lighting cho scene
      */
     setupLighting() {
+        this.lightsGroup = new THREE.Group();
+        
         // Ambient light - ánh sáng tổng thể
-        const ambientLight = new THREE.AmbientLight(0xffffff, 5);
-        this.scene.add(ambientLight);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 4.0);
+        this.lightsGroup.add(this.ambientLight);
         
         // Main directional light (key light)
-        const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        mainLight.position.set(5, 5, 5);
-        this.scene.add(mainLight);
+        this.mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        this.mainLight.position.set(5, 5, 5);
+        this.lightsGroup.add(this.mainLight);
         
         // Fill light (từ phía bên kia)
-        const fillLight = new THREE.DirectionalLight(0x00d4ff, 0.5);
-        fillLight.position.set(-5, 3, -5);
-        this.scene.add(fillLight);
+        this.fillLight = new THREE.DirectionalLight(0x00d4ff, 0.8);
+        this.fillLight.position.set(-5, 3, -5);
+        this.lightsGroup.add(this.fillLight);
         
         // Rim light (ánh sáng viền từ phía sau)
-        const rimLight = new THREE.DirectionalLight(0x7c3aed, 0.8);
-        rimLight.position.set(0, 5, -5);
-        this.scene.add(rimLight);
+        this.rimLight = new THREE.DirectionalLight(0x7c3aed, 1.0);
+        this.rimLight.position.set(0, 5, -5);
+        this.lightsGroup.add(this.rimLight);
         
         // Hemisphere light (bầu trời -> mặt đất)
-        const hemiLight = new THREE.HemisphereLight(0x00d4ff, 0x0a0e1a, 0.3);
-        this.scene.add(hemiLight);
+        this.hemiLight = new THREE.HemisphereLight(0x00d4ff, 0x0a0e1a, 0.4);
+        this.lightsGroup.add(this.hemiLight);
+
+        this.scene.add(this.lightsGroup);
+    }
+
+    /**
+     * Set lighting preset
+     * @param {string} preset - 'studio' | 'cyberpunk' | 'dramatic' | 'ambient'
+     */
+    setLightingPreset(preset) {
+        this.activeLightingPreset = preset;
+        switch (preset) {
+            case 'cyberpunk':
+                this.ambientLight.intensity = 2.0;
+                this.ambientLight.color.setHex(0x0a0e1a);
+                this.mainLight.intensity = 2.0;
+                this.mainLight.color.setHex(0x00f0ff);
+                this.fillLight.intensity = 1.5;
+                this.fillLight.color.setHex(0xff007f);
+                this.rimLight.intensity = 2.2;
+                this.rimLight.color.setHex(0x7c3aed);
+                this.scene.background = new THREE.Color(0x050714);
+                break;
+            case 'dramatic':
+                this.ambientLight.intensity = 1.0;
+                this.ambientLight.color.setHex(0xffffff);
+                this.mainLight.intensity = 3.5;
+                this.mainLight.color.setHex(0xffffff);
+                this.fillLight.intensity = 0.2;
+                this.fillLight.color.setHex(0x00d4ff);
+                this.rimLight.intensity = 2.5;
+                this.rimLight.color.setHex(0x00f0ff);
+                this.scene.background = new THREE.Color(0x030408);
+                break;
+            case 'ambient':
+                this.ambientLight.intensity = 6.0;
+                this.ambientLight.color.setHex(0xffffff);
+                this.mainLight.intensity = 0.5;
+                this.mainLight.color.setHex(0xffffff);
+                this.fillLight.intensity = 0.5;
+                this.fillLight.color.setHex(0xffffff);
+                this.rimLight.intensity = 0.2;
+                this.rimLight.color.setHex(0xffffff);
+                this.scene.background = new THREE.Color(0x111827);
+                break;
+            case 'studio':
+            default:
+                this.ambientLight.intensity = 4.0;
+                this.ambientLight.color.setHex(0xffffff);
+                this.mainLight.intensity = 1.5;
+                this.mainLight.color.setHex(0xffffff);
+                this.fillLight.intensity = 0.8;
+                this.fillLight.color.setHex(0x00d4ff);
+                this.rimLight.intensity = 1.0;
+                this.rimLight.color.setHex(0x7c3aed);
+                this.scene.background = new THREE.Color(0x0a0e1a);
+                break;
+        }
+    }
+
+    /**
+     * Toggle Wireframe mode
+     * @param {boolean} [enable] - Optional override
+     * @returns {boolean} New wireframe state
+     */
+    toggleWireframe(enable) {
+        this.isWireframeEnabled = enable !== undefined ? enable : !this.isWireframeEnabled;
+        
+        if (this.currentModel) {
+            this.currentModel.traverse((child) => {
+                if (child.isMesh && child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(mat => mat.wireframe = this.isWireframeEnabled);
+                    } else {
+                        child.material.wireframe = this.isWireframeEnabled;
+                    }
+                }
+            });
+        }
+        return this.isWireframeEnabled;
+    }
+
+    /**
+     * Toggle grid floor helper
+     * @param {boolean} [show]
+     * @returns {boolean} New grid visibility
+     */
+    toggleGridFloor(show) {
+        this.gridHelper.visible = show !== undefined ? show : !this.gridHelper.visible;
+        return this.gridHelper.visible;
+    }
+
+    /**
+     * Compute statistics for loaded model (vertices, triangles, meshes)
+     * @returns {object} { vertices, triangles, meshes }
+     */
+    getModelStats() {
+        let vertices = 0;
+        let triangles = 0;
+        let meshes = 0;
+
+        if (this.currentModel) {
+            this.currentModel.traverse((child) => {
+                if (child.isMesh && child.geometry) {
+                    meshes++;
+                    const geom = child.geometry;
+                    if (geom.index) {
+                        triangles += geom.index.count / 3;
+                    } else if (geom.attributes.position) {
+                        triangles += geom.attributes.position.count / 3;
+                    }
+                    if (geom.attributes.position) {
+                        vertices += geom.attributes.position.count;
+                    }
+                }
+            });
+        }
+
+        return { vertices, triangles: Math.round(triangles), meshes };
+    }
+
+    /**
+     * Capture HD PNG screenshot of the current 3D canvas view
+     */
+    takeScreenshot() {
+        // Re-render scene to make sure drawing buffer is active
+        this.renderer.render(this.scene, this.camera);
+        const dataUrl = this.canvas.toDataURL('image/png');
+        
+        const link = document.createElement('a');
+        const name = (this.currentModelData && this.currentModelData.name) ? 
+            this.currentModelData.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : '3d_model';
+        link.download = `syna_3d_${name}_${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
     }
 
     /**
@@ -137,6 +283,11 @@ class ModelViewer {
                     // Auto center và scale model
                     this.centerAndScaleModel(modelData.scale || 1.0);
                     
+                    // Re-apply wireframe if previously enabled
+                    if (this.isWireframeEnabled) {
+                        this.toggleWireframe(true);
+                    }
+                    
                     // Set camera target về center của model
                     this.focusOnModel();
                     
@@ -160,54 +311,73 @@ class ModelViewer {
     }
 
     /**
-     * Tự động center model về gốc tọa độ và scale phù hợp viewport
+     * Tự động center model, scale vừa màn hình và đặt chân model đứng trên mặt lưới (y=0)
      * @param {number} scaleMultiplier - Hệ số scale bổ sung
      */
     centerAndScaleModel(scaleMultiplier = 1.0) {
         if (!this.currentModel) return;
 
-        // Tính bounding box của model
-        const box = new THREE.Box3().setFromObject(this.currentModel);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
+        // Reset scale & position để tính toán bounding box chính xác
+        this.currentModel.scale.set(1, 1, 1);
+        this.currentModel.position.set(0, 0, 0);
+        this.currentModel.updateMatrixWorld(true);
+
+        // 1. Tính bounding box ban đầu
+        const rawBox = new THREE.Box3().setFromObject(this.currentModel);
+        const rawSize = rawBox.getSize(new THREE.Vector3());
         
-        // Center model về gốc tọa độ
-        this.currentModel.position.x = -center.x;
-        this.currentModel.position.y = -center.y;
-        this.currentModel.position.z = -center.z;
-        
-        // Tính scale factor để model fit trong viewport
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const targetSize = 3; // Kích thước mục tiêu
+        // 2. Tính scale factor để fit vừa viewport
+        const maxDim = Math.max(rawSize.x, rawSize.y, rawSize.z);
+        const targetSize = 3.5; // Kích thước khung cảnh tiêu chuẩn
         const scale = (targetSize / maxDim) * scaleMultiplier;
         
         this.currentModel.scale.setScalar(scale);
-        
-        console.log(`Model centered. Size: ${maxDim.toFixed(2)}, Scale: ${scale.toFixed(2)}`);
+        this.currentModel.updateMatrixWorld(true);
+
+        // 3. Tính bounding box sau khi đã scale
+        const scaledBox = new THREE.Box3().setFromObject(this.currentModel);
+        const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+        const scaledMinY = scaledBox.min.y;
+
+        // 4. Đặt vị trí model: X và Z ở tâm (0,0), Y để đáy model nằm chính xác tại y = 0
+        this.currentModel.position.x = -scaledCenter.x;
+        this.currentModel.position.y = -scaledMinY; // Chân model chạm mặt lưới y=0
+        this.currentModel.position.z = -scaledCenter.z;
+
+        // 5. Đặt mặt sàn grid nằm ngay bên dưới đáy model (y = -0.01 để tránh z-fighting)
+        if (this.gridHelper) {
+            this.gridHelper.position.set(0, -0.01, 0);
+        }
+
+        console.log(`Model grounded at y=0. Size: ${maxDim.toFixed(2)}, Scale: ${scale.toFixed(2)}`);
     }
 
     /**
-     * Đặt camera focus vào model
+     * Đặt camera focus vào tâm model
      */
     focusOnModel() {
         if (!this.currentModel) return;
 
+        this.currentModel.updateMatrixWorld(true);
         const box = new THREE.Box3().setFromObject(this.currentModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         
-        // Set camera target
+        // Target camera vào tâm của model đã đặt vị trí
         this.controls.target.copy(center);
         
         // Tính khoảng cách camera phù hợp
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = this.camera.fov * (Math.PI / 180);
         let cameraDistance = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        cameraDistance *= 2.5; // Thêm khoảng cách buffer
+        cameraDistance *= 2.0; // Khoảng cách quan sát dễ nhìn
         
-        // Đặt camera position
-        const direction = this.camera.position.clone().sub(center).normalize();
-        this.camera.position.copy(direction.multiplyScalar(cameraDistance).add(center));
+        // Đặt camera ở góc nghiêng nhẹ nhìn vào tâm model
+        this.camera.position.set(
+            center.x,
+            center.y + maxDim * 0.2,
+            center.z + cameraDistance
+        );
         
         this.controls.update();
     }
@@ -300,13 +470,8 @@ class ModelViewer {
     animate() {
         requestAnimationFrame(() => this.animate());
         
-        // Update controls (damping)
+        // Update controls (damping & auto-rotate)
         this.controls.update();
-        
-        // Optional: Tự động xoay model nhẹ khi idle
-        // if (this.currentModel) {
-        //     this.currentModel.rotation.y += 0.001;
-        // }
         
         // Render scene
         this.renderer.render(this.scene, this.camera);
@@ -338,12 +503,14 @@ class ModelViewer {
 
     /**
      * Toggle auto rotate
-     * @param {boolean} enabled - Enable/disable auto rotate
+     * @param {boolean} [enabled] - Enable/disable auto rotate
      * @param {number} speed - Tốc độ xoay
+     * @returns {boolean} New autoRotate state
      */
     setAutoRotate(enabled, speed = 1.0) {
-        this.controls.autoRotate = enabled;
+        this.controls.autoRotate = enabled !== undefined ? enabled : !this.controls.autoRotate;
         this.controls.autoRotateSpeed = speed;
+        return this.controls.autoRotate;
     }
 }
 
