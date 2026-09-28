@@ -35,6 +35,19 @@ function Collection() {
 function Header() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('about');
+  const [copyStatus, setCopyStatus] = useState('');
+  const contactDialogRef = useRef(null);
+  const mailtoUrl = `mailto:${profile.email}`;
+  const gmailUrl = `https://mail.google.com/mail/?extsrc=mailto&url=${encodeURIComponent(mailtoUrl)}`;
+  const outlookUrl = `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(profile.email)}`;
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopyStatus('copied');
+    } catch {
+      setCopyStatus('error');
+    }
+  };
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver((entries) => {
@@ -43,14 +56,27 @@ function Header() {
     site.navigation.forEach(item => { const el = document.getElementById(item.id); if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, []);
-  return <header className="site-header"><div className="header-inner">
+  return <><header className="site-header"><div className="header-inner">
     <a className="brand" href="#about" aria-label="Back to top"><span className="brand-mark">{profile.initials}</span><span>{profile.name}<span className="brand-dot">.</span></span></a>
     <button className="menu-toggle" aria-expanded={open} aria-controls="site-navigation" aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)}><Icon name={open ? 'close' : 'menu'} /></button>
     <nav id="site-navigation" className={`navigation ${open ? 'is-open' : ''}`} aria-label="Main navigation">
       {site.navigation.map(item => <a key={item.id} className={active === item.id ? 'active' : ''} href={`#${item.id}`} aria-current={active === item.id ? 'location' : undefined} onClick={() => setOpen(false)}>{item.label}</a>)}
-      {profile.email && <a className="nav-contact" href={`mailto:${profile.email}`}>Let's talk <Icon name="diagonal" /></a>}
+      {profile.email && <button className="nav-contact" type="button" aria-haspopup="dialog" aria-controls="contact-dialog" onClick={() => { setOpen(false); setCopyStatus(''); contactDialogRef.current?.showModal(); }}>Let's talk <Icon name="mail" /></button>}
     </nav>
-  </div></header>;
+  </div></header>
+    {profile.email && <dialog id="contact-dialog" ref={contactDialogRef} className="contact-dialog" aria-labelledby="contact-title" onClose={() => setCopyStatus('')}>
+      <div className="contact-dialog-top"><div><span className="section-number">GET IN TOUCH</span><h2 id="contact-title">Let's talk.</h2></div><button className="contact-close" type="button" aria-label="Close contact dialog" onClick={() => contactDialogRef.current?.close()}><Icon name="close" /></button></div>
+      <p className="contact-intro">Copy my address or choose where to write.</p>
+      <div className="contact-email-row"><span>{profile.email}</span><button type="button" aria-label="Copy email address" onClick={copyEmail}>{copyStatus === 'copied' ? 'Copied' : 'Copy'}</button></div>
+      <p className="contact-copy-status" role="status">{copyStatus === 'copied' ? 'Email copied to clipboard.' : copyStatus === 'error' ? 'Copy failed. Please select the address above.' : ''}</p>
+      <span className="contact-options-label">OPEN WITH</span>
+      <div className="contact-options">
+        <a href={mailtoUrl}>Default mail app <Icon name="diagonal" /></a>
+        <a href={gmailUrl} target="_blank" rel="noopener noreferrer">Gmail <Icon name="diagonal" /></a>
+        <a href={outlookUrl} target="_blank" rel="noopener noreferrer">Outlook Web <Icon name="diagonal" /></a>
+      </div>
+    </dialog>}
+  </>;
 }
 
 function AchievementCard({ item, index }) {

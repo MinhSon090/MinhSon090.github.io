@@ -7,6 +7,7 @@ export default function Icon({ name = 'arrow', ...props }) {
     pin: <><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></>,
     award: <><circle cx="12" cy="8" r="5" /><path d="m8 12-2 9 6-3 6 3-2-9M10 8l1.5 1.5L14 7" /></>,
     certificate: <><rect x="3" y="3" width="18" height="14" rx="2" /><path d="M7 7h10M7 11h4m4 6-1 5 3-2 3 2-1-5" /><circle cx="17" cy="14" r="3" /></>,
+    publication: <><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z" /><path d="M14 3v6h6M8 13h8M8 17h8" /></>,
     spark: <><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" /><path d="M20 2v4m-2-2h4" /></>,
     cube: <><path d="m12 3 9 5-9 5-9-5 9-5Zm9 5v9l-9 5-9-5V8m9 5v9" /></>,
     menu: <path d="M4 7h16M4 12h16M4 17h16" />,
