@@ -1,0 +1,35 @@
+/*! React Bits adaptations. Copyright (c) 2026 David Haz. MIT + Commons Clause; full notice: licenses/react-bits.txt. */
+.blur-text-word { display: inline-block; }
+.blur-text-pending .blur-text-word { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+.blur-text-visible .blur-text-word { animation: blurTextIn .75s cubic-bezier(.22, 1, .36, 1) var(--word-delay, 0ms) both; }
+
+.magnet, .magnet-content { display: inline-flex; }
+.magnet { padding: 8px; margin: -8px; }
+.magnet-content { transform: translate3d(var(--magnet-x, 0px), var(--magnet-y, 0px), 0); transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+.magnet:focus-within .magnet-content { transform: none; }
+
+.tilted-card { perspective: 1000px; }
+.tilted-card-surface { position: relative; border-radius: 16px; transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform .55s cubic-bezier(.22, 1, .36, 1), box-shadow .55s ease; }
+.tilted-card-surface::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), #ffffff55, transparent 65%); opacity: 0; pointer-events: none; transition: opacity .4s ease; }
+
+@keyframes blurTextIn {
+  0% { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+  55% { opacity: .75; filter: blur(3px); transform: translateY(-2px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tilted-card:hover .tilted-card-surface { box-shadow: 0 18px 40px #294fe812; }
+  .tilted-card:hover .tilted-card-surface::after { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blur-text-pending .blur-text-word { opacity: 1; filter: none; transform: none; }
+  .blur-text-visible .blur-text-word { animation: none; }
+  .magnet-content, .tilted-card-surface { transform: none; }
+  .tilted-card-surface::after { display: none; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .magnet-content, .tilted-card-surface { transform: none; }
+}

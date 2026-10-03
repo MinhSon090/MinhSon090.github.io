@@ -3,6 +3,9 @@ import { achievements, profile, site } from './data/portfolio.js';
 import Icon from './components/Icon.jsx';
 import Reveal from './components/Reveal.jsx';
 import HeroArtwork from './components/HeroArtwork.jsx';
+import BlurText from './components/react-bits/BlurText.jsx';
+import Magnet from './components/react-bits/Magnet.jsx';
+import TiltedCard from './components/react-bits/TiltedCard.jsx';
 
 const ModelViewer = lazy(() => import('./components/ModelViewer.jsx'));
 const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
@@ -87,8 +90,8 @@ function AchievementCard({ item, index }) {
     ))
     : item.organization;
   return <Reveal delay={index * 70}><article className="achievement-card">
-    <div className="achievement-top"><span className={`achievement-icon icon-${item.icon}`}><Icon name={item.icon} /></span><span className="achievement-year">{item.year}</span></div>
-    <div className="achievement-type">{item.type}{item.isPlaceholder && <span className="sample-badge">Sample content</span>}</div>
+    <div className="achievement-top"><span className={`achievement-icon icon-${item.icon}`}><Icon name={item.icon} /><span className="achievement-type">{item.type}</span></span><span className="achievement-year">{item.year}</span></div>
+    {item.isPlaceholder && <span className="sample-badge">Sample content</span>}
     <h3>{item.title}</h3><p className="achievement-organization">{organization}</p><p className="achievement-description">{item.description}</p>
     <div className="achievement-bottom"><div className="tags">{item.tags?.map(tag => <span key={tag}>{tag}</span>)}</div>{item.url && <a className="card-link" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${item.title}`}><Icon name="diagonal" /></a>}</div>
   </article></Reveal>;
@@ -108,12 +111,12 @@ export default function App() {
           <Reveal className="hero-copy">
             <div className="eyebrow"><span className="status-dot" /> PERSONAL PORTFOLIO <span className="eyebrow-line" /></div>
             <p className="hero-greeting">{profile.greeting} <strong>{profile.name}<span className="brand-dot">.</span></strong></p>
-            <h1>{profile.headline[0]}<br /><span>{profile.headline[1]}</span></h1>
+            <h1><BlurText text={profile.headline[0]} startDelay={140} /><br /><BlurText className="hero-headline-accent" text={profile.headline[1]} startDelay={320} /></h1>
             <p className="hero-introduction">{profile.introduction}</p>
-            <div className="hero-actions"><a className="button button-primary" href="#achievements">Explore my journey <Icon name="diagonal" /></a><a className="button button-text" href="#collection"><Icon name="cube" /> Enter the 3D playground</a></div>
+            <div className="hero-actions"><Magnet><a className="button button-primary" href="#achievements">Explore my journey <Icon name="diagonal" /></a></Magnet><Magnet maxOffset={4}><a className="button button-text" href="#collection"><Icon name="cube" /> Enter the 3D playground</a></Magnet></div>
             <div className="hero-meta"><span><Icon name="pin" />{profile.location}</span><span className="meta-divider" /><span>{profile.role}</span></div>
           </Reveal>
-          <Reveal className="hero-visual" delay={120}>{profile.portrait ? <div className="portrait-card"><img src={assetUrl(profile.portrait)} alt={profile.portraitAlt} /></div> : <HeroArtwork />}</Reveal>
+          <Reveal className="hero-visual" delay={120}><TiltedCard>{profile.portrait ? <div className="portrait-card"><img src={assetUrl(profile.portrait)} alt={profile.portraitAlt} /></div> : <HeroArtwork />}</TiltedCard></Reveal>
         </div>
         <Reveal><div className="about-strip"><div className="about-label"><span className="section-number">01 / ABOUT ME</span><span>Stay curious.<br />Keep creating.</span></div><div className="about-copy"><p>{profile.about}</p><div className="disciplines">{profile.disciplines.map(item => <span key={item}><span />{item}</span>)}</div></div><a className="scroll-cue" href="#achievements" aria-label="Scroll to achievements"><Icon name="down" /></a></div></Reveal>
       </section>
