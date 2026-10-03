@@ -132,6 +132,7 @@ h1 > span { color: var(--blue); }
 .sample-badge { padding: 3px 6px; border-radius: 4px; font-size: 8px; color: #7c8571; background: #f3f4ef; }
 .achievement-card h3 { font-size: 17px; font-weight: 550; letter-spacing: -.6px; line-height: 1.5; }
 .achievement-organization { font-size: 10px; color: #92978a; margin-top: 7px; }
+.achievement-organization strong { font-weight: 700; color: var(--ink); }
 .achievement-description { font-size: 12px; color: var(--muted); margin-top: 17px; line-height: 1.9; flex: 1; }
 .achievement-bottom { border-top: 1px solid #eff0eb; margin-top: 23px; padding-top: 17px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }

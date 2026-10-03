@@ -1,6 +1,7 @@
 // Replace placeholders with your real details. Add array entries to extend the page.
 export const profile = {
   name: 'Nguyen Minh Son',
+  publicationNames: ['Minh Son Nguyen', 'Son Minh Nguyen'],
   initials: 'SYNA',
   role: 'University Student, AI Researcher, 3D Creator',
   location: 'Hanoi, Vietnam',
@@ -18,6 +19,7 @@ export const profile = {
 
 export const achievements = [
   {
+    // https://link.springer.com/book/9789819239344
     id: 'publication-u-mamba', type: 'Publication', year: '2026',
     title: 'U-Mamba: Lightweight Ultrasound Segmentation Using Selective State Space Models',
     organization: 'Quang-Tiep Tran, Dinh Thai Kim, Minh Son Nguyen, Lan Anh Nguyen, Quang Lam Chu and Nhat Anh Dang',

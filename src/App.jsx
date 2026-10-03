@@ -80,10 +80,16 @@ function Header() {
 }
 
 function AchievementCard({ item, index }) {
+  const authorNames = profile.publicationNames ?? [profile.name];
+  const organization = item.type === 'Publication'
+    ? item.organization.split(/(,| and )/).map((author, authorIndex) => (
+      authorNames.includes(author.trim()) ? <strong key={authorIndex}>{author}</strong> : author
+    ))
+    : item.organization;
   return <Reveal delay={index * 70}><article className="achievement-card">
     <div className="achievement-top"><span className={`achievement-icon icon-${item.icon}`}><Icon name={item.icon} /></span><span className="achievement-year">{item.year}</span></div>
     <div className="achievement-type">{item.type}{item.isPlaceholder && <span className="sample-badge">Sample content</span>}</div>
-    <h3>{item.title}</h3><p className="achievement-organization">{item.organization}</p><p className="achievement-description">{item.description}</p>
+    <h3>{item.title}</h3><p className="achievement-organization">{organization}</p><p className="achievement-description">{item.description}</p>
     <div className="achievement-bottom"><div className="tags">{item.tags?.map(tag => <span key={tag}>{tag}</span>)}</div>{item.url && <a className="card-link" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${item.title}`}><Icon name="diagonal" /></a>}</div>
   </article></Reveal>;
 }
